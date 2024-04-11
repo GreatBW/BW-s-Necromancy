@@ -1,0 +1,9 @@
+# Copyright (C)
+# See LICENSE file for extended copyright information.
+# This file is part of the repository from .
+
+# do not include obj and bin folders
+
+obj
+bin
+Sprites
