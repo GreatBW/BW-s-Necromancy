@@ -1,0 +1,1 @@
+scr_effect_create(o_b_exceptional, o_npc_maid_grocery)

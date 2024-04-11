@@ -1,0 +1,4 @@
+event_inherited()
+audio_stop_sound(loop_sound)
+scr_onUnitAnimationDestroy(frontAnimation)
+scr_onUnitAnimationDestroy(backAnimation)

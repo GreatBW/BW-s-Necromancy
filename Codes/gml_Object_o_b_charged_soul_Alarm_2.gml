@@ -1,0 +1,1 @@
+duration = max_duration
