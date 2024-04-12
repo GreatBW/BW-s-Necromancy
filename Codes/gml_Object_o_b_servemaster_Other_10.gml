@@ -46,7 +46,7 @@ with (target)
         is_flying = 0
     ai_script = gml_Script_scr_enemy_choose_state
     flee_limit = 0
-    emo_death_sound = choose(1410, 1411, 1412)
+    emo_death_sound = choose(snd_zombie_death_1, snd_zombie_death_2, snd_zombie_death_3)
     VSN = 8
     Poison_Immunity = 1
     isLootDropped = 0
@@ -57,7 +57,7 @@ with (target)
     if object_is_ancestor(object_index, o_Bandit)
     {
         ds_list_clear(emo_sound)
-        ds_list_add(emo_sound, 1413, 1414, 1415, 1416)
+        ds_list_add(emo_sound, snd_zombie_emotion_1, snd_zombie_emotion_2, snd_zombie_emotion_3, snd_zombie_emotion_4)
     }
     if is_player()
     {

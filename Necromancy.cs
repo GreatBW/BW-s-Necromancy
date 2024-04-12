@@ -97,6 +97,97 @@ public class Necromancy : Mod
 
     public override void PatchMod()
     {
+
+        UndertaleGameObject o_skill_death_plague_ico = Msl.AddObject(
+            name: "o_skill_death_plague_ico", 
+            spriteName: "s_soul_abs", 
+            parentName: "o_skill_ico", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: false,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_skill_soul_explosion_ico = Msl.AddObject(
+            name: "o_skill_soul_explosion_ico", 
+            spriteName: "s_soulzac", 
+            parentName: "o_skill_passive", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_skill_Lostsouls_ico = Msl.AddObject(
+            name: "o_skill_Lostsouls_ico", 
+            spriteName: "s_disasterundead", 
+            parentName: "o_skill_ico", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_skill_bw_resurrection_ico = Msl.AddObject(
+            name: "o_skill_bw_resurrection_ico", 
+            spriteName: "s_recurct", 
+            parentName: "o_skill_ico", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_skill_bw_wraithsummon_ico = Msl.AddObject(
+            name: "o_skill_bw_wraithsummon_ico", 
+            spriteName: "s_wraithbind", 
+            parentName: "o_skill_ico", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_bw_curse_ico = Msl.AddObject(
+            name: "o_bw_curse_ico", 
+            spriteName: "s_pcurse", 
+            parentName: "o_skill_ico", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_bw_darkbolt_ico = Msl.AddObject(
+            name: "o_bw_darkbolt_ico", 
+            spriteName: "s_darkbalz", 
+            parentName: "o_skill_ico", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_bw_dark_bless_ico = Msl.AddObject(
+            name: "o_bw_dark_bless_ico", 
+            spriteName: "s_blusss", 
+            parentName: "o_skill_ico", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_skill_bw_touch_ico = Msl.AddObject(
+            name: "o_skill_bw_touch_ico", 
+            spriteName: "s_dtouch", 
+            parentName: "o_skill_ico", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
         Msl.AddFunction(ModFiles.GetCode("gml_GlobalScript_scr_bw_checker.gml"), "scr_bw_checker");
         Msl.AddFunction(ModFiles.GetCode("gml_GlobalScript_scr_bw_targeter.gml"), "scr_bw_targeter");
 
@@ -474,19 +565,13 @@ new MslEvent("gml_Object_o_skill_death_plague_Other_19.gml", EventType.Other, 19
 new MslEvent("gml_Object_o_skill_death_plague_Other_10.gml", EventType.Other, 10),
 new MslEvent("gml_Object_o_skill_death_plague_PreCreate_0.gml", EventType.PreCreate, 0)
                     );
-                    Msl.AddObject(
-                        name: "o_skill_death_plague_ico", 
-                        spriteName: "s_soul_abs", 
-                        parentName: "o_skill_ico", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: false,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_skill_death_plague_ico_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_skill_death_plague_ico_Step_0.gml", EventType.Step, 0),
-new MslEvent("gml_Object_o_skill_death_plague_ico_PreCreate_0.gml", EventType.PreCreate, 0)
-                    );
+                    
+        o_skill_death_plague_ico.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_skill_death_plague_ico_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_skill_death_plague_ico_Step_0.gml", EventType.Step, 0),
+            new MslEvent("gml_Object_o_skill_death_plague_ico_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
+
                     Msl.AddObject(
                         name: "o_skill_soul_explosion", 
                         spriteName: "s_soulzac", 
@@ -503,21 +588,14 @@ new MslEvent("gml_Object_o_skill_soul_explosion_Other_17.gml", EventType.Other, 
 new MslEvent("gml_Object_o_skill_soul_explosion_Other_13.gml", EventType.Other, 13),
 new MslEvent("gml_Object_o_skill_soul_explosion_PreCreate_0.gml", EventType.PreCreate, 0)
                     );
-                    Msl.AddObject(
-                        name: "o_skill_soul_explosion_ico", 
-                        spriteName: "s_soulzac", 
-                        parentName: "o_skill_passive", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_skill_soul_explosion_ico_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_skill_soul_explosion_ico_Step_2.gml", EventType.Step, 2),
-new MslEvent("gml_Object_o_skill_soul_explosion_ico_Other_13.gml", EventType.Other, 13),
-new MslEvent("gml_Object_o_skill_soul_explosion_ico_Other_17.gml", EventType.Other, 17),
-new MslEvent("gml_Object_o_skill_soul_explosion_ico_PreCreate_0.gml", EventType.PreCreate, 0)
-                    );
+                    
+        o_skill_soul_explosion_ico.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_skill_soul_explosion_ico_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_skill_soul_explosion_ico_Step_2.gml", EventType.Step, 2),
+            new MslEvent("gml_Object_o_skill_soul_explosion_ico_Other_13.gml", EventType.Other, 13),
+            new MslEvent("gml_Object_o_skill_soul_explosion_ico_Other_17.gml", EventType.Other, 17),
+            new MslEvent("gml_Object_o_skill_soul_explosion_ico_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
 
         Msl.AddObject(
             name: "o_pass_skill_nmadness", 
@@ -550,18 +628,12 @@ new MslEvent("gml_Object_o_pass_skill_ndarkness_Other_17.gml", EventType.Other, 
 new MslEvent("gml_Object_o_pass_skill_ndarkness_Other_13.gml", EventType.Other, 13),
 new MslEvent("gml_Object_o_pass_skill_ndarkness_PreCreate_0.gml", EventType.PreCreate, 0)
                     );
-                    Msl.AddObject(
-                        name: "o_skill_Lostsouls_ico", 
-                        spriteName: "s_disasterundead", 
-                        parentName: "o_skill_ico", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_skill_Lostsouls_ico_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_skill_Lostsouls_ico_Step_2.gml", EventType.Step, 2)
-                    );
+
+        o_skill_Lostsouls_ico.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_skill_Lostsouls_ico_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_skill_Lostsouls_ico_Step_2.gml", EventType.Step, 2)
+        );
+
                     Msl.AddObject(
                         name: "o_pass_skill_darkblood", 
                         spriteName: "s_grim_blood", 
@@ -652,19 +724,7 @@ new MslEvent("gml_Object_o_allDeffence_Attitude_Other_10.gml", EventType.Other, 
 new MslEvent("gml_Object_o_allDeffence_Attitude_Other_12.gml", EventType.Other, 12),
 new MslEvent("gml_Object_o_allDeffence_Attitude_PreCreate_0.gml", EventType.PreCreate, 0)
                     );
-                    Msl.AddObject(
-                        name: "o_skill_category_necromancy", 
-                        spriteName: "", 
-                        parentName: "o_sklill_category_magic", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_skill_category_necromancy_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_skill_category_necromancy_Other_24.gml", EventType.Other, 24),
-new MslEvent("gml_Object_o_skill_category_necromancy_PreCreate_0.gml", EventType.PreCreate, 0)
-                    );
+
                     Msl.AddObject(
                         name: "o_disclaimer03", 
                         spriteName: "", 
@@ -706,15 +766,7 @@ new MslEvent("gml_Object_o_BwMark_Other_5.gml", EventType.Other, 5)
             new MslEvent("gml_Object_o_skill_bw_resurrection_Other_13.gml", EventType.Other, 13)
         );
 
-        Msl.AddObject(
-            name: "o_skill_bw_resurrection_ico", 
-            spriteName: "s_recurct", 
-            parentName: "o_skill_ico", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_skill_bw_resurrection_ico.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_skill_bw_resurrection_ico_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_skill_bw_resurrection_ico_Step_2.gml", EventType.Step, 2),
             new MslEvent("gml_Object_o_skill_bw_resurrection_ico_Other_13.gml", EventType.Other, 13)
@@ -768,15 +820,7 @@ new MslEvent("gml_Object_o_BwMark_Other_5.gml", EventType.Other, 5)
             new MslEvent("gml_Object_o_skill_bw_wraithsummon_Other_15.gml", EventType.Other, 15)
         );
 
-        Msl.AddObject(
-            name: "o_skill_bw_wraithsummon_ico", 
-            spriteName: "s_wraithbind", 
-            parentName: "o_skill_ico", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_skill_bw_wraithsummon_ico.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_skill_bw_wraithsummon_ico_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_skill_bw_wraithsummon_ico_Step_2.gml", EventType.Step, 2),
             new MslEvent("gml_Object_o_skill_bw_wraithsummon_ico_Other_4.gml", EventType.Other, 4),
@@ -812,28 +856,21 @@ new MslEvent("gml_Object_o_BwMark_Other_5.gml", EventType.Other, 5)
             new MslEvent("gml_Object_o_bw_curse_Other_13.gml", EventType.Other, 13)
         );
 
-                    Msl.AddObject(
-                        name: "o_bw_curse_ico", 
-                        spriteName: "s_pcurse", 
-                        parentName: "o_skill_ico", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_bw_curse_ico_Create_0.gml", EventType.Create, 0)
-                    );
-                    Msl.AddObject(
-                        name: "o_bw_cursebirth", 
-                        spriteName: "s_curse_cast", 
-                        parentName: "o_spelllbirth", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_bw_cursebirth_Create_0.gml", EventType.Create, 0)
-                    );
+        o_bw_curse_ico.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_bw_curse_ico_Create_0.gml", EventType.Create, 0)
+        );
+
+        Msl.AddObject(
+            name: "o_bw_cursebirth", 
+            spriteName: "s_curse_cast", 
+            parentName: "o_spelllbirth", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        ).ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_bw_cursebirth_Create_0.gml", EventType.Create, 0)
+        );
 
         Msl.AddObject(
             name: "o_bw_inscurse", 
@@ -862,17 +899,11 @@ new MslEvent("gml_Object_o_BwMark_Other_5.gml", EventType.Other, 5)
 new MslEvent("gml_Object_o_bw_darkbolt_Other_17.gml", EventType.Other, 17),
 new MslEvent("gml_Object_o_bw_darkbolt_Other_13.gml", EventType.Other, 13)
                     );
-                    Msl.AddObject(
-                        name: "o_bw_darkbolt_ico", 
-                        spriteName: "s_darkbalz", 
-                        parentName: "o_skill_ico", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_bw_darkbolt_ico_Create_0.gml", EventType.Create, 0)
-                    );
+
+        o_bw_darkbolt_ico.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_bw_darkbolt_ico_Create_0.gml", EventType.Create, 0)
+        );
+
                     Msl.AddObject(
                         name: "o_bw_ballbirth", 
                         spriteName: "s_spell_darkball_birth", 
@@ -899,18 +930,12 @@ new MslEvent("gml_Object_o_bw_ballbirth_Other_10.gml", EventType.Other, 10)
 new MslEvent("gml_Object_o_bw_dark_bless_Other_17.gml", EventType.Other, 17),
 new MslEvent("gml_Object_o_bw_dark_bless_Other_13.gml", EventType.Other, 13)
                     );
-                    Msl.AddObject(
-                        name: "o_bw_dark_bless_ico", 
-                        spriteName: "s_blusss", 
-                        parentName: "o_skill_ico", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_bw_dark_bless_ico_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_bw_dark_bless_ico_Step_2.gml", EventType.Step, 2)
-                    );
+
+        o_bw_dark_bless_ico.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_bw_dark_bless_ico_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_bw_dark_bless_ico_Step_2.gml", EventType.Step, 2)
+        );
+
                     Msl.AddObject(
                         name: "o_bw_blessing_birth", 
                         spriteName: "s_darkbless_birth", 
@@ -948,18 +973,12 @@ new MslEvent("gml_Object_o_bw_darkbless_Draw_0.gml", EventType.Draw, 0)
 new MslEvent("gml_Object_o_skill_bw_touch_Other_17.gml", EventType.Other, 17),
 new MslEvent("gml_Object_o_skill_bw_touch_Other_13.gml", EventType.Other, 13)
                     );
-                    Msl.AddObject(
-                        name: "o_skill_bw_touch_ico", 
-                        spriteName: "s_dtouch", 
-                        parentName: "o_skill_ico", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_skill_bw_touch_ico_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_skill_bw_touch_ico_Step_2.gml", EventType.Step, 2)
-                    );
+
+        o_skill_bw_touch_ico.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_skill_bw_touch_ico_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_skill_bw_touch_ico_Step_2.gml", EventType.Step, 2)
+        );
+
                     Msl.AddObject(
                         name: "o_bw_touch", 
                         spriteName: "", 
@@ -1025,19 +1044,20 @@ new MslEvent("gml_Object_o_darkball2_Destroy_0.gml", EventType.Destroy, 0),
 new MslEvent("gml_Object_o_darkball2_Other_10.gml", EventType.Other, 10),
 new MslEvent("gml_Object_o_darkball2_Other_11.gml", EventType.Other, 11)
                     );
-                    Msl.AddObject(
-                        name: "o_b_deathbless", 
-                        spriteName: "s_buff_death_blesss", 
-                        parentName: "o_physical_buff", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_b_deathbless_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_b_deathbless_Alarm_2.gml", EventType.Alarm, 2),
-new MslEvent("gml_Object_o_b_deathbless_Other_10.gml", EventType.Other, 10)
-                    );
+
+        Msl.AddObject(
+            name: "o_b_deathbless", 
+            spriteName: "s_buff_death_blesss", 
+            parentName: "o_physical_buff", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        ).ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_b_deathbless_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_b_deathbless_Alarm_2.gml", EventType.Alarm, 2),
+            new MslEvent("gml_Object_o_b_deathbless_Other_10.gml", EventType.Other, 10)
+        );
 
         Msl.AddObject(
             name: "o_bw_zombie", 
@@ -1144,11 +1164,132 @@ new MslEvent("gml_Object_o_b_deathbless_Other_10.gml", EventType.Other, 10)
             new MslEvent("gml_Object_o_soul_absorption_impact_Alarm_1.gml", EventType.Alarm, 1)
         );
 
+        Msl.AddObject(
+            name: "o_skill_category_necromancy", 
+            spriteName: "", 
+            parentName: "o_sklill_category_magic", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        ).ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_skill_category_necromancy_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_skill_category_necromancy_Other_24.gml", EventType.Other, 24),
+            new MslEvent("gml_Object_o_skill_category_necromancy_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
+
         Msl.LoadGML("gml_GlobalScript_scr_attack")
             .MatchFrom("scr_skill_call_buff(o_db_curse, id)")
             .InsertBelow("scr_skill_call_buff(o_db_painful_curse, id)")
             .Save();  
             
+        Msl.LoadGML("gml_GlobalScript_scr_enemy_cast_spell")
+            .MatchFrom("scr_skill_call_buff(o_db_curse, id)")
+            .InsertBelow("scr_skill_call_buff(o_db_painful_curse, id)")
+            .Save();
+            
+        Msl.LoadGML("gml_GlobalScript_scr_enemy_hit")
+            .MatchFrom("scr_skill_call_buff(o_db_curse, id)")
+            .InsertBelow("scr_skill_call_buff(o_db_painful_curse, id)")
+            .Save();
+
+        Msl.LoadGML("gml_GlobalScript_scr_enemyArcherChangeToMelee")
+            .MatchFrom("scr_set_hl()")
+            .InsertBelow(@"if (faction_id == ""Servant"")
+{
+    scr_enemyArcherChangeToMeleeParam(1)
+}
+else")
+            .MatchFrom("unitParamName += \" Melee\"")
+            .InsertBelow(@"if argument0 scr_param(unitParamName, 0, 1)
+else")
+            .Save();
+
+        Msl.LoadGML("gml_GlobalScript_scr_enemyTransitListFill")
+            .MatchFrom("grid_y = round((yy div 26))\n}\n}\n}\n}\n}\n}\n}\n}")
+            .InsertBelow(@"with (o_enemy)
+{
+if (!(object_is_ancestor(object_index, o_NPC)))
+{
+if (ds_list_empty(lock_turn) && HP >= 1)
+{
+if ((faction_id == ""Pet"" && scr_round_cell(point_distance(x, y, other.x, other.y)) < 208) || (faction_id == ""Servant"" && scr_round_cell(point_distance(x, y, other.x, other.y)) < 208) || (faction_id == ""Fallower"" && scr_round_cell(point_distance(x, y, other.x, other.y)) < 208))
+{
+scr_mp_clear_tiles(o_unit)
+if path_exists(path)
+{
+mp_grid_path(o_controller.grid, path, x, y, other.x, other.y, true)
+ds_list_add(global.agred_enemy_list, [id, path_get_number(path)])
+}
+else ds_list_add(global.agred_enemy_list, [id, ds_list_size(global.agred_enemy_list)])
+scr_selfcell(0, id)
+if ds_exists(buffs, 2)
+{
+for (i = 0; i < ds_list_size(buffs); i++)
+{
+with (ds_list_find_value(buffs, i))
+{
+persistent = 1
+with (animationInstance)
+{
+persistent = 1
+light.persistent = 1
+}
+}
+}
+}
+if ds_exists(consum_list, 2)
+{
+for (i = 0; i < ds_list_size(consum_list); i++)
+{
+with (ds_list_find_value(consum_list, i))
+persistent = 1
+}
+}
+if ds_exists(pass_skill, 2)
+{
+for (i = 0; i < ds_list_size(pass_skill); i++)
+{
+with (ds_list_find_value(pass_skill, i))
+persistent = 1
+}
+}
+ai_is_on = 0
+persistent = 1
+with (o_onUnitAnimation)
+{
+if (owner == other.id)
+persistent = 1
+}
+x = -1000
+xx = x
+draw_x = x
+grid_x = round((xx div 26))
+grid_y = round((yy div 26))
+}
+}
+}
+}")
+            .Save();
+
+        // gml_GlobalScript_scr_get_damage_of_weapon
+
+         Msl.LoadGML("gml_GlobalScript_scr_get_XP")
+            .MatchFrom("{")
+            .InsertBelow("var _sus = 0\nif (argument_count > 1) _sus = argument[1]")
+            .MatchFrom("var XP = math_round((")
+            .InsertAbove("if (!_sus){")
+            .MatchFrom("scr_atr_incr(\"XP\", XP)")
+            .InsertBelow("}else{XP = math_round((((argument0 * o_player.Received_XP) / 100) / 2))\nscr_atr_incr(\"XP\", XP)}")
+            .Save();
+
+        Msl.LoadGML("gml_GlobalScript_scr_global_turn_end")
+            .MatchFrom("with (collision_circle(x, y, 10, o_cutscene_start_trigger, 0, 0))")
+            .InsertAbove(@"with (o_skill_bw_resurrection_ico) event_user(3)
+with (o_pass_skill_nmadness) event_user(3)
+with (o_pass_skill_unholymind) event_user(3)")
+            .Save();
+
         Msl.LoadGML("gml_GlobalScript_scr_param")
             .MatchFrom("_needChange = argument[1]")
             .InsertBelow("var _zompass = 0\nif (argument_count > 2){\n_zompass = argument[2]}")
@@ -1158,10 +1299,24 @@ new MslEvent("gml_Object_o_b_deathbless_Other_10.gml", EventType.Other, 10)
             .InsertBelow("}")
             .Save();
 
-        Msl.LoadGML("gml_GlobalScript_scr_enemy_cast_spell")
-            .MatchFrom("scr_skill_call_buff(o_db_curse, id)")
-            .InsertBelow("scr_skill_call_buff(o_db_painful_curse, id)")
+        Msl.LoadGML("gml_GlobalScript_scr_penalty_player_attack")
+            .MatchFrom("instance_exists(o_player)")
+            .InsertAbove("if (faction_id != \"Servant\"){")
+            .MatchFrom("return 1")
+            .InsertBelow("}")
             .Save();
+
+        // gml_GlobalScript_scr_qualityBgDraw
+
+        Msl.LoadGML("gml_GlobalScript_scr_skill_tier_init")
+            .MatchFrom("}")
+            .InsertAbove(@"
+global.necromancy_tier1 = [""Necromancy"", o_skill_death_plague_ico, o_bw_darkbolt_ico, o_bw_curse_ico]
+global.necromancy_tier2 = [""Necromancy"", o_skill_bw_resurrection_ico, o_bw_dark_bless_ico, o_pass_skill_nmadness, o_pass_skill_ndarkness]
+global.necromancy_tier3 = [""Necromancy"", o_pass_skill_unholymind, o_skill_bw_touch_ico, o_skill_soul_explosion_ico]")
+            .Save();
+
+        // gml_GlobalScript_scr_weapon_generation
             
     /*     Msl.LoadAssemblyAsString("gml_Object_o_enemy_Destroy_0")
             .MatchFrom("call.i event_inherited(argc=0)\npopz.v")
@@ -1215,14 +1370,7 @@ popenv [1000]")
             .ReplaceBy("var _metaCategoriesArray = [[o_skill_category_sword, o_skill_category_axe, o_skill_category_mace, o_skill_category_dagger, o_skill_category_greatsword, o_skill_category_greataxe, o_skill_category_greatmauls, o_skill_category_polearms, o_skill_category_bows, o_skill_category_shields, o_skill_category_staves, o_skill_category_wands], [o_skill_category_basic_skills, o_skill_category_dual_wielding, o_skill_category_survival, o_skill_category_combat, o_skill_category_athletics, o_skill_category_mastery_of_magic, o_skill_category_necromancy, o_skill_category_basic_armor, o_skill_category_alchemy, o_skill_category_sabotage], [o_skill_category_pyromancy, o_skill_category_geomancy, o_skill_category_electromancy, o_skill_category_venomancy, o_skill_category_cryomancy, o_skill_category_astromancy, o_skill_category_chronomancy, o_skill_category_psymancy, o_skill_category_arcanistics]]")
             .Save();
 
-        Msl.LoadGML("gml_GlobalScript_scr_skill_tier_init")
-            .MatchFrom("}")
-            .InsertAbove(@"
-global.necromancy_tier1 = [""Necromancy"", o_skill_death_plague_ico, o_bw_darkbolt_ico, o_bw_curse_ico]
-global.necromancy_tier2 = [""Necromancy"", o_skill_bw_resurrection_ico, o_bw_dark_bless_ico, o_pass_skill_nmadness, o_pass_skill_ndarkness]
-global.necromancy_tier3 = [""Necromancy"", o_pass_skill_unholymind, o_skill_bw_touch_ico, o_skill_soul_explosion_ico]")
-            .Save();
-
+        // table injection
         Msl.LoadGML("gml_GlobalScript_table_weapons_text")
             .Apply(WeaponTextIterator)
             .Save();
@@ -1237,6 +1385,10 @@ global.necromancy_tier3 = [""Necromancy"", o_pass_skill_unholymind, o_skill_bw_t
 
         Msl.LoadGML("gml_GlobalScript_table_skills_stat")
             .Apply(SkillsStatIterator)
+            .Save();
+
+        Msl.LoadGML("gml_GlobalScript_table_skills")
+            .Apply(SkillsIterator)
             .Save();
     }
     private static IEnumerable<string> WeaponTextIterator(IEnumerable<string> input)
@@ -1412,6 +1564,36 @@ global.necromancy_tier3 = [""Necromancy"", o_pass_skill_unholymind, o_skill_bw_t
             if (item.Contains(undead))
             {
                 string newItem = item.Insert(item.IndexOf(undead) + undead.Length, skillsStat);
+                yield return newItem;
+            }
+            else
+            {
+                yield return item;
+            }
+        }
+    }
+    private static IEnumerable<string> SkillsIterator(IEnumerable<string> input)
+    {
+        string skills = "\"Soul_Explosion;Жертвоприношение души;Mastery of Binding;Mastery of Binding;Mastery of Binding;Mastery of Binding;Mastery of Binding;Mastery of Binding;Mastery of Binding;Mastery of Binding;Mastery of Binding;Mastery of Binding;\"," +
+        "\"imortall;Бессмертие;Immortality;Immortality;Immortality;Immortality;Immortality;Immortality;Immortality;Immortality;Immortality;Immortality;\"," +
+        "\"kingdead;Архитеургия;Archtheurgy;Archtheurgy;Archtheurgy;Archtheurgy;Archtheurgy;Archtheurgy;Archtheurgy;Archtheurgy;Archtheurgy;Archtheurgy;\"," +
+        "\"Lostsouls;Великий ритуал воскрешения;Triple Hand Reunion;Greater Ritual of Resurrection;Greater Ritual of Resurrection;Greater Ritual of Resurrection;Greater Ritual of Resurrection;Greater Ritual of Resurrection;Greater Ritual of Resurrection;Greater Ritual of Resurrection;Greater Ritual of Resurrection;Greater Ritual of Resurrection;\"," +
+        "\"Death_Plague;Поглощение души;Essence Leech;Essence Leech;Essence Leech;Essence Leech;Essence Leech;Essence Leech;Essence Leech;Essence Leech;Essence Leech;Essence Leech;\"," + 
+        "\"nmadness;Расцветающее безумие;Blooming Madness;Blooming Madness;Blooming Madness;Blooming Madness;Blooming Madness;Blooming Madness;Blooming Madness;Blooming Madness;Blooming Madness;Blooming Madness;\"," +
+        "\"unholymind;Жатва хаоса;Presence of Darkness;Presence of Darkness;Presence of Darkness;Presence of Darkness;Presence of Darkness;Presence of Darkness;Presence of Darkness;Presence of Darkness;Presence of Darkness;Presence of Darkness;\"," + 
+        "\"ndarkness;Абсолютная тьма;Sealed Mind;Sealed Mind;Sealed Mind;Sealed Mind;Sealed Mind;Sealed Mind;Sealed Mind;Sealed Mind;Sealed Mind;Sealed Mind;\"," +
+        "\"Pcurse;Мучительное проклятие;Withering Curse;Withering Curse;Withering Curse;Withering Curse;Withering Curse;Withering Curse;Withering Curse;Withering Curse;Withering Curse;Withering Curse;\"," +
+        "\"Bw_Bless;Дары Смерти;Death's Blessing;Death's Blessing;Death's Blessing;Death's Blessing;Death's Blessing;Death's Blessing;Death's Blessing;Death's Blessing;Death's Blessing;Death's Blessing;\"," +
+        "\"Bw_Bolt;Осквернение;Desecration;Desecration;Desecration;Desecration;Desecration;Desecration;Desecration;Desecration;Desecration;Desecration;\"," +
+        "\"Bw_Resurrection;Воскрешение;Resurrection;低等起死还魂;Kleines Ritual der Auferstehung;Lesser Ritual of Resurrection;Lesser Ritual of Resurrection;Rituale di Resurrezione Inferiore;Lesser Ritual of Resurrection;Lesser Ritual of Resurrection;Lesser Ritual of Resurrection;復活の簡易儀式;소규모 부활 의식;\"," +
+        "\"Bw_Touch;Касание смерти;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;\"," +
+        "\"Wraith_Binding;Призыв умертвия;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;\",";
+
+        foreach(string item in input)
+        {
+            if (item.Contains("\";skill_name_end"))
+            {
+                string newItem = item.Insert(item.IndexOf("\";skill_name_end"), skills);
                 yield return newItem;
             }
             else

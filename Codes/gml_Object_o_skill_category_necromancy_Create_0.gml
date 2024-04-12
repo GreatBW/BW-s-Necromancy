@@ -1,5 +1,5 @@
 event_inherited()
 text = "Necromancy"
-skill = [7041, 7028, 7029, 7032, 7027, 7033, 7034, 7030, 7045, 7025, 7048, 7052, 7055, 7059]
-branch_sprite = 12840
-owner = 3157
+skill = [o_skill_bw_resurrection_ico, o_pass_skill_nmadness, o_pass_skill_ndarkness, o_pass_skill_unholymind, o_skill_soul_explosion_ico, o_pass_skill_imortall, o_pass_skill_kingdead, o_skill_Lostsouls_ico, o_skill_bw_wraithsummon_ico, o_skill_death_plague_ico, o_bw_curse_ico, o_bw_darkbolt_ico, o_bw_dark_bless_ico, o_skill_bw_touch_ico]
+branch_sprite = s_nmancy_reworked
+owner = gml_Script_scr_GetMobParametr

@@ -8,7 +8,7 @@ if is_open
         scr_psychic_change("Morale", 0.3)
     with (o_b_bless)
     {
-        if (target == 3226)
+        if (target == o_player)
             instance_destroy()
     }
     if (_san > _sus)

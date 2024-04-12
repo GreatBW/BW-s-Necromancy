@@ -25,7 +25,7 @@ if _is_undead
         {
             with (instance_create(x, y, o_bw_resurrection))
             {
-                owner = 3226
+                owner = o_player
                 target = -1
                 is_special = 1
                 u_charge = 3

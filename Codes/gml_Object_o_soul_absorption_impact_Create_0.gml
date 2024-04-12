@@ -5,5 +5,5 @@ if (global.language == 1)
     name = "Essence Flux"
 else
     name = "Essence Flux"
-owner = 3226
+owner = o_player
 damage2 = 0

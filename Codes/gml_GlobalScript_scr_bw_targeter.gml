@@ -16,7 +16,7 @@ function scr_bw_targeter() //gml_Script_scr_bw_targeter
                     if _col.visible
                     {
                         _cur = 1671
-                        other.target_group = 1808
+                        other.target_group = o_corpse
                     }
                 }
             }
@@ -33,11 +33,11 @@ function scr_bw_targeter() //gml_Script_scr_bw_targeter
                         if scr_instance_exists_in_list(o_b_servemaster)
                         {
                             _cur = 1671
-                            other.target_group = 1818
+                            other.target_group = o_enemy
                         }
                         else
                         {
-                            other.target_group = 1808
+                            other.target_group = o_corpse
                             _cur = 1675
                         }
                     }

@@ -8,7 +8,7 @@ xx = 33
 button = "5"
 scr_skill_atr()
 can_learn = 1
-target_group = 1808
+target_group = o_corpse
 damage_type = "Unholy_Damage"
 class = "spell"
 ignore_interact = 1

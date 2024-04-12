@@ -7,5 +7,5 @@ else
 scr_skill_atr()
 can_learn = 1
 ignore_interact = 1
-target_group = 1818
+target_group = o_enemy
 startcast_sprite_tag = "s_deathtouch_"

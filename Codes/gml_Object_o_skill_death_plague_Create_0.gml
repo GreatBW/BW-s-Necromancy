@@ -1,5 +1,5 @@
 event_inherited()
-target_group = 1818
+target_group = o_enemy
 skill = "Death_Plague"
 xx = 0
 button = "4"
