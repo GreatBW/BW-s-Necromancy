@@ -7,8 +7,86 @@ using ModShardLauncher.Mods;
 using UndertaleModLib.Models;
 using System.Collections.Generic;
 using System.IO;
+using System;
+using System.Linq;
 
 namespace Necromancy;
+static class StringExtensions
+{
+    public static IEnumerable<int> AllIndicesOf(this string text, string pattern)
+    {
+        if (string.IsNullOrEmpty(pattern))
+        {
+            throw new ArgumentNullException(pattern);
+        }
+        return Kmp(text, pattern);
+    }
+
+    private static IEnumerable<int> Kmp(string text, string pattern)
+    {
+        int M = pattern.Length;
+        int N = text.Length;
+
+        int[] lps = LongestPrefixSuffix(pattern);
+        int i = 0, j = 0; 
+
+        while (i < N)
+        {
+            if (pattern[j] == text[i])
+            {
+                j++;
+                i++;
+            }
+            if (j == M)
+            {
+                yield return i - j;
+                j = lps[j - 1];
+            }
+
+            else if (i < N && pattern[j] != text[i])
+            {
+                if (j != 0)
+                {
+                    j = lps[j - 1];
+                }
+                else
+                {
+                    i++;
+                }
+            }
+        }
+    }
+
+    private static int[] LongestPrefixSuffix(string pattern)
+    {
+        int[] lps = new int[pattern.Length];
+        int length = 0;
+        int i = 1;
+
+        while (i < pattern.Length)
+        {
+            if (pattern[i] == pattern[length])
+            {
+                length++;
+                lps[i] = length;
+                i++;
+            }
+            else
+            {
+                if (length != 0)
+                {
+                    length = lps[length - 1];
+                }
+                else
+                {
+                    lps[i] = length;
+                    i++;
+                }
+            }
+        }
+        return lps;
+    }
+}
 public class Necromancy : Mod
 {
     public override string Author => "BW, CommissarAmethyst, zizani";
@@ -180,84 +258,86 @@ public class Necromancy : Mod
             new MslEvent("gml_Object_o_res_new01_Draw_0.gml", EventType.Draw, 0)
         );
                     
-                    Msl.AddObject(
-                        name: "o_trashy_corpz", 
-                        spriteName: "s_fleshpile_rotten", 
-                        parentName: "", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_trashy_corpz_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_trashy_corpz_Alarm_0.gml", EventType.Alarm, 0)
-                    );
-                    Msl.AddObject(
-                        name: "o_Lostsouls", 
-                        spriteName: "", 
-                        parentName: "", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_Lostsouls_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_Lostsouls_Destroy_0.gml", EventType.Destroy, 0),
-new MslEvent("gml_Object_o_Lostsouls_Alarm_0.gml", EventType.Alarm, 0),
-new MslEvent("gml_Object_o_Lostsouls_Alarm_10.gml", EventType.Alarm, 10),
-new MslEvent("gml_Object_o_Lostsouls_PreCreate_0.gml", EventType.PreCreate, 0)
-                    );
-                    Msl.AddObject(
-                        name: "o_absorption_soul", 
-                        spriteName: "s_essence_leech_cast", 
-                        parentName: "o_magic_pillar", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_absorption_soul_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_absorption_soul_Destroy_0.gml", EventType.Destroy, 0),
-new MslEvent("gml_Object_o_absorption_soul_Alarm_0.gml", EventType.Alarm, 0),
-new MslEvent("gml_Object_o_absorption_soul_Alarm_10.gml", EventType.Alarm, 10),
-new MslEvent("gml_Object_o_absorption_soul_Alarm_2.gml", EventType.Alarm, 2),
-new MslEvent("gml_Object_o_absorption_soul_PreCreate_0.gml", EventType.PreCreate, 0)
-                    );
+        Msl.AddObject(
+            name: "o_trashy_corpz", 
+            spriteName: "s_fleshpile_rotten", 
+            parentName: "", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        ).ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_trashy_corpz_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_trashy_corpz_Alarm_0.gml", EventType.Alarm, 0)
+        );
 
-            Msl.AddObject(
-                name: "o_b_servemaster", 
-                spriteName: "s_zompie_passiveskill", 
-                parentName: "o_class_skills", 
-                isVisible: true, 
-                isPersistent: false, 
-                isAwake: true,
-                collisionShapeFlags: CollisionShapeFlags.Circle
-            ).ApplyEvent(ModFiles, 
-                new MslEvent("gml_Object_o_b_servemaster_Create_0.gml", EventType.Create, 0),
-                new MslEvent("gml_Object_o_b_servemaster_Alarm_2.gml", EventType.Alarm, 2),
-                new MslEvent("gml_Object_o_b_servemaster_Alarm_7.gml", EventType.Alarm, 7),
-                new MslEvent("gml_Object_o_b_servemaster_Alarm_6.gml", EventType.Alarm, 6),
-                new MslEvent("gml_Object_o_b_servemaster_Alarm_8.gml", EventType.Alarm, 8),
-                new MslEvent("gml_Object_o_b_servemaster_Step_0.gml", EventType.Step, 0),
-                new MslEvent("gml_Object_o_b_servemaster_Mouse_54.gml", EventType.Mouse, 54),
-                new MslEvent("gml_Object_o_b_servemaster_Other_10.gml", EventType.Other, 10),
-                new MslEvent("gml_Object_o_b_servemaster_KeyPress_86.gml", EventType.KeyPress, 86),
-                new MslEvent("gml_Object_o_b_servemaster_PreCreate_0.gml", EventType.PreCreate, 0)
-            );
+        Msl.AddObject(
+            name: "o_Lostsouls", 
+            spriteName: "", 
+            parentName: "", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        ).ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_Lostsouls_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_Lostsouls_Destroy_0.gml", EventType.Destroy, 0),
+            new MslEvent("gml_Object_o_Lostsouls_Alarm_0.gml", EventType.Alarm, 0),
+            new MslEvent("gml_Object_o_Lostsouls_Alarm_10.gml", EventType.Alarm, 10),
+            new MslEvent("gml_Object_o_Lostsouls_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
 
-            Msl.AddObject(
-                name: "o_b_Lostsouls", 
-                spriteName: "", 
-                parentName: "o_class_skills", 
-                isVisible: false, 
-                isPersistent: false, 
-                isAwake: true,
-                collisionShapeFlags: CollisionShapeFlags.Circle
-            ).ApplyEvent(ModFiles, 
-                new MslEvent("gml_Object_o_b_Lostsouls_Create_0.gml", EventType.Create, 0),
-                new MslEvent("gml_Object_o_b_Lostsouls_Alarm_2.gml", EventType.Alarm, 2),
-                new MslEvent("gml_Object_o_b_Lostsouls_Other_10.gml", EventType.Other, 10)
-            );
+        Msl.AddObject(
+            name: "o_absorption_soul", 
+            spriteName: "s_essence_leech_cast", 
+            parentName: "o_magic_pillar", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        ).ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_absorption_soul_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_absorption_soul_Destroy_0.gml", EventType.Destroy, 0),
+            new MslEvent("gml_Object_o_absorption_soul_Alarm_0.gml", EventType.Alarm, 0),
+            new MslEvent("gml_Object_o_absorption_soul_Alarm_10.gml", EventType.Alarm, 10),
+            new MslEvent("gml_Object_o_absorption_soul_Alarm_2.gml", EventType.Alarm, 2),
+            new MslEvent("gml_Object_o_absorption_soul_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
+
+        Msl.AddObject(
+            name: "o_b_servemaster", 
+            spriteName: "s_zompie_passiveskill", 
+            parentName: "o_class_skills", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        ).ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_b_servemaster_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_b_servemaster_Alarm_2.gml", EventType.Alarm, 2),
+            new MslEvent("gml_Object_o_b_servemaster_Alarm_7.gml", EventType.Alarm, 7),
+            new MslEvent("gml_Object_o_b_servemaster_Alarm_6.gml", EventType.Alarm, 6),
+            new MslEvent("gml_Object_o_b_servemaster_Alarm_8.gml", EventType.Alarm, 8),
+            new MslEvent("gml_Object_o_b_servemaster_Step_0.gml", EventType.Step, 0),
+            new MslEvent("gml_Object_o_b_servemaster_Mouse_54.gml", EventType.Mouse, 54),
+            new MslEvent("gml_Object_o_b_servemaster_Other_10.gml", EventType.Other, 10),
+            new MslEvent("gml_Object_o_b_servemaster_KeyPress_86.gml", EventType.KeyPress, 86),
+            new MslEvent("gml_Object_o_b_servemaster_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
+
+        Msl.AddObject(
+            name: "o_b_Lostsouls", 
+            spriteName: "", 
+            parentName: "o_class_skills", 
+            isVisible: false, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        ).ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_b_Lostsouls_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_b_Lostsouls_Alarm_2.gml", EventType.Alarm, 2),
+            new MslEvent("gml_Object_o_b_Lostsouls_Other_10.gml", EventType.Other, 10)
+        );
 
         Msl.AddObject(
             name: "o_b_unbind", 
@@ -1143,18 +1223,195 @@ global.necromancy_tier2 = [""Necromancy"", o_skill_bw_resurrection_ico, o_bw_dar
 global.necromancy_tier3 = [""Necromancy"", o_pass_skill_unholymind, o_skill_bw_touch_ico, o_skill_soul_explosion_ico]")
             .Save();
 
+        Msl.LoadGML("gml_GlobalScript_table_weapons_text")
+            .Apply(WeaponTextIterator)
+            .Save();
+            
         Msl.LoadGML("gml_GlobalScript_table_text")
             .Apply(TextIterator)
             .Save();
-    }
 
+        Msl.LoadGML("gml_GlobalScript_table_speech")
+            .Apply(SpeechIterator)
+            .Save();
+
+        Msl.LoadGML("gml_GlobalScript_table_skills_stat")
+            .Apply(SkillsStatIterator)
+            .Save();
+    }
+    private static IEnumerable<string> WeaponTextIterator(IEnumerable<string> input)
+    {
+        string chestpieces = "\";;CHESTPIECES;CHESTPIECES;;;;;CHESTPIECES;CHESTPIECES;;;;\",";
+        List<int> indicesChestpieces;
+        string rings = "\";;RINGS;RINGS;;;;;RINGS;RINGS;;;;\",";
+        List<int> indicesRings;
+
+        // armor_name
+        string sinistercrown = "\"sinistercrown;Sinister Crown;Sinister Crown;Sinister Crown;Sinister Crown;Sinister Crown;Sinister Crown;Sinister Crown;Sinister Crown;Sinister Crown;Sinister Crown;Sinister Crown;Sinister Crown;\",";
+        string hexermantle = "\"hexermantle;Hexer Mantle;Hexer Mantle;Hexer Mantle;Hexer Mantle;Hexer Mantle;Hexer Mantle;Hexer Mantle;Hexer Mantle;Hexer Mantle;Hexer Mantle;Hexer Mantle;Hexer Mantle;\",";
+        string skullmorionring = "\"Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;\",";
+        
+        // armor_desc
+        string sinistercrownDesc = "\"hexermantle;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;\",";
+        string hexermantleDesc = "\"sinistercrown;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;\",";
+        string skullmorionringDesc = "\"Skull Morion Ring;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;\",";
+
+        foreach(string item in input)
+        {
+            if (item.Contains(chestpieces) && item.Contains(rings))
+            {
+                string newItem = item;
+                indicesChestpieces = newItem.AllIndicesOf(chestpieces).ToList();
+                newItem = newItem.Insert(indicesChestpieces[1] + chestpieces.Length, sinistercrownDesc + hexermantleDesc);
+                newItem = newItem.Insert(indicesChestpieces[0] + chestpieces.Length, sinistercrown + hexermantle);
+                
+                indicesRings = newItem.AllIndicesOf(rings).ToList();
+                newItem = newItem.Insert(indicesRings[1] + rings.Length, skullmorionringDesc);
+                newItem = newItem.Insert(indicesRings[0] + rings.Length, skullmorionring);
+                yield return newItem;
+            }
+            else
+            {
+                yield return item;
+            }
+        }
+    }
     private static IEnumerable<string> TextIterator(IEnumerable<string> input)
     {
+        string tier = "\"Necromancy;Оккультизм;Occultism;Occultism;Occultism;Occultism;Occultism;Occultism;Occultism;Occultism;Occultism;Occultism;\", ";
+        string rarity = "\"10;магический / магическая / магическое / магические;Unholy;魔法;magischer / magische / magisches / magische;mágico / mágica / mágicos / mágicas;magique / magique / magiques / magiques;oggetto magico - ;mágico;Magiczny / Magiczna / Magiczne / Magiczne;büyülü;マジカル;마법의;\",";
+        string hover = "\"Necromancy;Бросьте вызов магическим ограничениям и познайте энтропические тайны, лежащие за гранью жизни и смерти.##~y~Особенности:~/~#~w~Поддержка~/~, ~w~Призыв слуг~/~, ~w~Выживаемость~/~, ~w~Ослабление врагов~/~;Challenge magical bounds and master the chaotic dance between life and death with the artistry of a true warlock.##~y~Main focus:~/~#~w~Support~/~, ~w~Minion Management~/~, ~w~Survivability~/~, ~w~Weakening Effects~/~;Challenge magical bounds and master the chaotic dance between life and death with the artistry of a true warlock.##~y~Main focus:~/~#~w~Support~/~, ~w~Minion Management~/~, ~w~Survivability~/~, ~w~Weakening Effects~/~;Challenge magical bounds and master the chaotic dance between life and death with the artistry of a true warlock.##~y~Main focus:~/~#~w~Support~/~, ~w~Minion Management~/~, ~w~Survivability~/~, ~w~Weakening Effects~/~;Challenge magical bounds and master the chaotic dance between life and death with the artistry of a true warlock.##~y~Main focus:~/~#~w~Support~/~, ~w~Minion Management~/~, ~w~Survivability~/~, ~w~Weakening Effects~/~;Challenge magical bounds and master the chaotic dance between life and death with the artistry of a true warlock.##~y~Main focus:~/~#~w~Support~/~, ~w~Minion Management~/~, ~w~Survivability~/~, ~w~Weakening Effects~/~;Challenge magical bounds and master the chaotic dance between life and death with the artistry of a true warlock.##~y~Main focus:~/~#~w~Support~/~, ~w~Minion Management~/~, ~w~Survivability~/~, ~w~Weakening Effects~/~;Challenge magical bounds and master the chaotic dance between life and death with the artistry of a true warlock.##~y~Main focus:~/~#~w~Support~/~, ~w~Minion Management~/~, ~w~Survivability~/~, ~w~Weakening Effects~/~;Challenge magical bounds and master the chaotic dance between life and death with the artistry of a true warlock.##~y~Main focus:~/~#~w~Support~/~, ~w~Minion Management~/~, ~w~Survivability~/~, ~w~Weakening Effects~/~;Challenge magical bounds and master the chaotic dance between life and death with the artistry of a true warlock.##~y~Main focus:~/~#~w~Support~/~, ~w~Minion Management~/~, ~w~Survivability~/~, ~w~Weakening Effects~/~;Challenge magical bounds and master the chaotic dance between life and death with the artistry of a true warlock.##~y~Main focus:~/~#~w~Support~/~, ~w~Minion Management~/~, ~w~Survivability~/~, ~w~Weakening Effects~/~;\",";
+        
         foreach(string item in input)
         {
             if (item.Contains("Tier_name_end"))
             {
-                string newItem = item.Insert(item.IndexOf("\";Tier_name_end"), "\"Necromancy;Оккультизм;Occultism;Occultism;Occultism;Occultism;Occultism;Occultism;Occultism;Occultism;Occultism;Occultism;\", ");
+                string newItem = item;
+                newItem = newItem.Insert(newItem.IndexOf("\";Tier_name_end"), tier);
+                newItem = newItem.Insert(newItem.IndexOf("\";rarity_end"), rarity);
+                newItem = newItem.Insert(newItem.IndexOf("\";skilltree_hover_end"), hover);
+                yield return newItem;
+            }
+            else
+            {
+                yield return item;
+            }
+        }
+    }
+    private static IEnumerable<string> SpeechIterator(IEnumerable<string> input)
+    {
+        string forbidden = "\";;// FORBIDDEN MAGIC;// FORBIDDEN MAGIC;;;;;;// FORBIDDEN MAGIC;;;;\",";
+
+        string MCWraithStart = "\"MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;\",";
+        string speechMCWraith = "\";Korrug Namar!;Lagua ra metha ...?!;廓卢戈'纳玛尔！;Korrug Namar!;¡Korrug Namar!;Korrug Namar !;Korrug Namar!;Korrug Namar!;Korrug Namar!;Korrug Namar!;コールグ・ナマール！;Korrug Namar!;Korrug Namar!;Korrug Namar!;\",";
+        string MCWraithEnd = "\"MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;\",";
+        
+        string WraithSart = "\"Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;\",";
+        string speechWraith = "\";Korrug Namar!;Lagura mithensa!;廓卢戈'纳玛尔！;Korrug Namar!;¡Korrug Namar!;Korrug Namar !;Korrug Namar!;Korrug Namar!;Korrug Namar!;Korrug Namar!;コールグ・ナマール！;Korrug Namar!;Korrug Namar!;Korrug Namar!;\",";
+        string WraithEnd = "\"Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;\",";
+        
+        string LostSoulsStart = "\"Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;\",";
+        string speechLostSouls = "\";Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;\",";
+        string LostSoulsEnd = "\"Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;\",";
+        
+        string MCLostSoulsStart = "\"MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;\",";
+        string speechMCLostSouls = "\";Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;\",";
+        string MCLostSoulsEnd = "\"MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;\",";
+
+        string MCbwTouchStart = "\"MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;\",";
+        string speechMCbwTouch = "\";Korrug Namar!;Kogrug Nema ...?!;廓卢戈'纳玛尔！;Korrug Namar!;¡Korrug Namar!;Korrug Namar !;Korrug Namar!;Korrug Namar!;Korrug Namar!;Korrug Namar!;コールグ・ナマール！;Korrug Namar!;Korrug Namar!;Korrug Namar!;\",";
+        string MCbwTouchEnd = "\"MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;\",";
+
+        string bwTouchStart = "\"Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;\",";
+        string speechbwTouch = "\";Korrug Namar!;Korrug Namar!;廓卢戈'纳玛尔！;Korrug Namar!;¡Korrug Namar!;Korrug Namar !;Korrug Namar!;Korrug Namar!;Korrug Namar!;Korrug Namar!;コールグ・ナマール！;Korrug Namar!;Korrug Namar!;Korrug Namar!;\",";
+        string bwTouchEnd = "\"Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;\",";
+        
+        string bwBlessStart = "\"Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;\",";
+        string speechbwBless = "\";Yagrak Atot!;Yagrak Atot!;亚格拉克'阿托特！;Yagrak Atot!;¡Yagrak Atot!;Yagrak Atot !;Yagrak Atot!;Yagrak Atot!;Yagrak Atot!;Yagrak Atot!;ヤグラク・アトット！;Yagrak Atot!;Yagrak Atot!;Yagrak Atot!;\",";
+        string bwBlessEnd = "\"Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;\",";
+
+        string MCbwBlessStart = "\"MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;\",";
+        string speechMCbwBless = "\";Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;\",";
+        string MCbwBlessEnd = "\"MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;\",";
+
+        string DeathPlagueStart = "\"Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;\",";
+        string speechDeathPlague = "\";En'thero !;En'thero !;En'thero !;En'thero !;En'thero !;En'thero !;En'thero !;En'thero !;En'thero !;En'thero !;En'thero !;En'thero !;En'thero !;En'thero !;\",";
+        string DeathPlagueEnd = "\"Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;\",";
+
+        string MCDeathPlagueStart = "\"MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;\",";
+        string speechMCDeathPlague = "\";En'tera;En'tera;En'tera;En'tera;En'tera;En'tera;En'tera;En'tera;En'tera;En'tera;En'tera;En'tera;En'tera;En'tera;\",";
+        string MCDeathPlagueEnd = "\"MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;\",";
+
+        string BwBoltStart = "\"Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;\",";
+        string speechBwBolt = "\";In Nag Zur!;In Nag Zur...;因纳戈祖尔……;In Nag Zur...;In Nag Zur...;In Nag Zur !;In Nag Zur...;In Nag Zur...;In Nag Zur...;In Nag Zur...;イン・ナグ・ズール…;In Nag Zur...;In Nag Zur...;In Nag Zur...;\",";
+        string BwBoltEnd = "\"Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;\",";
+
+        string MCBwBoltStart = "\"MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;\",";
+        string speechMCBwBolt = "\";in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;\",";
+        string MCBwBoltEnd = "\"MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;\",";
+
+        string PcurseStart = "\"Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;\",";
+        string speechPcurse = "\";Shaggrath Azud...;Shaggrath Azud!;沙格拉斯'阿祖得！;Shaggrath Azud!;¡Shaggrath Azud!;Shaggrath Azud...;Shaggrath Azud!;Shaggrath Azud!;Shaggrath Azud!;Shaggrath Azud!;シャグラト・アズード！;Shaggrath Azud!;Shaggrath Azud!;Shaggrath Azud!;\",";
+        string PcurseEnd = "\"Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;\",";
+
+        string MCPcurseStart = "\"MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;\",";
+        string speechMCPcurse = "\";Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;\",";
+        string MCPcurseEnd = "\"MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;\",";
+
+        string BwResurrectionStart = "\"Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;\",";
+        string speechBwResurrection = "\";Lagur! Lagur! Lagur!;Lagur! Lagur! Lagur!;拉古尔！拉古尔！拉古尔！;Lagur! Lagur! Lagur!;¡Lagur! ¡Lagur! ¡Lagur!;Lagur ! Lagur ! Lagur !;Lagur! Lagur! Lagur!;Lagur! Lagur! Lagur!;Lagur! Lagur! Lagur!;Lagur! Lagur! Lagur!;ラグール！ ラグール！ ラグール！;Lagur! Lagur! Lagur!;Lagur! Lagur! Lagur!;Lagur! Lagur! Lagur!;\",";
+        string BwResurrectionEnd = "\"Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;\",";
+
+        string MCBwResurrectionStart = "\"MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;\",";
+        string speechMCBwResurrection = "\";Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;\",";
+        string MCBwResurrectionEnd = "\"MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;\",";
+        
+        string speech = MCWraithStart + speechMCWraith + MCWraithEnd + 
+            WraithSart + speechWraith + WraithEnd + 
+            LostSoulsStart + speechLostSouls + LostSoulsEnd + 
+            MCLostSoulsStart + speechMCLostSouls + MCLostSoulsEnd +
+            MCbwTouchStart + speechMCbwTouch + MCbwTouchEnd +
+            bwTouchStart + speechbwTouch + bwTouchEnd +
+            bwBlessStart + speechbwBless + bwBlessEnd +
+            MCbwBlessStart + speechMCbwBless + MCbwBlessEnd +
+            DeathPlagueStart + speechDeathPlague + DeathPlagueEnd +
+            MCDeathPlagueStart + speechMCDeathPlague + MCDeathPlagueEnd +
+            BwBoltStart + speechBwBolt + BwBoltEnd +
+            MCBwBoltStart + speechMCBwBolt + MCBwBoltEnd + 
+            PcurseStart + speechPcurse + PcurseEnd +
+            MCPcurseStart + speechMCPcurse + MCPcurseEnd +
+            BwResurrectionStart + speechBwResurrection + BwResurrectionEnd +
+            MCBwResurrectionStart + speechMCBwResurrection + MCBwResurrectionEnd;
+        
+        foreach(string item in input)
+        {
+            if (item.Contains(forbidden))
+            {
+                string newItem = item.Insert(item.IndexOf(forbidden) + forbidden.Length, speech);
+                yield return newItem;
+            }
+            else
+            {
+                yield return item;
+            }
+        }
+    }
+    private static IEnumerable<string> SkillsStatIterator(IEnumerable<string> input)
+    {
+        string undead = "\"// UNDEAD;;;;;;;;;;;;;;;;;;;;;;;;;;\",";
+        string skillsStat = "\"Bw_Bless;o_bw_blessing_birth;Target Object;vis;14;26;0;0;0;0;0;normal;spell;0;;necromancy;0;1;;2;x;;;;;1;\"," +
+        "\"Death_Plague;o_absorption_soul;Target Object;7;5;13;0;0;0;0;0;normal;spell;0;s_essence_leech_;necromancy;0;1;;4;x;;;;;1;\"," +
+        "\"Wraith_Binding;o_bw_wraith_summoning;Target Point;6;9;30;0;0;0;0;0;normal;spell;0;s_wraithsummon_;necromancy;0;1;;66;x;;;;1;1;\"," +
+        "\"Lostsouls;o_Lostsouls;No Target;6;44;90;0;0;11;11;0;normal;spell;0;;necromancy;0;1;;44;x;;;;1;1;\"," +
+        "\"Bw_Bolt;o_bw_ballbirth;Target Point;6;3;13;12;0;0;0;0;normal;spell;1;;necromancy;0;1;;6;66;;;;;1;\"," +
+        "\"Bw_Resurrection;o_bw_resurrection_birth;Target Object;6;26;33;0;0;0;0;0;normal;spell;0;;necromancy;0;1;;33;x;;;;1;1;\"," +
+        "\"Pcurse;o_bw_cursebirth;Target Object;5;9;18;0;0;0;0;0;normal;spell;2;;necromancy;0;1;;9;x;;;;;1;\"," +
+        "\"Bw_Touch;o_bw_touch;Target Object;6;13;26;0;0;0;0;0;normal;spell;0;;necromancy;0;1;;17;33;;;;;1;\",";
+        foreach(string item in input)
+        {
+            if (item.Contains(undead))
+            {
+                string newItem = item.Insert(item.IndexOf(undead) + undead.Length, skillsStat);
                 yield return newItem;
             }
             else
