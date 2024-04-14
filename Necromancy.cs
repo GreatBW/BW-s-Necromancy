@@ -1178,6 +1178,7 @@ new MslEvent("gml_Object_o_darkball2_Other_11.gml", EventType.Other, 11)
             new MslEvent("gml_Object_o_skill_category_necromancy_PreCreate_0.gml", EventType.PreCreate, 0)
         );
 
+        // script 
         Msl.LoadGML("gml_GlobalScript_scr_attack")
             .MatchFrom("scr_skill_call_buff(o_db_curse, id)")
             .InsertBelow("scr_skill_call_buff(o_db_painful_curse, id)")
@@ -1318,6 +1319,239 @@ global.necromancy_tier3 = [""Necromancy"", o_pass_skill_unholymind, o_skill_bw_t
 
         // gml_GlobalScript_scr_weapon_generation
             
+        // events
+        Msl.LoadGML("gml_Object_c_roadAltar_Other_10")
+            .MatchFrom("scr_psychic_change(\"Morale\", 5)")
+            .InsertAbove("if (instance_exists(o_skill_bw_resurrection_ico) && (!o_skill_bw_resurrection_ico.is_open)){")
+            .MatchFrom("scr_effect_create(o_b_bless, o_skill_lion_charge_ico)")
+            .InsertBelow("}")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_attitudes_menu_Create_0")
+            .MatchFrom("var _attitudesArray = [")
+            .ReplaceBy("var _attitudesArray = [o_allDeffence_Attitude, o_allAttack_Attitude, o_Meditative_Attitude, o_Aggressive_Attitude, o_shout, o_crossbow_charging]")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_b_dark_blessing_Alarm_2")
+            .MatchAll()
+            .InsertBelow(@"var _dur = duration
+if instance_exists(o_player)
+{
+if is_player(target)
+{
+if scr_instance_exists_in_list(o_b_deathbless, o_player.buffs)
+{
+with (o_b_deathbless)
+{
+if (target == o_player)
+duration += _dur
+}
+instance_destroy()
+}
+else
+{
+scr_effect_create(o_b_deathbless, _dur)
+instance_destroy()
+}
+}
+}")
+            .Save();
+
+            Msl.LoadGML("gml_Object_o_b_magic_unholy_Alarm_2")
+                .MatchFrom("scr_guiAnimation_ext(x, y, 787)")
+                .ReplaceBy(@"{
+with (scr_guiAnimation_ext(x, y, 787))
+image_blend = c_teal
+}")
+                .Save();
+
+            Msl.LoadGML("gml_Object_o_b_magic_unholy_Other_15")
+                .MatchFrom("ds_map_replace\nds_map_replace\nds_map_replace")
+                .ReplaceBy(@"ds_map_replace(data, ""Magic_Power"", 15)
+ds_map_replace(data, ""Unholy_Damage"", (0.125 * scr_get_damage_of_weapon(is_player(target), target)))
+ds_map_replace(data, ""Damage_Received"", -5)
+ds_map_replace(data, ""Cooldown_Reduction"", -5)")
+                .Save();
+
+            Msl.LoadGML("gml_Object_o_Bandit_Draw_0")
+                .MatchFrom("image_index = 0")
+                .InsertBelow(@"if (faction_id == ""Servant"")
+{
+if (object_index == o_bandit_paymaster)
+sprite_index = s_bandit_paymaster_z
+if (object_index == o_bandit_heavyarbalester)
+sprite_index = s_bandit_heavyarbalester_z
+if (object_index == o_bandit_gmdeserter_gaxe)
+sprite_index = s_bandit_gmdeserter_gaxe_z
+if (object_index == o_bandit_raubritter_2hsword)
+sprite_index = s_bandit_raubritter_2hsword_z
+if (object_index == o_bandit_gmdeserter_ghammer)
+sprite_index = s_bandit_gmdeserter_ghammer_z
+if (object_index == o_bandit_banneret)
+sprite_index = s_bandit_banneret_z
+if (object_index == o_bandit_raubritter_2hmace)
+sprite_index = s_bandit_raubritter_2hmace_z
+if (object_index == o_bandit_gmdeserter_polearm)
+sprite_index = s_bandit_gmdeserter_polearm_z
+if (object_index == o_bandit_geomancer)
+sprite_index = s_bandit_geomancer_z
+if (object_index == o_bandit_goon_cleaver)
+sprite_index = s_bandit_goon_cleaver_z
+if (object_index == o_bandit_goon_club)
+sprite_index = s_bandit_goon_club_z
+if (object_index == o_bandit_thug_club)
+sprite_index = s_bandit_thug_club_z
+if (object_index == o_bandit_trasher)
+sprite_index = s_bandit_trasher_z
+if (object_index == o_bandit_trasher_axe)
+sprite_index = s_bandit_trasher_axe_z
+if (object_index == o_bandit_trasher_sword)
+sprite_index = s_bandit_trasher_sword_z
+if (object_index == o_bandit_rioter)
+sprite_index = s_bandit_rioter_z
+if (object_index == o_bandit_renegade)
+sprite_index = s_bandit_renegade_z
+if (object_index == o_bandit_renegade_sword)
+sprite_index = s_bandit_renegade_sword_z
+if (object_index == o_bandit_renegade_axe)
+sprite_index = s_bandit_renegade_axe_z
+if (object_index == o_bandit_renegade_mace)
+sprite_index = s_bandit_renegade_mace_z
+if (object_index == o_bandit_poacher)
+sprite_index = s_bandit_poacher_z
+if (object_index == o_bandit_henchman_axe)
+sprite_index = s_bandit_henchman_axe_z
+if (object_index == o_bandit_sidekick_mace)
+sprite_index = s_bandit_sidekick_mace_z
+if (object_index == o_bandit_outlaw)
+sprite_index = s_bandit_outlaw_z
+if (object_index == o_bandit_rogue_mage)
+sprite_index = s_bandit_rogue_mage_z
+if (object_index == o_bandit_mancatcher)
+sprite_index = s_bandit_mancatcher_z
+if (object_index == o_bandit_crook)
+sprite_index = s_bandit_crook_z
+if (object_index == o_bandit_marauder_axe)
+sprite_index = s_bandit_marauder_axe_z
+if (object_index == o_bandit_marauder_sword)
+sprite_index = s_bandit_marauder_sword_z
+if (object_index == o_bandit_marauder_mace)
+sprite_index = s_bandit_marauder_mace_z
+if (object_index == o_bandit_soldier_sword)
+sprite_index = s_bandit_soldier_sword_z
+if (object_index == o_bandit_soldier_axe)
+sprite_index = s_bandit_soldier_axe_z
+if (object_index == o_bandit_soldier_mace)
+sprite_index = s_bandit_soldier_mace_z
+if (object_index == o_bandit_sergeant_hammer)
+sprite_index = s_bandit_sergeant_hammer_z
+if (object_index == o_bandit_sergeant_sword)
+sprite_index = s_bandit_sergeant_sword_z
+if (object_index == o_bandit_sergeant_axe)
+sprite_index = s_bandit_sergeant_axe_z
+if (object_index == o_bandit_sergeant_mace)
+sprite_index = s_bandit_sergeant_mace_z
+if (object_index == o_bandit_sergeant_gsword)
+sprite_index = s_bandit_sergeant_gsword_z
+if (object_index == o_bandit_arbalester)
+sprite_index = s_bandit_arbalester_z
+if (object_index == o_bandit_cutthroat)
+sprite_index = s_bandit_cutthroat_z
+if (object_index == o_bandit_halberdier)
+sprite_index = s_bandit_halberdier_z
+if (object_index == o_bandit_conjurer)
+sprite_index = s_bandit_conjurer_z
+if (object_index == o_bandit_freak)
+sprite_index = s_bandit_freak_z
+if (object_index == o_bandit_warlock)
+sprite_index = s_bandit_warlock_z
+if (object_index == o_bandit_kingpin)
+sprite_index = s_bandit_kingpin_z
+if (object_index == o_bandit_bonebreaker_axe)
+sprite_index = s_bandit_bonebreaker_axe_z
+if (object_index == o_bandit_bonebreaker_mace)
+sprite_index = s_bandit_bonebreaker_mace_z
+if (object_index == o_bandit_ringleader_2hsword)
+sprite_index = s_bandit_ringleader_2hsword_z
+if (object_index == o_bandit_ringleader_shield)
+sprite_index = s_bandit_ringleader_shield_z
+if (object_index == o_bandit_huntmaster)
+sprite_index = s_bandit_huntmaster_z
+if (object_index == o_bandit_magehunter)
+sprite_index = s_bandit_magehunter_z
+if (object_index == o_bandit_duelist)
+sprite_index = s_bandit_duelist_z
+if (object_index == o_bandit_raubritter_flail)
+sprite_index = s_bandit_raubritter_flail_z
+if (object_index == o_bandit_longbowman)
+sprite_index = s_bandit_longbowman_z
+if (object_index == o_bandit_electromancer)
+sprite_index = s_bandit_electromancer_z
+if (object_index == o_bandit_dog01)
+sprite_index = s_bandit_dog_z
+if (object_index == o_bandit_dog02)
+sprite_index = s_bandit_dog_z
+if (object_index == o_bandit_dog03)
+sprite_index = s_bandit_dog_z
+if (object_index == o_bandit_elite_dog)
+sprite_index = s_bandit_elite_dog_z
+}")
+                .Save();
+
+            string invoke_dog = @"event_inherited()
+if ((!(scr_instance_exists_in_list(o_b_servemaster, buffs))) && (!instance_exists(o_res_buff_creator)) && (!instance_exists(o_undead_fixer)))
+{
+    if (!isLoaded)
+    {
+        var _dogCount = 1
+        if scr_chance_value(75)
+        {
+            repeat _dogCount
+            {
+                var _xx = (x + (26 * choose(-1, 1)))
+                var _yy = (y + (26 * choose(-1, 1)))
+                scr_enemy_create(_xx, _yy, o_bandit_elite_dog)
+            }
+        }
+    }
+}
+";
+            Msl.LoadGML("gml_Object_o_bandit_huntmaster_Alarm_4")
+                .MatchAll()
+                .ReplaceBy(invoke_dog)
+                .Save();
+                
+            Msl.LoadGML("gml_Object_o_bandit_longbowman_Alarm_4")
+                .MatchAll()
+                .ReplaceBy(invoke_dog)
+                .Save();
+            
+            Msl.LoadGML("gml_Object_o_bandit_mancatcher_Alarm_4")
+                .MatchAll()
+                .ReplaceBy(@"event_inherited()
+if ((!(scr_instance_exists_in_list(o_b_servemaster, buffs))) && (!instance_exists(o_res_buff_creator)) && (!instance_exists(o_undead_fixer)))
+{
+    if (!isLoaded)
+    {
+        var _dogCount = irandom_range(1, 2)
+        if scr_chance_value(75)
+        {
+            repeat _dogCount
+            {
+                var _xx = (x + (26 * choose(-1, 1)))
+                var _yy = (y + (26 * choose(-1, 1)))
+                scr_enemy_create(_xx, _yy, choose(1955, 1957, 1958))
+            }
+        }
+    }
+}")
+                .Save();
+
+            Msl.LoadGML("gml_Object_o_corpse_Create_0")
+                .MatchFrom("event_inherited()")
+                .InsertBelow("in_range = 0\nin_range2 = 0")
+                .Save();
+            
     /*     Msl.LoadAssemblyAsString("gml_Object_o_enemy_Destroy_0")
             .MatchFrom("call.i event_inherited(argc=0)\npopz.v")
             .InsertBelow(@"
@@ -1370,7 +1604,7 @@ popenv [1000]")
             .ReplaceBy("var _metaCategoriesArray = [[o_skill_category_sword, o_skill_category_axe, o_skill_category_mace, o_skill_category_dagger, o_skill_category_greatsword, o_skill_category_greataxe, o_skill_category_greatmauls, o_skill_category_polearms, o_skill_category_bows, o_skill_category_shields, o_skill_category_staves, o_skill_category_wands], [o_skill_category_basic_skills, o_skill_category_dual_wielding, o_skill_category_survival, o_skill_category_combat, o_skill_category_athletics, o_skill_category_mastery_of_magic, o_skill_category_necromancy, o_skill_category_basic_armor, o_skill_category_alchemy, o_skill_category_sabotage], [o_skill_category_pyromancy, o_skill_category_geomancy, o_skill_category_electromancy, o_skill_category_venomancy, o_skill_category_cryomancy, o_skill_category_astromancy, o_skill_category_chronomancy, o_skill_category_psymancy, o_skill_category_arcanistics]]")
             .Save();
 
-        // table injection
+        // table
         Msl.LoadGML("gml_GlobalScript_table_weapons_text")
             .Apply(WeaponTextIterator)
             .Save();
@@ -1589,6 +1823,9 @@ popenv [1000]")
         "\"Bw_Touch;Касание смерти;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;\"," +
         "\"Wraith_Binding;Призыв умертвия;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;\",";
 
+        string sealofpower_ru = "#~ur~Оккультизм:~/~ ~lg~+15%~/~ к силе магии, ~lg~+12.5%~/~ к урону оружия нечестивостью, ~lg~-5%~/~ к получаемому урону, ~lg~-5%~/~ к времени восст. способностей";
+        string sealofpower_en = "#~ur~Occultism:~/~ ~lg~+15%~/~ Magic Power, ~lg~+12.5%~/~ Weapon Damage, dealt as Unholy, ~lg~-5%~/~ Damage Taken, ~lg~-5%~/~ Cooldown Durations";
+
         string undead = "\";;///// UNDEAD;///// UNDEAD;;;;;///// UNDEAD;///// UNDEAD;;;;\",";
         string skillsDesc = @"""Soul_Explosion;
         Накладывает на союзную нежить эффект ~r~\""Жертвоприношение души\""~/~, который можно активировать вручную.##Эффект автоматически применяется на цели с менее чем ~r~33%~/~ запаса здоровья.##При активации эффекта, цель взрывается, нанося ~ur~нечестивый урон~/~ по всем соседним клеткам, равный оставшемуся у неё запасу здоровья, после чего накладывает на заклинателя ~p~\""Тëмный договор\""~/~ на ~w~12~/~ ходов:##~lg~+3~/~ к урону оружия ~ur~нечестивостью~/~#~lg~+3~/~к урону оружия ~p~арканой~/~#~lg~+7.5%~/~ к похищению жизни##Отвязывание нежити (кроме ~w~умертвий~/~) находящейся под эффектом ~r~\""Жертвоприношения души\""~/~ накладывает на заклинателя эффект ~lg~\""Исключительная душа\""~/~ на ~w~8~/~ ходов, позволяющий на время действия избежать штрафов от ~r~\""Одержимости\""~/~.##Каждая активация требует ~bl~10%~/~ запаса энергии.;
@@ -1628,10 +1865,9 @@ popenv [1000]")
         Casting ~w~Spells~/~ deal ~ur~/*Unholy_Damage*/ Unholy Damage~/~ to all enemies within vision (based on ~lg~3.33%~/~ of ~w~Magic Power~/~).##~w~Raising the dead~/~, ~w~summoning wraiths~/~, ~w~Stealing Essence~/~ or ~w~receiving~/~ ~lg~\""Death's Blessing\""~/~ has ~lg~33%~/~ chance to activate ~lg~\""Ascension\""~/~ for ~w~6~/~ turns, granting:##~lg~+33%~/~ Unholy Resistance#~lg~+66%~/~ Miracle Potency#Converts ~ur~Unholy Damage~/~ into ~ly~Sacred Damage~/~.;
         Casting ~w~Spells~/~ deal ~ur~/*Unholy_Damage*/ Unholy Damage~/~ to all enemies within vision (based on ~lg~3.33%~/~ of ~w~Magic Power~/~).##~w~Raising the dead~/~, ~w~summoning wraiths~/~, ~w~Stealing Essence~/~ or ~w~receiving~/~ ~lg~\""Death's Blessing\""~/~ has ~lg~33%~/~ chance to activate ~lg~\""Ascension\""~/~ for ~w~6~/~ turns, granting:##~lg~+33%~/~ Unholy Resistance#~lg~+66%~/~ Miracle Potency#Converts ~ur~Unholy Damage~/~ into ~ly~Sacred Damage~/~.;
         Casting ~w~Spells~/~ deal ~ur~/*Unholy_Damage*/ Unholy Damage~/~ to all enemies within vision (based on ~lg~3.33%~/~ of ~w~Magic Power~/~).##~w~Raising the dead~/~, ~w~summoning wraiths~/~, ~w~Stealing Essence~/~ or ~w~receiving~/~ ~lg~\""Death's Blessing\""~/~ has ~lg~33%~/~ chance to activate ~lg~\""Ascension\""~/~ for ~w~6~/~ turns, granting:##~lg~+33%~/~ Unholy Resistance#~lg~+66%~/~ Miracle Potency#Converts ~ur~Unholy Damage~/~ into ~ly~Sacred Damage~/~.;
-        "",";
-        string a =@"
+        "",
         ""Lostsouls;
-        Воскрешает до ~w~3~/~ трупов в радиусе ~w~6~/~ клеток, восстанавливая поднятой нежити ~lg~33%~/~ запаса здоровья и ~bl~33~/~ запаса энергии.##Призывает ~w~Умертвие~/~ за каждый недостающий труп в радиусе действия. Сила ~w~Умертвии~/~ зависит от степени ~lg~\""Поглощëнной души\""~/~ заклинателя.##Накладывает на заклинателя эффект ~lg~\""Исключительная душа\""Z""~/~ на ~w~5~/~-~w~7~/~ ходов за каждый призыв ~w~Умертвия~/~. Призванные ~w~Умертвия~/~ ~r~возвращаются в загробный мир~/~ по истечению ~lg~\""Исключительной души\""~/~.##Использование этого заклинания ~r~невозможно~/~ под эффектом ~r~\""Одержимости\""~/~ или ~lg~\""Исключительной души\""~/~.;
+        Воскрешает до ~w~3~/~ трупов в радиусе ~w~6~/~ клеток, восстанавливая поднятой нежити ~lg~33%~/~ запаса здоровья и ~bl~33~/~ запаса энергии.##Призывает ~w~Умертвие~/~ за каждый недостающий труп в радиусе действия. Сила ~w~Умертвии~/~ зависит от степени ~lg~\""Поглощëнной души\""~/~ заклинателя.##Накладывает на заклинателя эффект ~lg~\""Исключительная душа\""~/~ на ~w~5~/~-~w~7~/~ ходов за каждый призыв ~w~Умертвия~/~. Призванные ~w~Умертвия~/~ ~r~возвращаются в загробный мир~/~ по истечению ~lg~\""Исключительной души\""~/~.##Использование этого заклинания ~r~невозможно~/~ под эффектом ~r~\""Одержимости\""~/~ или ~lg~\""Исключительной души\""~/~.;
         Reanimates up to ~w~3~/~ corpses within ~w~6~/~ tiles, restoring them to ~lg~33%~/~ of their ~r~Max Health~/~ and ~lg~33%~/~ ~bl~Max Energy~/~.##Summons a ~w~Wraith~/~ for each missing corpse within the area of effect. The ~w~Wraith's~/~ power depends on the number of ~lg~\""Essence Charge\""~/~ stacks.##Grants ~w~3-6~/~ turns of ~lg~\""Disorder\""~/~ for each instance of ~w~Summoning~/~. ~w~Wraiths~/~ ~r~die~/~ once ~lg~\""Disorder\""~/~ expires.##This spell cannot be cast while under the effects of ~r~\""Obsession\""~/~ or ~lg~\""Disorder\""~/~.;
         Reanimates up to ~w~3~/~ corpses within ~w~6~/~ tiles, restoring them to ~lg~33%~/~ of their ~r~Max Health~/~ and ~lg~33%~/~ ~bl~Max Energy~/~.##Summons a ~w~Wraith~/~ for each missing corpse within the area of effect. The ~w~Wraith's~/~ power depends on the number of ~lg~\""Essence Charge\""~/~ stacks.##Grants ~w~3-6~/~ turns of ~lg~\""Disorder\""~/~ for each instance of ~w~Summoning~/~. ~w~Wraiths~/~ ~r~die~/~ once ~lg~\""Disorder\""~/~ expires.##This spell cannot be cast while under the effects of ~r~\""Obsession\""~/~ or ~lg~\""Disorder\""~/~.;
         Reanimates up to ~w~3~/~ corpses within ~w~6~/~ tiles, restoring them to ~lg~33%~/~ of their ~r~Max Health~/~ and ~lg~33%~/~ ~bl~Max Energy~/~.##Summons a ~w~Wraith~/~ for each missing corpse within the area of effect. The ~w~Wraith's~/~ power depends on the number of ~lg~\""Essence Charge\""~/~ stacks.##Grants ~w~3-6~/~ turns of ~lg~\""Disorder\""~/~ for each instance of ~w~Summoning~/~. ~w~Wraiths~/~ ~r~die~/~ once ~lg~\""Disorder\""~/~ expires.##This spell cannot be cast while under the effects of ~r~\""Obsession\""~/~ or ~lg~\""Disorder\""~/~.;
