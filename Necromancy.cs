@@ -1357,25 +1357,25 @@ instance_destroy()
 }")
             .Save();
 
-            Msl.LoadGML("gml_Object_o_b_magic_unholy_Alarm_2")
-                .MatchFrom("scr_guiAnimation_ext(x, y, 787)")
-                .ReplaceBy(@"{
+        Msl.LoadGML("gml_Object_o_b_magic_unholy_Alarm_2")
+            .MatchFrom("scr_guiAnimation_ext(x, y, 787)")
+            .ReplaceBy(@"{
 with (scr_guiAnimation_ext(x, y, 787))
 image_blend = c_teal
 }")
-                .Save();
+            .Save();
 
-            Msl.LoadGML("gml_Object_o_b_magic_unholy_Other_15")
-                .MatchFrom("ds_map_replace\nds_map_replace\nds_map_replace")
-                .ReplaceBy(@"ds_map_replace(data, ""Magic_Power"", 15)
+        Msl.LoadGML("gml_Object_o_b_magic_unholy_Other_15")
+            .MatchFrom("ds_map_replace\nds_map_replace\nds_map_replace")
+            .ReplaceBy(@"ds_map_replace(data, ""Magic_Power"", 15)
 ds_map_replace(data, ""Unholy_Damage"", (0.125 * scr_get_damage_of_weapon(is_player(target), target)))
 ds_map_replace(data, ""Damage_Received"", -5)
 ds_map_replace(data, ""Cooldown_Reduction"", -5)")
-                .Save();
+            .Save();
 
-            Msl.LoadGML("gml_Object_o_Bandit_Draw_0")
-                .MatchFrom("image_index = 0")
-                .InsertBelow(@"if (faction_id == ""Servant"")
+        Msl.LoadGML("gml_Object_o_Bandit_Draw_0")
+            .MatchFrom("image_index = 0")
+            .InsertBelow(@"if (faction_id == ""Servant"")
 {
 if (object_index == o_bandit_paymaster)
 sprite_index = s_bandit_paymaster_z
@@ -1496,9 +1496,9 @@ sprite_index = s_bandit_dog_z
 if (object_index == o_bandit_elite_dog)
 sprite_index = s_bandit_elite_dog_z
 }")
-                .Save();
+            .Save();
 
-            string invoke_dog = @"event_inherited()
+        string invoke_dog = @"event_inherited()
 if ((!(scr_instance_exists_in_list(o_b_servemaster, buffs))) && (!instance_exists(o_res_buff_creator)) && (!instance_exists(o_undead_fixer)))
 {
     if (!isLoaded)
@@ -1516,19 +1516,19 @@ if ((!(scr_instance_exists_in_list(o_b_servemaster, buffs))) && (!instance_exist
     }
 }
 ";
-            Msl.LoadGML("gml_Object_o_bandit_huntmaster_Alarm_4")
-                .MatchAll()
-                .ReplaceBy(invoke_dog)
-                .Save();
-                
-            Msl.LoadGML("gml_Object_o_bandit_longbowman_Alarm_4")
-                .MatchAll()
-                .ReplaceBy(invoke_dog)
-                .Save();
+        Msl.LoadGML("gml_Object_o_bandit_huntmaster_Alarm_4")
+            .MatchAll()
+            .ReplaceBy(invoke_dog)
+            .Save();
             
-            Msl.LoadGML("gml_Object_o_bandit_mancatcher_Alarm_4")
-                .MatchAll()
-                .ReplaceBy(@"event_inherited()
+        Msl.LoadGML("gml_Object_o_bandit_longbowman_Alarm_4")
+            .MatchAll()
+            .ReplaceBy(invoke_dog)
+            .Save();
+        
+        Msl.LoadGML("gml_Object_o_bandit_mancatcher_Alarm_4")
+            .MatchAll()
+            .ReplaceBy(@"event_inherited()
 if ((!(scr_instance_exists_in_list(o_b_servemaster, buffs))) && (!instance_exists(o_res_buff_creator)) && (!instance_exists(o_undead_fixer)))
 {
     if (!isLoaded)
@@ -1540,19 +1540,131 @@ if ((!(scr_instance_exists_in_list(o_b_servemaster, buffs))) && (!instance_exist
             {
                 var _xx = (x + (26 * choose(-1, 1)))
                 var _yy = (y + (26 * choose(-1, 1)))
-                scr_enemy_create(_xx, _yy, choose(1955, 1957, 1958))
+                scr_enemy_create(_xx, _yy, choose(o_bandit_dog01, o_bandit_dog02, o_bandit_dog03))
             }
         }
     }
 }")
-                .Save();
+            .Save();
 
-            Msl.LoadGML("gml_Object_o_corpse_Create_0")
-                .MatchFrom("event_inherited()")
-                .InsertBelow("in_range = 0\nin_range2 = 0")
-                .Save();
+        Msl.LoadGML("gml_Object_o_corpse_Create_0")
+            .MatchFrom("event_inherited()")
+            .InsertBelow("in_range = 0\nin_range2 = 0")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_corpse_Step_0")
+            .MatchAll()
+            .InsertBelow(@"if instance_exists(o_player)
+{
+if (scr_round_cell(point_distance(x, y, o_player.x, o_player.y)) < 156)
+in_range = 1
+else
+in_range = 0
+}
+if instance_exists(o_player)
+{
+if (scr_round_cell(point_distance(x, y, o_player.x, o_player.y)) < 182)
+in_range2 = 1
+else
+in_range2 = 0
+}")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_darkball_Create_0")
+            .MatchAll()
+            .InsertBelow("is_special = 0")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_dataLoader_Other_10")
+            .MatchFrom("global.bodypart = \"random\"")
+            .InsertAbove("global.bw_selection = 0\nglobal.bw_call = 0")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_db_hunger3_Other_10")
+            .MatchFrom("if (turn_count == 4")
+            .ReplaceBy("if (turn_count == 4 && instance_exists(o_pass_skill_imortall) && (!o_pass_skill_imortall.is_open))")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_db_mute_Destroy_0")
+            .MatchFrom("event_inherited()")
+            .InsertBelow("if (!__is_undefined(shackles))")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_db_net_Create_0")
+            .MatchFrom("buff_snd =")
+            .InsertBelow("is_special = 0")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_db_net_Destroy_0")
+            .MatchFrom("var _dur = childDuration")
+            .InsertBelow("if (!is_special){")
+            .MatchFrom("ds_map_set(data, \"Duration\", _dur)")
+            .InsertBelow("}")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_db_thirst3_Other_10")
+            .MatchFrom("if (turn_count =")
+            .ReplaceBy("if (turn_count == 2 && instance_exists(o_pass_skill_imortall) && (!o_pass_skill_imortall.is_open))")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_death_touch_Alarm_1")
+            .MatchFrom("var _caster = owner")
+            .InsertBelow("if (owner.faction_id != \"Servant\"){")
+            .MatchFrom("if (visible && scr_tile_distance(id, _caster) < _caster.VSN)")
+            .InsertAbove("if (!(scr_instance_exists_in_list(o_b_servemaster, buffs))){")
+            .MatchFrom("scr_restore_hp(id, other.steal, scr_id_get_name(other.id))")
+            .InsertBelow(@"}
+}
+}
+}
+else
+{
+with (o_Dead_March)
+{
+if scr_instance_exists_in_list(o_b_servemaster, buffs)
+{
+if (visible && scr_tile_distance(id, _caster) < _caster.VSN)
+{
+with (scr_guiAnimation_ext(x, y, 1277, 1, 1, 0, 16777215, 0))
+{
+scr_audio_play_at(snd_skill_death_touch_mob_regen)
+depth = (other.depth - 1)
+scr_set_lt()
+}
+scr_restore_hp(id, other.steal, scr_id_get_name(other.id))
+}
+}")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_enemy_birth_Other_7")
+            .MatchFrom("with (scr_enemy_create(x, ")
+            .InsertAbove(@"if is_special
+{
+instance_create(x, y, o_res_buff_creator)
+with (scr_enemy_create(x, y, 7065, is_cheack))
+{
+owner = other.owner
+scr_agred(100)
+event_user(5)
+if instance_exists(o_controller)
+{
+ds_grid_set(o_controller.posgrid, grid_x, grid_y, id)
+mp_grid_add_cell(o_controller.grid, grid_x, grid_y)
+}
+gain_xp *= 1
+with (o_pass_skill_unholymind)
+event_user(3)
+}
+instance_destroy()
+}
+else
+{")
+            .MatchAll()
+            .InsertBelow("}")
+            .Save();
+
             
-    /*     Msl.LoadAssemblyAsString("gml_Object_o_enemy_Destroy_0")
+    Msl.LoadAssemblyAsString("gml_Object_o_enemy_Destroy_0")
             .MatchFrom("call.i event_inherited(argc=0)\npopz.v")
             .InsertBelow(@"
 pushi.e 0
@@ -1587,16 +1699,11 @@ pop.v.v local._shomar
 
 :[1005]
 popenv [1000]")
-            .Save(); */
+            .Save();
 
         Msl.LoadGML("gml_Object_o_player_Create_0")
             .MatchFrom("event_inherited()")
             .InsertBelow("wraith_spin = -4")
-            .Save();
-
-        Msl.LoadGML("gml_Object_o_dataLoader_Other_10")
-            .MatchFrom("global.bodypart = \"random\"")
-            .InsertAbove("global.bw_selection = 0\nglobal.bw_call = 0")
             .Save();
 
         Msl.LoadGML("gml_Object_o_skillmenu_Create_0")
