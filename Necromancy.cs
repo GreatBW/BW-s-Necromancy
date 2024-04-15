@@ -1748,7 +1748,8 @@ type_text = (""Unholy "" + _type_text)
             "gml_Object_o_necromancer_boss_Alarm_4",
             "gml_Object_o_necromancer_boss_staff_Alarm_4",
             "gml_Object_o_necromancer_ritualist_Alarm_4",
-            "gml_Object_o_necromancer_wraithbinder_Alarm_4"
+            "gml_Object_o_necromancer_wraithbinder_Alarm_4",
+            "gml_Object_o_revenant_Alarm_4"
         };
 
         foreach(string boss in boss_drop)
@@ -1819,12 +1820,112 @@ global.bw_selection = 0
             .ReplaceBy("corpse_type = o_empty")
             .Save();
 
+        Msl.LoadGML("gml_Object_o_ressurection_Other_7")
+            .MatchAll()
+            .InsertAbove("scr_bw_checker(owner)")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_sign_of_darkness_Other_11")
+            .MatchFrom("Unholy_Damage = ")
+            .InsertBelow(@"if instance_exists(owner)
+{
+if (owner.faction_id != ""Servant"")
+{")
+            .MatchFrom("if (typeID == \"vampire\" || typeID == \"undead\")")
+            .InsertAbove("if (!(scr_instance_exists_in_list(o_b_servemaster, buffs))){")
+            .MatchFrom("other.Unholy_Damage")
+            .InsertBelow(@"}
+}
+}
+else
+{
+with (target)
+{
+if scr_instance_exists_in_list(o_b_servemaster, buffs)
+{
+if (typeID == ""vampire"" || typeID == ""undead"")
+{
+scr_temp_incr_atr(""FMB"", -33, o_damage_dealer, id, id)
+scr_temp_incr_atr(""MP_Restoration"", 33, o_damage_dealer, id, id)
+scr_temp_incr_atr(""CRT"", 9, o_damage_dealer, id, id)
+}
+else
+other.Unholy_Damage = 9
+}
+}
+}")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_skeleton_Destroy_0")
+            .MatchFrom("event_inherited()")
+            .InsertBelow("if ((!instance_exists(o_undead_fixer)) && faction_id != \"Servant\"){")
+            .MatchFrom("}")
+            .InsertAbove("}")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_skill_enchantment_Other_20")
+            .MatchFrom("if (owner.object_index != o_trade_inventory")
+            .ReplaceBy("if (owner.object_index != o_trade_inventory && is_weapon && scr_dsMapFindValue(data, \"identified\", 0) && (!(scr_dsMapFindValue(data, \"is_cursed\", 1))) && scr_dsMapFindValue(data, \"quality\", -4) != (6 << 0) && scr_dsMapFindValue(data, \"quality\", -4) != (10 << 0))")
+            .Save();
+
         Msl.LoadGML("gml_Object_o_skillmenu_Create_0")
             .MatchFrom("var _metaCategoriesArray = ")
             .ReplaceBy("var _metaCategoriesArray = [[o_skill_category_sword, o_skill_category_axe, o_skill_category_mace, o_skill_category_dagger, o_skill_category_greatsword, o_skill_category_greataxe, o_skill_category_greatmauls, o_skill_category_polearms, o_skill_category_bows, o_skill_category_shields, o_skill_category_staves, o_skill_category_wands], [o_skill_category_basic_skills, o_skill_category_dual_wielding, o_skill_category_survival, o_skill_category_combat, o_skill_category_athletics, o_skill_category_mastery_of_magic, o_skill_category_necromancy, o_skill_category_basic_armor, o_skill_category_alchemy, o_skill_category_sabotage], [o_skill_category_pyromancy, o_skill_category_geomancy, o_skill_category_electromancy, o_skill_category_venomancy, o_skill_category_cryomancy, o_skill_category_astromancy, o_skill_category_chronomancy, o_skill_category_psymancy, o_skill_category_arcanistics]]")
             .Save();
 
         // table
+        List<string>? ai_table = ModLoader.GetTable("gml_GlobalScript_table_animals_ai");
+        List<string> new_ai_elements = new() { 
+            "Servant;Pet;Fallower;", 
+            "3;1;2;", // moose
+            "3;3;3;", // saiga
+            "3;3;3;", // deer
+            "1;1;1;", // bear
+            "2;1;1;", // wolf
+            "1;1;1;", // gulon
+            "1;1;1;", // young troll
+            "3;3;3;", // fox
+            "3;1;2;", // boar
+            "2;1;2;", // bison
+            "3;3;3;", // squirrel
+            "3;3;3;", // rabbit
+            "3;3;3;", // hedgehog
+            "3;3;3;", // snake
+            "1;1;;", // forest buzzer
+            "1;1;1;", // brigand
+            "1;;;", // grandMagistrate
+            "1;;;", // rotten willow
+            "1;1;1;", // undead
+            "1;1;1;", // vampire
+            "1;1;1;", // carnivore
+            "1;1;1;", // omnivore
+            "1;1;1;", // dog
+            "1;1;1;", // crawler
+            "1;1;1;", // harpy
+            "Servant;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;;1;1;1;1;1;1;1;1;1;1;1;;;;",
+            "Pet;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;;1;;;1;1;1;1;1;1;1;1;;;;",
+            "Fallower;1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;;1;;;1;1;1;1;1;1;1;1;;;;"
+        };
+        if (ai_table != null)
+        {
+            int i;
+            for(i = 0; i < ai_table.Count; i++)
+            {
+                if (ai_table[i].Contains("1;- Combat")) break;
+                ai_table[i] = ai_table[i] + new_ai_elements[i];
+            }
+            ai_table.Insert(i, new_ai_elements[i]);
+            i++;
+            ai_table.Insert(i, new_ai_elements[i]);
+            i++;
+            ai_table.Insert(i, new_ai_elements[i]);
+            ModLoader.SetTable(ai_table, "gml_GlobalScript_table_animals_ai");
+        }
+
+        Msl.LoadGML("gml_GlobalScript_table_armor")
+            .Apply(ArmorIterator)
+            .Save();
+
         Msl.LoadGML("gml_GlobalScript_table_weapons_text")
             .Apply(WeaponTextIterator)
             .Save();
@@ -2018,6 +2119,27 @@ popz.v
             }
             // 3, 4 and 5 are removed
             else if (status < 3 || status > 5)
+            {
+                yield return item;
+            }
+        }
+    }
+    private static IEnumerable<string> ArmorIterator(IEnumerable<string> input)
+    {
+        string helmets = "\"// HELMETS;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\",";
+        string chestpieces = "\"// CHESTPIECES;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\",";
+        string rings = "\"// RINGS;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\",";
+        foreach(string item in input)
+        {
+            if(item.Contains("helmets"))
+            {
+                string newItem = item;
+                newItem = newItem.Insert(newItem.IndexOf(helmets) + helmets.Length, "\"sinistercrown;20;head101;Head;Light;Unique;metal;6000;333;;;;;;;1;;;;;;25;;;10;;;;;;;;;;;;;;;;;;;;;;;;10;;;;;;;;;;;;;;;;;;;;;;;;;;-33;;;;aldor magic;;;;;;;;;;;;;;;;;\",");
+                newItem = newItem.Insert(newItem.IndexOf(chestpieces) + chestpieces.Length, "\"hexermantle;15;chest101;Chest;Light;Unique;cloth;2400;120;5;;;;;;;;15;;;;16;;-7;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;5;15;25;;;;;;;;;;;;13;;;;aldor magic;;;;4;;;;;;;;;;;;;\",");
+                newItem = newItem.Insert(newItem.IndexOf(rings) + rings.Length, "\"Skull Morion Ring;20;ring101;Ring;Light;Unique;wood;1200;33;;;;;;;;;;;;;;;;;;;;;;;;;;;;6;;;;;;9;;;;;;;;;;;;;;;;;;;16;;;;;;;;;;;;;16;;;;special;;;;;;;;;;;;;;;;;\",");
+                yield return newItem;
+            }
+            else
             {
                 yield return item;
             }
