@@ -724,29 +724,30 @@ new MslEvent("gml_Object_o_allDeffence_Attitude_Other_12.gml", EventType.Other, 
 new MslEvent("gml_Object_o_allDeffence_Attitude_PreCreate_0.gml", EventType.PreCreate, 0)
                     );
 
-                    Msl.AddObject(
-                        name: "o_disclaimer03", 
-                        spriteName: "", 
-                        parentName: "", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_disclaimer03_Draw_0.gml", EventType.Draw, 0)
-                    );
-                    Msl.AddObject(
-                        name: "o_BwMark", 
-                        spriteName: "s_bwdis", 
-                        parentName: "", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: false,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_BwMark_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_BwMark_Other_5.gml", EventType.Other, 5)
-                    );
+        Msl.AddObject(
+            name: "o_disclaimer03", 
+            spriteName: "", 
+            parentName: "", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        ).ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_disclaimer03_Draw_0.gml", EventType.Draw, 0)
+        );
+
+        Msl.AddObject(
+            name: "o_BwMark", 
+            spriteName: "s_bwdis", 
+            parentName: "", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: false,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        ).ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_BwMark_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_BwMark_Other_5.gml", EventType.Other, 5)
+        );
 
         Msl.AddObject(
             name: "o_skill_bw_resurrection", 
@@ -1956,8 +1957,18 @@ else if scr_chance_value(75) {scr_inventory_add_item(o_inv_cgrimoir2)}
 else {scr_inventory_add_item(o_inv_cgrimoir3)}")
             .Save();
 
-        // TODO: gml_Object_o_wraith_summoning_Other_10
-        // TODO: gml_RoomCC_r_disclaimer2_0_Create
+        Msl.LoadGML("gml_Object_o_wraith_summoning_Other_10")
+            .MatchFrom("var _spr = s_wraithsummon_hit")
+            .InsertBelow(@"if (owner.faction_id == ""Servant"")
+instance_create(x, y, o_res_buff_creator)")
+            .Save();
+
+
+        // TODO: add a room
+        /* Msl.LoadGML("gml_RoomCC_r_disclaimer2_0_Create")
+            .MatchFrom("roomNext")
+            .ReplaceBy("roomNext = r_bw_disclaimer")
+            .Save(); */
 
         // table
         List<string>? ai_table = ModLoader.GetTable("gml_GlobalScript_table_animals_ai");
@@ -2014,6 +2025,10 @@ else {scr_inventory_add_item(o_inv_cgrimoir3)}")
 
         Msl.LoadGML("gml_GlobalScript_table_Books")
             .Apply(BooksIterator)
+            .Save();
+
+        Msl.LoadGML("gml_GlobalScript_table_Modifiers")
+            .Apply(ModifiersIterator)
             .Save();
 
         Msl.LoadGML("gml_GlobalScript_table_weapons_text")
@@ -2309,6 +2324,117 @@ popz.v
                 newItem = newItem.Insert(newItem.IndexOf(bookmid) + bookmid.Length, $"\"{grimoir1_mid}\",\"{grimoir2_mid}\",\"{grimoir3_mid}\",");
                 newItem = newItem.Insert(newItem.IndexOf(bookdesc) + bookdesc.Length, $"\"{grimoir1_desc}\",\"{grimoir2_desc}\",\"{grimoir3_desc}\",");
                 newItem = newItem.Insert(newItem.IndexOf(booktype) + booktype.Length, $"\"{grimoir1_type}\",\"{grimoir2_type}\",\"{grimoir3_type}\",");
+                yield return newItem;
+            }
+            else
+            {
+                yield return item;
+            }
+        }
+    }
+    private static IEnumerable<string> ModifiersIterator(IEnumerable<string> input)
+    {
+        string buff_name = "buff_name;\",";
+        string buff_desc = "buff_desc;\",";
+
+        string id_angel_charm = "o_b_angel_charm";
+        string name_angel_charm_ru = "Вознесение";
+        string name_angel_charm_en = "Ascension";
+        string name_angel_charm = $"{id_angel_charm};{name_angel_charm_ru};" + Enumerable.Repeat($"{name_angel_charm_en};", 11);
+        string desc_angel_charm_ru = @"";
+        string desc_angel_charm_en = @"";
+        string desc_angel_charm= $"{id_angel_charm};{desc_angel_charm_ru};" + Enumerable.Repeat($"{desc_angel_charm_en};", 11);
+
+        string id_takeover = "o_db_takeover";
+        string name_takeover_ru = "Одержимость";
+        string name_takeover_en = "Obsession";
+        string name_takeover = $"{id_takeover};{name_takeover_ru};" + Enumerable.Repeat($"{name_takeover_en};", 11);
+        string desc_takeover_ru = @"Штрафы меняются каждый ход в зависимости от недостающего ~lg~рассудка~/~.##Может вызвать ~r~Замешательство~/~ или ~r~Ошеломление~/~.##~r~Смерть близка~/~: каждые несколько ходов максимальное здоровье снижается.";
+        string desc_takeover_en = @"The penalties change dynamically depending on the missing percentage of ~lg~Sanity~/~.##May Cause ~r~Confusion~/~ or ~r~Daze~/~.##Deals ~ur~1-3 Unholy Damage~/~ if sanity drops below ~r~33%~/~.##~r~Near death~/~: the character's Max Health is reduced every few turns.";
+        string desc_takeover = $"{id_takeover};{desc_takeover_ru};" + Enumerable.Repeat($"{desc_takeover_en};", 11);
+
+        string id_unbind = "o_b_unbind";
+        string name_unbind_ru = "Отвязать";
+        string name_unbind_en = "Unbind";
+        string name_unbind = $"{id_unbind};{name_unbind_ru};" + Enumerable.Repeat($"{name_unbind_en};", 11);
+        string desc_unbind_ru = @"Нажатие на иконку эффекта или клавиши ~r~N~/~ в этом окне моментально убивает эту нежить. Тратит ход.";
+        string desc_unbind_en = @"Clicking on this icon instantly kills this undead and then advances a turn.";
+        string desc_unbind = $"{id_unbind};{desc_unbind_ru};" + Enumerable.Repeat($"{desc_unbind_en};", 11);
+
+        string id_darkenchant = "o_b_darkenchant";
+        string name_darkenchant_ru = "Тёмный договор";
+        string name_darkenchant_en = "Dark Enchantment";
+        string name_darkenchant = $"{id_darkenchant};{name_darkenchant_ru};" + Enumerable.Repeat($"{name_darkenchant_en};", 11);
+        string desc_darkenchant_ru = @"";
+        string desc_darkenchant_en = @"";
+        string desc_darkenchant = $"{id_darkenchant};{desc_darkenchant_ru};" + Enumerable.Repeat($"{desc_darkenchant_en};", 11);
+
+        string id_punishment = "o_db_punishment";
+        string name_punishment_ru = "Punishment";
+        string name_punishment_en = "Punishment";
+        string name_punishment = $"{id_punishment};{name_punishment_ru};" + Enumerable.Repeat($"{name_punishment_en};", 11);
+        string desc_punishment_ru = @"";
+        string desc_punishment_en = @"";
+        string desc_punishment = $"{id_punishment};{desc_punishment_ru};" + Enumerable.Repeat($"{desc_punishment_en};", 11);
+
+        string id_exceptional = "o_b_exceptional";
+        string name_exceptional_ru = "Исключительная душа";
+        string name_exceptional_en = "Disorder";
+        string name_exceptional = $"{id_exceptional};{name_exceptional_ru};" + Enumerable.Repeat($"{name_exceptional_en};", 11);
+        string desc_exceptional_ru = @"Аннулирует штрафы от эффекта ~r~\""Одержимости\""~/~ и препятствует его получению.##Когда эффект заканчивает: ~r~возвращает в загробный мир~/~ всех союзных умертвий.";
+        string desc_exceptional_en = @"Negates penalties of ~r~Obsession~/~.##Prevents from receiving ~r~Obsession~/~.##When effect expires: ~r~unbinds~/~ all allied wraiths.";
+        string desc_exceptional = $"{id_exceptional};{desc_exceptional_ru};" + Enumerable.Repeat($"{desc_exceptional_en};", 11);
+
+        string id_bw_sacrifice = "o_bw_sacrifice";
+        string name_bw_sacrifice_ru = "Soul Sacrifice";
+        string name_bw_sacrifice_en = "Soul Sacrifice";
+        string name_bw_sacrifice = $"{id_bw_sacrifice};{name_bw_sacrifice_ru};" + Enumerable.Repeat($"{name_bw_sacrifice_en};", 11);
+        string desc_bw_sacrifice_ru = @"Pressing ~r~K~/~ activates the effect and then advances a turn.##Activation consumes ~bl~10%~/~ of Max Energy.;Pressing ~r~K~/~ activates the effect and then advances a turn.##Activation consumes ~bl~10%~/~ of Max Energy.";
+        string desc_bw_sacrifice_en = @"Pressing ~r~K~/~ activates the effect and then advances a turn.##Activation consumes ~bl~10%~/~ of Max Energy.;Pressing ~r~K~/~ activates the effect and then advances a turn.##Activation consumes ~bl~10%~/~ of Max Energy.";
+        string desc_bw_sacrifice = $"{id_bw_sacrifice};{desc_bw_sacrifice_ru};" + Enumerable.Repeat($"{desc_bw_sacrifice_en};", 11);
+
+        string id_servemaster = "o_b_servemaster";
+        string name_servemaster_ru = "Оживление";
+        string name_servemaster_en = "Revivify";
+        string name_servemaster = $"{id_servemaster};{name_servemaster_ru};" + Enumerable.Repeat($"{name_servemaster_en};", 11);
+        string desc_servemaster_ru = @"Считается ~r~нежитью~/~: привод в город является ~r~преступлением~/~.##Способно ~lg~следовать~/~ за вами по всей карте.##Нажатие по иконке ~y~левой кнопкой мыши~/~ переключает режим поведения юнита между ~lg~Следованием~/~ и ~r~Агрессией~/~.#Нажатие по иконке ~y~правой кнопкой мыши~/~ переключает режим поведения юнита между ~lg~Простоем~/~ и ~p~Автономией~/~.##Нажатие клавиши ~y~C~/~ позволяет задать точку для перемещения подконтрольной нежити.#Нажатие клавиши ~y~V~/~ позволяет задать цель для атаки подконтрольной нежити.";
+        string desc_servemaster_en = @"Considered as an ~r~Undead~/~: bringing it inside settlements is ~r~Crime~/~.##Capable of ~lg~Following~/~ you everywhere on the map.##~y~Left clicking~/~ this icon switches ~r~Aggressive~/~ and ~lg~Follow~/~ mode.#~y~Right clicking~/~ this icon switches ~lg~Idle~/~ and ~p~Autonomous~/~ mode.##Pressing ~y~V~/~ allows for selectable positioning.";
+        string desc_servemaster = $"{id_servemaster};{desc_servemaster_ru};" + Enumerable.Repeat($"{desc_servemaster_en};", 11);
+
+        string id_charged_soul = "o_b_charged_soul";
+        string name_charged_soul_ru = "Поглощённая душа";
+        string name_charged_soul_en = "Charged Soul";
+        string name_charged_soul = $"{id_charged_soul};{name_charged_soul_ru};" + Enumerable.Repeat($"{name_charged_soul_en};", 11);
+        string desc_charged_soul_ru = @"Использование ~w~Заклинаний~/~ уменьшает степень эффекта на ~r~1~/~.##Повторное произнесение ~lg~Поглощения души~/~ увеличивает степень эффекта (вплоть до ~sy~IV~/~) и обновляет его длительность.";
+        string desc_charged_soul_en = @"Using ~w~Spells~/~ reduce the number of stacks by ~r~1~/~.##The repeated use of ~lg~Soul Absorption~/~ grants an extra stack of the effect (up to ~w~IV~/~) and refreshes its duration.";
+        string desc_charged_soul = $"{id_charged_soul};{desc_charged_soul_ru};" + Enumerable.Repeat($"{desc_charged_soul_en};", 11);
+
+        string id_deathbless = "o_b_deathbless";
+        string name_deathbless_ru = "Дар Смерти";
+        string name_deathbless_en = "Death's Blessing";
+        string name_deathbless = $"{id_deathbless};{name_deathbless_ru};" + Enumerable.Repeat($"{name_deathbless_en};", 11);
+        string desc_deathbless_ru = @"";
+        string desc_deathbless_en = @"";
+        string desc_deathbless = $"{id_deathbless};{desc_deathbless_ru};" + Enumerable.Repeat($"{desc_deathbless_en};", 11);
+
+        string id_painful_curse = "o_db_painful_curse";
+        string name_painful_curse_ru = "Мучительное проклятие";
+        string name_painful_curse_en = "Withering Curse";
+        string name_painful_curse = $"{id_painful_curse};{name_painful_curse_ru};" + Enumerable.Repeat($"{name_painful_curse_en};", 11);
+        string desc_painful_curse_ru = @"";
+        string desc_painful_curse_en = @"";
+        string desc_painful_curse = $"{id_painful_curse};{desc_painful_curse_ru};" + Enumerable.Repeat($"{desc_painful_curse_en};", 11);
+
+        string name = $"\"{name_angel_charm}\",\"{name_takeover}\",\"{name_unbind}\",\"{name_darkenchant}\",\"{name_punishment}\",\"{name_exceptional}\",\"{name_bw_sacrifice}\",\"{name_servemaster}\",\"{name_charged_soul}\",\"{name_deathbless}\",\"{name_painful_curse}\",";
+        string desc = $"\"{desc_angel_charm}\",\"{desc_takeover}\",\"{desc_unbind}\",\"{desc_darkenchant}\",\"{desc_punishment}\",\"{desc_exceptional}\",\"{desc_bw_sacrifice}\",\"{desc_servemaster}\",\"{desc_charged_soul}\",\"{desc_deathbless}\",\"{desc_painful_curse}\",";
+        
+        foreach(string item in input)
+        {
+            if (item.Contains(buff_name))
+            {
+                string newItem = item;
+                newItem = newItem.Insert(newItem.IndexOf(buff_name) + buff_name.Length, name);
+                newItem = newItem.Insert(newItem.IndexOf(buff_desc) + buff_desc.Length, desc);
                 yield return newItem;
             }
             else
