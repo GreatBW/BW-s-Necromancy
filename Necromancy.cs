@@ -1272,7 +1272,41 @@ grid_y = round((yy div 26))
 }")
             .Save();
 
-        //TODO: gml_GlobalScript_scr_get_damage_of_weapon
+        Msl.LoadGML("gml_GlobalScript_scr_get_damage_of_weapon")
+            .MatchFrom("var _dmg = 0")
+            .InsertBelow(@"var _sus = 0
+if (instance_exists(o_inv_right_hand) && instance_exists(o_inv_left_hand))
+{
+with (o_inv_right_hand)
+{
+if instance_exists(children)
+{
+_sus++
+with (children)
+{
+if equipped
+_dmg += scr_dsMapFindValue(data, ""DMG"", 0)
+}
+}
+}
+with (o_inv_left_hand)
+{
+if instance_exists(children)
+{
+_sus++
+with (children)
+{
+if equipped
+_dmg += scr_dsMapFindValue(data, ""DMG"", 0)
+}
+}
+}
+}")
+            .MatchFromUntil("with (children)", "}")
+            .Remove()
+            .MatchFrom("return _dmg;")
+            .InsertAbove("if ((_sus == 2) && (!_isTwoHand)) {_dmg *= 0.5}")
+            .Save();
 
          Msl.LoadGML("gml_GlobalScript_scr_get_XP")
             .MatchFrom("{")
@@ -1873,6 +1907,58 @@ other.Unholy_Damage = 9
             .ReplaceBy("var _metaCategoriesArray = [[o_skill_category_sword, o_skill_category_axe, o_skill_category_mace, o_skill_category_dagger, o_skill_category_greatsword, o_skill_category_greataxe, o_skill_category_greatmauls, o_skill_category_polearms, o_skill_category_bows, o_skill_category_shields, o_skill_category_staves, o_skill_category_wands], [o_skill_category_basic_skills, o_skill_category_dual_wielding, o_skill_category_survival, o_skill_category_combat, o_skill_category_athletics, o_skill_category_mastery_of_magic, o_skill_category_necromancy, o_skill_category_basic_armor, o_skill_category_alchemy, o_skill_category_sabotage], [o_skill_category_pyromancy, o_skill_category_geomancy, o_skill_category_electromancy, o_skill_category_venomancy, o_skill_category_cryomancy, o_skill_category_astromancy, o_skill_category_chronomancy, o_skill_category_psymancy, o_skill_category_arcanistics]]")
             .Save();
 
+        Msl.LoadGML("gml_Object_o_small_troll_Other_7")
+            .MatchAll()
+            .InsertBelow(@"if (state == ""threat"")
+{
+if (spr == threat_sprite_start)
+{
+spr = threat_sprite_loop
+sprite_index = threat_sprite_loop
+}
+if is_array(threat_sound_array)
+{
+audio_stop_sound(threat_sound)
+var _can_play = 1
+with (object_index)
+{
+if (id != other.id && visible)
+{
+if audio_is_playing(threat_sound)
+_can_play = 0
+}
+}
+if _can_play
+threat_sound = scr_audio_play_at(threat_sound_array[1])
+}
+}
+else
+{
+scr_enemy_stop_animation()
+if audio_is_playing(threat_sound)
+audio_stop_sound(threat_sound)
+}")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_summon_blood_golem_bith_Other_10")
+            .MatchFrom("is_execute = 1")
+            .InsertBelow(@"if (owner.faction_id != ""Servant"")
+{
+}
+else
+instance_create(x, y, o_res_buff_creator)")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_whitchousecontainer02_Other_10")
+            .MatchFrom("scr_inventory_add_item(o_inv_treatise_geo2)")
+            .InsertBelow(@"if scr_chance_value(50) {scr_inventory_add_item(o_inv_cgrimoir)}
+else if scr_chance_value(75) {scr_inventory_add_item(o_inv_cgrimoir2)}
+else {scr_inventory_add_item(o_inv_cgrimoir3)}")
+            .Save();
+
+        // TODO: gml_Object_o_wraith_summoning_Other_10
+        // TODO: gml_RoomCC_r_disclaimer2_0_Create
+
         // table
         List<string>? ai_table = ModLoader.GetTable("gml_GlobalScript_table_animals_ai");
         List<string> new_ai_elements = new() { 
@@ -1924,6 +2010,10 @@ other.Unholy_Damage = 9
 
         Msl.LoadGML("gml_GlobalScript_table_armor")
             .Apply(ArmorIterator)
+            .Save();
+
+        Msl.LoadGML("gml_GlobalScript_table_Books")
+            .Apply(BooksIterator)
             .Save();
 
         Msl.LoadGML("gml_GlobalScript_table_weapons_text")
@@ -2137,6 +2227,88 @@ popz.v
                 newItem = newItem.Insert(newItem.IndexOf(helmets) + helmets.Length, "\"sinistercrown;20;head101;Head;Light;Unique;metal;6000;333;;;;;;;1;;;;;;25;;;10;;;;;;;;;;;;;;;;;;;;;;;;10;;;;;;;;;;;;;;;;;;;;;;;;;;-33;;;;aldor magic;;;;;;;;;;;;;;;;;\",");
                 newItem = newItem.Insert(newItem.IndexOf(chestpieces) + chestpieces.Length, "\"hexermantle;15;chest101;Chest;Light;Unique;cloth;2400;120;5;;;;;;;;15;;;;16;;-7;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;5;15;25;;;;;;;;;;;;13;;;;aldor magic;;;;4;;;;;;;;;;;;;\",");
                 newItem = newItem.Insert(newItem.IndexOf(rings) + rings.Length, "\"Skull Morion Ring;20;ring101;Ring;Light;Unique;wood;1200;33;;;;;;;;;;;;;;;;;;;;;;;;;;;;6;;;;;;9;;;;;;;;;;;;;;;;;;;16;;;;;;;;;;;;;16;;;;special;;;;;;;;;;;;;;;;;\",");
+                yield return newItem;
+            }
+            else
+            {
+                yield return item;
+            }
+        }
+    }
+    private static IEnumerable<string> BooksIterator(IEnumerable<string> input)
+    {
+        string bookname = "book_name;\",";
+        string bookstart = "book_content;\",";
+        string bookmid = "book_mid_text;\",";
+        string bookdesc = "book_desc;\",";
+        string booktype = "book_type;\",";
+
+        string grimoir1_id = "cgrimoir";
+
+        string grimoir1_name_ru = @"Оккультный трактат I";
+        string grimoir1_name_en = @"Occult Treatise I";
+        string grimoir1_start_en = @". . . I’ve done it. The rat came back to life, squirming its little body with all the energy of a healthy newborn around the dagger with which I pinned it to the table last night.#I had to redraw the sigil five times but finally, I have done the impossible. I was so close to hurling my grimoire into the fireplace.#I was ready to give up and travel to the Cathedral to throw myself on my knees and beg for forgiveness. But it worked. I have created life from death.##It didn’t live for long, and perhaps that is a mercy. It limped around the table when I removed the dagger, squealing with obvious pain and terror, unable to react to any of the stimuli I prepared.#Finally the sun rose, and in its light the thing curled up and went quiet. Obviously I have a long way to go. I can’t bring her back like this.##Morella, forgive me. I must continue my experiments. I won’t waste more time with rats and frogs. Perhaps their souls are too small or their bodies too weak to properly receive the energies which flow from my sigil and my incantations without being damaged.#Perhaps I merely require practice until I have perfected this ritual. But in either case, I don’t have time to play with these trivial creatures while my love decays in her tomb. I must have a human corpse.##Tonight, the graveyard will yield the subject of my next breakthrough. . .";
+        string grimoir1_mid_ru = @"\""Запретный сигил: Раскрытие магии через подобающие ритуалы.\""##~gr~Открывает возможность изучить некоторые оккультные способности:~/~##~lg~Осквернение~/~#~lg~Мучительное проклятие~/~#~lg~Поглощение души~/~##Прочтение этой книги приносит ~y~опыт~/~.";
+        string grimoir1_mid_en = @"\""The Forbidden Sigil: Unveiling magic through proper rituals.\""##~gr~Allows you to learn the following Occultism abilities:~/~##~lg~Desecration~/~#~lg~Painful Curse~/~#~lg~Soul Absorption~/~##Reading this book grants some ~y~Experience~/~.";
+        string grimoir1_desc_ru = @"Более половины этой пыльной книги наполнено бессмысленными выражениями и рассуждениями.";
+        string grimoir1_desc_en = @"More than half of this dusty journal is filled with meaningless expressions and references.";
+        string grimoir1_type_ru = @"Автор: Силас, священнослужитель";
+        string grimoir1_type_en = @"Written by Silas the priest";
+
+        string grimoir2_id = "cgrimoir2";
+
+        string grimoir2_name_ru = @"Оккультный трактат II";
+        string grimoir2_name_en = @"Occult Treatise II";
+        string grimoir2_start_en = ". . . His subservience thrills and disgusts me. It is as though his personality decayed with his flesh. He at least remembers what his name was in life and can answer my questions when I speak slowly and loudly and avoid abstraction.## But he will say nothing of his own volition, do nothing except gnaw on things and smack his head against the wall. What a pitiful condition. But he lives again, despite the noose still tied around his neck. And he is intelligent enough to follow commands.##And he is strong, stronger than his putrefying muscles could possibly allow.## When I ordered him to guard me last night as I dug him up a brother, we were set upon by a territorial ghoul, angry that I was raiding its larder.# My new servant seized its arm, ripped it off and proceeded to beat the creature to death with it.#How can he be possessed of such power? My theory is that the energies with which I brought him back to life have not dissipated but suffuse his body still.# Perhaps this means that flesh is not even necessary for reanimation.## I will perform the ritual on a skeleton! . . .";
+        string grimoir2_mid_ru = @"\""Устланный пороком путь вспять уже не обернуть.\""##~gr~Открывает возможность изучить некоторые оккультные способности:~/~##~lg~Ритуал воскрешения~/~#~lg~Дары Смерти~/~#~y~Расцветающее безумие~/~#~y~Абсолютная тьма~/~##Прочтение этой книги приносит ~y~опыт~/~.";
+        string grimoir2_mid_en = @"\""Danger awaits as madness thrives through your mistakes.\""##~gr~Allows you to learn the following Occultism abilities:~/~##~lg~Ritual of Resurrection~/~#~lg~Death's Blessing~/~#~y~Growing Madness~/~#~y~Absolute Darkness~/~##Reading this book grants some ~y~Experience~/~.";
+        string grimoir2_desc_ru = @"Более половины этой пыльной книги наполнено бессмысленными выражениями и рассуждениями.";
+        string grimoir2_desc_en = @"More than half of this dusty journal is filled with meaningless expressions and references.";
+        string grimoir2_type_ru = @"Автор: Силас, священнослужитель";
+        string grimoir2_type_en = @"Written by Silas the priest";
+
+        string grimoir3_id = "cgrimoir3";
+
+        string grimoir3_name_ru = @"Оккультный трактат III";
+        string grimoir3_name_en = @"Occult Treatise III";
+        string grimoir3_start_en = ". . . My creatures still terrify me but oh, the excitement is molten gold in my veins. The grimoire sings in my hands. My staff twists and churns under my fingers like a dying thing. The moon is a door and I am opening it, and what secrets whisper to me from the other side! Morella, if only you were here to see the fruit of my research!##Morella… I have scarcely had time to think of you these past few weeks. The work has taken on a life of its own, so to speak. I understand I can never bring you back the way you were. At first I grieved at the realisation, defeated. I missed your fair hair and your rosy cheeks and your sparkling eyes. I choked at the thought of returning you to life in the rotting shell of your former self, or untouchable and freezing cold like the wraiths which pour like tears up from the earth when I weep.##But the work continued and my insight grew and the whispers taught me that there is beauty in decay. Decay is life! The mould that grows on our bones is alive and it sings in the voice of the trees, the forest, the stars. All life sings in the voice of death. It is a blessing. I don’t remember the way your voice sounded. But I will give you a new voice. You will sing for me again and the worms will writhe in delight at your song.##And we will have a kingdom of our own, my love. I have made us a court. I have made us an army. They are so many now. At first I could only seize one at a time in my mind’s fist but I have learned to link their souls in a lattice which holds them all together. The lattice is a pattern, a rhythm. Our soldiers stumble from room to room of our palace with this rhythm guiding their steps, as they guard your tomb. It is a dance. It is the rhythm of your song. The lyrics were written in the caverns of our ancestors. They are written between the stars. The song. . .";
+        string grimoir3_mid_ru = @"\""И когда планеты встанут в ряд - начнётся твой обряд, и тогда руки твои соткут ткань вознесения, даруя истинное благословение.\""##~gr~Открывает возможность изучить некоторые оккультные способности:~/~##~lg~Касание смерти~/~#~y~Пожинание хаоса~/~#~y~Жертвоприношение души~/~##Прочтение этой книги приносит ~y~опыт~/~.";
+        string grimoir3_mid_en = @"\""A celestial choreography unfolds, as the hands intricately weave the fabric of ascension, bestowing upon us a true blessing.\""##~gr~Allows you to learn the following Occultism abilities:~/~##~lg~Death Touch~/~#~y~Grasp of Chaos~/~#~y~Soul Sacrifice~/~##Reading this book grants some ~y~Experience~/~.";
+        string grimoir3_desc_ru = @"Более половины этой пыльной книги наполнено бессмысленными выражениями и рассуждениями.";
+        string grimoir3_desc_en = @"More than half of this dusty journal is filled with meaningless expressions and references.";
+        string grimoir3_type_ru = @"Автор: Силас, священнослужитель";
+        string grimoir3_type_en = @"Written by Silas the priest";
+
+        string grimoir1_name = $"{grimoir1_id};{grimoir1_name_ru};" + Enumerable.Repeat($"{grimoir1_name_en};", 13);
+        string grimoir2_name = $"{grimoir2_id};{grimoir2_name_ru};" + Enumerable.Repeat($"{grimoir2_name_en};", 13);
+        string grimoir3_name = $"{grimoir3_id};{grimoir3_name_ru};" + Enumerable.Repeat($"{grimoir3_name_en};", 13);
+
+        string grimoir1_start = $"{grimoir1_id};" + Enumerable.Repeat($"{grimoir1_start_en};", 14);
+        string grimoir2_start = $"{grimoir2_id};" + Enumerable.Repeat($"{grimoir2_start_en};", 14);
+        string grimoir3_start = $"{grimoir3_id};" + Enumerable.Repeat($"{grimoir3_start_en};", 14);
+
+        string grimoir1_mid = $"{grimoir1_id};{grimoir1_mid_ru};" + Enumerable.Repeat($"{grimoir1_mid_en};", 13);
+        string grimoir2_mid = $"{grimoir2_id};{grimoir2_mid_ru};" + Enumerable.Repeat($"{grimoir2_mid_en};", 13);
+        string grimoir3_mid = $"{grimoir3_id};{grimoir3_mid_ru};" + Enumerable.Repeat($"{grimoir3_mid_en};", 13);
+
+        string grimoir1_desc = $"{grimoir1_id};{grimoir1_desc_ru};" + Enumerable.Repeat($"{grimoir1_desc_en};", 13);
+        string grimoir2_desc = $"{grimoir2_id};{grimoir2_desc_ru};" + Enumerable.Repeat($"{grimoir2_desc_en};", 13);
+        string grimoir3_desc = $"{grimoir3_id};{grimoir3_desc_ru};" + Enumerable.Repeat($"{grimoir3_desc_en};", 13);
+
+        string grimoir1_type = $"{grimoir1_id};{grimoir1_type_ru};" + Enumerable.Repeat($"{grimoir1_type_en};", 13);
+        string grimoir2_type = $"{grimoir2_id};{grimoir2_type_ru};" + Enumerable.Repeat($"{grimoir2_type_en};", 13);
+        string grimoir3_type = $"{grimoir3_id};{grimoir3_type_ru};" + Enumerable.Repeat($"{grimoir3_type_en};", 13);
+        foreach(string item in input)
+        {
+            if(item.Contains("bookname"))
+            {
+                string newItem = item;
+                
+                newItem = newItem.Insert(newItem.IndexOf(bookname) + bookname.Length, $"\"{grimoir1_name}\",\"{grimoir2_name}\",\"{grimoir3_name}\",");
+                newItem = newItem.Insert(newItem.IndexOf(bookstart) + bookstart.Length, $"\"{grimoir1_start}\",\"{grimoir2_start}\",\"{grimoir3_start}\",");
+                newItem = newItem.Insert(newItem.IndexOf(bookmid) + bookmid.Length, $"\"{grimoir1_mid}\",\"{grimoir2_mid}\",\"{grimoir3_mid}\",");
+                newItem = newItem.Insert(newItem.IndexOf(bookdesc) + bookdesc.Length, $"\"{grimoir1_desc}\",\"{grimoir2_desc}\",\"{grimoir3_desc}\",");
+                newItem = newItem.Insert(newItem.IndexOf(booktype) + booktype.Length, $"\"{grimoir1_type}\",\"{grimoir2_type}\",\"{grimoir3_type}\",");
                 yield return newItem;
             }
             else
