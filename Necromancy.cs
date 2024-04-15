@@ -1665,40 +1665,7 @@ else
 
             
     Msl.LoadAssemblyAsString("gml_Object_o_enemy_Destroy_0")
-            .MatchFrom("call.i event_inherited(argc=0)\npopz.v")
-            .InsertBelow(@"
-pushi.e 0
-pop.v.i local._shomar
-pushi.e o_enemy
-pushenv [1005]
-
-:[1000]
-push.v self.buffs
-pushi.e o_b_servemaster
-conv.i.v
-call.i gml_Script_scr_instance_exists_in_list(argc=2)
-conv.v.b
-bf [1002]
-
-:[1001]
-call.i gml_Script_is_visible(argc=0)
-conv.v.b
-b [1003]
-
-:[1002]
-push.e 0
-
-:[1003]
-bf [1005]
-
-:[1004]
-push.v local._shomar
-push.e 1
-add.i.v
-pop.v.v local._shomar
-
-:[1005]
-popenv [1000]")
+            .Apply(EnemyDestroyIterator)
             .Save();
 
         Msl.LoadGML("gml_Object_o_player_Create_0")
@@ -1731,6 +1698,184 @@ popenv [1000]")
         Msl.LoadGML("gml_GlobalScript_table_skills")
             .Apply(SkillsIterator)
             .Save();
+    }
+    private static IEnumerable<string> EnemyDestroyIterator(IEnumerable<string> input)
+    {
+        int status = 0;
+        int index_player = DataLoader.data.GameObjects.IndexOf(Msl.GetObject("o_player"));
+        int index_nmadness = DataLoader.data.GameObjects.IndexOf(Msl.GetObject("o_pass_skill_nmadness"));
+        string saved_branch_true = "";
+        foreach(string item in input)
+        {
+            if (status == 0 && item.Contains("call.i event_inherited(argc=0)"))
+            {
+                status = 1;
+                yield return item;
+            }
+            else if (status == 1 && item.Contains("popz.v"))
+            {
+                status = 2;
+                yield return item;
+                yield return @"
+pushi.e 0
+pop.v.i local._shomar
+pushi.e o_enemy
+pushenv [1005]
+
+:[1000]
+push.v self.buffs
+pushi.e o_b_servemaster
+conv.i.v
+call.i gml_Script_scr_instance_exists_in_list(argc=2)
+conv.v.b
+bf [1002]
+
+:[1001]
+call.i gml_Script_is_visible(argc=0)
+conv.v.b
+b [1003]
+
+:[1002]
+push.e 0
+
+:[1003]
+bf [1005]
+
+:[1004]
+push.v local._shomar
+push.e 1
+add.i.v
+pop.v.v local._shomar
+
+:[1005]
+popenv [1000]";
+            }
+            else if (status == 2 && item.Contains("bf"))
+            {
+                status = 3;
+                yield return item;
+                yield return $@":[1011]
+pushi.e {index_player}
+conv.i.v
+push.v self.id
+call.i gml_Script_scr_tile_distance(argc=2)
+pushi.e 20
+cmp.i.v LTE
+bf [1016]
+
+:[1012]
+push.v {index_player}.id
+call.i string(argc=1)
+push.v self.Received_Damage_Priority
+call.i ds_map_find_value(argc=2)
+conv.v.b
+bt [1014]
+
+:[1013]
+pushloc.v local._is_player_attacker
+conv.v.b
+b [1015]
+
+:[1014]
+push.e 1
+
+:[1015]
+b [1017]
+
+:[1016]
+push.e 0
+
+:[1017]
+pop.v.b local._vanilla_condition";
+            }
+            else if (status == 3 && item.Contains($"pushi.e {index_player}"))
+            {
+                status = 4;
+            }
+            else if (status == 4 && item.Contains("bt"))
+            {
+                status = 5;
+                saved_branch_true = item;
+            }
+            else if (status == 5 && item.Contains("pushloc.v local._is_player_attacker"))
+            {
+                status = 6;
+                yield return $@"pushloc.v local._vanilla_condition
+conv.v.b
+{saved_branch_true}
+
+:[1020]
+pushloc.v local._shomar";
+            }
+            else if (status == 6 && item.Contains("push.v self.gain_xp"))
+            {
+                status = 7;
+                yield return $@"pushloc.v local._vanilla_condition
+conv.v.b
+bt [1035]
+
+:[1031]
+pushi.e {index_nmadness}
+conv.i.v
+call.i instance_exists(argc=1)
+conv.v.b
+bf [1033]
+
+:[1032]
+push.v {index_nmadness}.is_open
+conv.v.b
+b [1034]
+
+:[1033]
+push.e 0
+
+:[1034]
+b [1036]
+
+:[1035]
+push.e 1
+
+:[1036]
+bf [1038]
+
+:[1037]";
+                yield return item;     
+            }
+            else if (status == 7 && item.Contains($"pushi.e {index_player}"))
+            {
+                status = 8;
+                yield return $@"b [1040]
+
+:[1038]
+pushloc.v local._shomar
+conv.v.b
+bf [1040]
+
+:[1039]
+pushi.e 1
+conv.i.v
+push.v self.gain_xp
+call.i gml_Script_scr_get_XP(argc=2)
+pop.v.v local.xp
+pushloc.v local.xp
+push.v self.id
+call.i gml_Script_scr_id_get_name(argc=1)
+call.i @@NewGMLArray@@(argc=1)
+push.s ""death""
+conv.s.v
+call.i gml_Script_scr_actionsLogXP(argc=3)
+popz.v
+
+:[1040]
+";
+                yield return item;
+            }
+            // 3, 4 and 5 are removed
+            else if (status < 3 || status > 5)
+            {
+                yield return item;
+            }
+        }
     }
     private static IEnumerable<string> WeaponTextIterator(IEnumerable<string> input)
     {
@@ -1935,7 +2080,7 @@ popenv [1000]")
 
         string undead = "\";;///// UNDEAD;///// UNDEAD;;;;;///// UNDEAD;///// UNDEAD;;;;\",";
         string skillsDesc = @"""Soul_Explosion;
-        Накладывает на союзную нежить эффект ~r~\""Жертвоприношение души\""~/~, который можно активировать вручную.##Эффект автоматически применяется на цели с менее чем ~r~33%~/~ запаса здоровья.##При активации эффекта, цель взрывается, нанося ~ur~нечестивый урон~/~ по всем соседним клеткам, равный оставшемуся у неё запасу здоровья, после чего накладывает на заклинателя ~p~\""Тëмный договор\""~/~ на ~w~12~/~ ходов:##~lg~+3~/~ к урону оружия ~ur~нечестивостью~/~#~lg~+3~/~к урону оружия ~p~арканой~/~#~lg~+7.5%~/~ к похищению жизни##Отвязывание нежити (кроме ~w~умертвий~/~) находящейся под эффектом ~r~\""Жертвоприношения души\""~/~ накладывает на заклинателя эффект ~lg~\""Исключительная душа\""~/~ на ~w~8~/~ ходов, позволяющий на время действия избежать штрафов от ~r~\""Одержимости\""~/~.##Каждая активация требует ~bl~10%~/~ запаса энергии.;
+        Unbinding allies doesn't take a turn and replenishes ~bl~Energy~/~ equal to ~w~10%~/~ of your Magic Power.##Increases the ~w~level~/~ of summoning abilities by ~lg~1~/~.;
         Unbinding allies doesn't take a turn and replenishes ~bl~Energy~/~ equal to ~w~10%~/~ of your Magic Power.##Increases the ~w~level~/~ of summoning abilities by ~lg~1~/~.;
         Unbinding allies doesn't take a turn and replenishes ~bl~Energy~/~ equal to ~w~10%~/~ of your Magic Power.##Increases the ~w~level~/~ of summoning abilities by ~lg~1~/~.;
         Unbinding allies doesn't take a turn and replenishes ~bl~Energy~/~ equal to ~w~10%~/~ of your Magic Power.##Increases the ~w~level~/~ of summoning abilities by ~lg~1~/~.;
@@ -1948,7 +2093,7 @@ popenv [1000]")
         Unbinding allies doesn't take a turn and replenishes ~bl~Energy~/~ equal to ~w~10%~/~ of your Magic Power.##Increases the ~w~level~/~ of summoning abilities by ~lg~1~/~.;
         "",
         ""imortall;
-        Позволяет избегать смертельных ударов, пока ~r~порог здоровья~/~ и ~lg~мораль~/~ выше ~lg~50%~/~.##Когда ~r~здоровье~/~ опускается до ~w~2~/~, происходит следующее:##~r~-10%~/~ к морали#~r~+2%~/~ к усталости#Восстанавливает ~lg~33%~/~ запаса здоровья и ~bl~33%~/~ энергии##Персонаж больше не может ~r~умереть~/~ от жажды и голода.;
+        Prevents dying from lethal hits as long as ~r~Max Health~/~ and ~lg~Morale~/~ are both higher than ~lg~50%~/~.##When ~r~Health~/~ drops below 2, replenishes ~lg~33%~/~ of ~r~Max Health~/~ and ~bl~Max Energy~/~, and applies:##~r~-10% Morale~/~#~r~+2% Fatigue~/~##Prevents ~r~death~/~ from starvation or dehydration.;
         Prevents dying from lethal hits as long as ~r~Max Health~/~ and ~lg~Morale~/~ are both higher than ~lg~50%~/~.##When ~r~Health~/~ drops below 2, replenishes ~lg~33%~/~ of ~r~Max Health~/~ and ~bl~Max Energy~/~, and applies:##~r~-10% Morale~/~#~r~+2% Fatigue~/~##Prevents ~r~death~/~ from starvation or dehydration.;
         Prevents dying from lethal hits as long as ~r~Max Health~/~ and ~lg~Morale~/~ are both higher than ~lg~50%~/~.##When ~r~Health~/~ drops below 2, replenishes ~lg~33%~/~ of ~r~Max Health~/~ and ~bl~Max Energy~/~, and applies:##~r~-10% Morale~/~#~r~+2% Fatigue~/~##Prevents ~r~death~/~ from starvation or dehydration.;
         Prevents dying from lethal hits as long as ~r~Max Health~/~ and ~lg~Morale~/~ are both higher than ~lg~50%~/~.##When ~r~Health~/~ drops below 2, replenishes ~lg~33%~/~ of ~r~Max Health~/~ and ~bl~Max Energy~/~, and applies:##~r~-10% Morale~/~#~r~+2% Fatigue~/~##Prevents ~r~death~/~ from starvation or dehydration.;
@@ -1961,7 +2106,7 @@ popenv [1000]")
         Prevents dying from lethal hits as long as ~r~Max Health~/~ and ~lg~Morale~/~ are both higher than ~lg~50%~/~.##When ~r~Health~/~ drops below 2, replenishes ~lg~33%~/~ of ~r~Max Health~/~ and ~bl~Max Energy~/~, and applies:##~r~-10% Morale~/~#~r~+2% Fatigue~/~##Prevents ~r~death~/~ from starvation or dehydration.;
         "",
         ""kingdead;
-        Произнесение ~w~заклинаний~/~ наносит ~ur~/*Unholy_Damage*/ нечестивого урона~/~ (урон равен ~lg~5%~/~ от ~w~силы магии~/~) всем врагам в поле зрения.##~w~Воскрешение нежити~/~, ~w~призыв умертвий~/~, ~w~поглощение душ~/~ или ~w~получение~/~ ~lg~\""Дара Смерти\""~/~ имеет ~lg~33%~/~ шанс активировать эффект ~lg~\""Вознесение\""~/~ на ~w~6~/~ ходов:##~lg~+33%~/~ к сопр. нечестивому урону#~lg~+99%~/~ к силе чудес#Конвертирует ~ur~нечестивый урон~/~ в ~ly~священный~/~.;
+        Casting ~w~Spells~/~ deal ~ur~/*Unholy_Damage*/ Unholy Damage~/~ to all enemies within vision (based on ~lg~3.33%~/~ of ~w~Magic Power~/~).##~w~Raising the dead~/~, ~w~summoning wraiths~/~, ~w~Stealing Essence~/~ or ~w~receiving~/~ ~lg~\""Death's Blessing\""~/~ has ~lg~33%~/~ chance to activate ~lg~\""Ascension\""~/~ for ~w~6~/~ turns, granting:##~lg~+33%~/~ Unholy Resistance#~lg~+66%~/~ Miracle Potency#Converts ~ur~Unholy Damage~/~ into ~ly~Sacred Damage~/~.;
         Casting ~w~Spells~/~ deal ~ur~/*Unholy_Damage*/ Unholy Damage~/~ to all enemies within vision (based on ~lg~3.33%~/~ of ~w~Magic Power~/~).##~w~Raising the dead~/~, ~w~summoning wraiths~/~, ~w~Stealing Essence~/~ or ~w~receiving~/~ ~lg~\""Death's Blessing\""~/~ has ~lg~33%~/~ chance to activate ~lg~\""Ascension\""~/~ for ~w~6~/~ turns, granting:##~lg~+33%~/~ Unholy Resistance#~lg~+66%~/~ Miracle Potency#Converts ~ur~Unholy Damage~/~ into ~ly~Sacred Damage~/~.;
         Casting ~w~Spells~/~ deal ~ur~/*Unholy_Damage*/ Unholy Damage~/~ to all enemies within vision (based on ~lg~3.33%~/~ of ~w~Magic Power~/~).##~w~Raising the dead~/~, ~w~summoning wraiths~/~, ~w~Stealing Essence~/~ or ~w~receiving~/~ ~lg~\""Death's Blessing\""~/~ has ~lg~33%~/~ chance to activate ~lg~\""Ascension\""~/~ for ~w~6~/~ turns, granting:##~lg~+33%~/~ Unholy Resistance#~lg~+66%~/~ Miracle Potency#Converts ~ur~Unholy Damage~/~ into ~ly~Sacred Damage~/~.;
         Casting ~w~Spells~/~ deal ~ur~/*Unholy_Damage*/ Unholy Damage~/~ to all enemies within vision (based on ~lg~3.33%~/~ of ~w~Magic Power~/~).##~w~Raising the dead~/~, ~w~summoning wraiths~/~, ~w~Stealing Essence~/~ or ~w~receiving~/~ ~lg~\""Death's Blessing\""~/~ has ~lg~33%~/~ chance to activate ~lg~\""Ascension\""~/~ for ~w~6~/~ turns, granting:##~lg~+33%~/~ Unholy Resistance#~lg~+66%~/~ Miracle Potency#Converts ~ur~Unholy Damage~/~ into ~ly~Sacred Damage~/~.;
@@ -1974,7 +2119,7 @@ popenv [1000]")
         Casting ~w~Spells~/~ deal ~ur~/*Unholy_Damage*/ Unholy Damage~/~ to all enemies within vision (based on ~lg~3.33%~/~ of ~w~Magic Power~/~).##~w~Raising the dead~/~, ~w~summoning wraiths~/~, ~w~Stealing Essence~/~ or ~w~receiving~/~ ~lg~\""Death's Blessing\""~/~ has ~lg~33%~/~ chance to activate ~lg~\""Ascension\""~/~ for ~w~6~/~ turns, granting:##~lg~+33%~/~ Unholy Resistance#~lg~+66%~/~ Miracle Potency#Converts ~ur~Unholy Damage~/~ into ~ly~Sacred Damage~/~.;
         "",
         ""Lostsouls;
-        Воскрешает до ~w~3~/~ трупов в радиусе ~w~6~/~ клеток, восстанавливая поднятой нежити ~lg~33%~/~ запаса здоровья и ~bl~33~/~ запаса энергии.##Призывает ~w~Умертвие~/~ за каждый недостающий труп в радиусе действия. Сила ~w~Умертвии~/~ зависит от степени ~lg~\""Поглощëнной души\""~/~ заклинателя.##Накладывает на заклинателя эффект ~lg~\""Исключительная душа\""~/~ на ~w~5~/~-~w~7~/~ ходов за каждый призыв ~w~Умертвия~/~. Призванные ~w~Умертвия~/~ ~r~возвращаются в загробный мир~/~ по истечению ~lg~\""Исключительной души\""~/~.##Использование этого заклинания ~r~невозможно~/~ под эффектом ~r~\""Одержимости\""~/~ или ~lg~\""Исключительной души\""~/~.;
+        Reanimates up to ~w~3~/~ corpses within ~w~6~/~ tiles, restoring them to ~lg~33%~/~ of their ~r~Max Health~/~ and ~lg~33%~/~ ~bl~Max Energy~/~.##Summons a ~w~Wraith~/~ for each missing corpse within the area of effect. The ~w~Wraith's~/~ power depends on the number of ~lg~\""Essence Charge\""~/~ stacks.##Grants ~w~3-6~/~ turns of ~lg~\""Disorder\""~/~ for each instance of ~w~Summoning~/~. ~w~Wraiths~/~ ~r~die~/~ once ~lg~\""Disorder\""~/~ expires.##This spell cannot be cast while under the effects of ~r~\""Obsession\""~/~ or ~lg~\""Disorder\""~/~.;
         Reanimates up to ~w~3~/~ corpses within ~w~6~/~ tiles, restoring them to ~lg~33%~/~ of their ~r~Max Health~/~ and ~lg~33%~/~ ~bl~Max Energy~/~.##Summons a ~w~Wraith~/~ for each missing corpse within the area of effect. The ~w~Wraith's~/~ power depends on the number of ~lg~\""Essence Charge\""~/~ stacks.##Grants ~w~3-6~/~ turns of ~lg~\""Disorder\""~/~ for each instance of ~w~Summoning~/~. ~w~Wraiths~/~ ~r~die~/~ once ~lg~\""Disorder\""~/~ expires.##This spell cannot be cast while under the effects of ~r~\""Obsession\""~/~ or ~lg~\""Disorder\""~/~.;
         Reanimates up to ~w~3~/~ corpses within ~w~6~/~ tiles, restoring them to ~lg~33%~/~ of their ~r~Max Health~/~ and ~lg~33%~/~ ~bl~Max Energy~/~.##Summons a ~w~Wraith~/~ for each missing corpse within the area of effect. The ~w~Wraith's~/~ power depends on the number of ~lg~\""Essence Charge\""~/~ stacks.##Grants ~w~3-6~/~ turns of ~lg~\""Disorder\""~/~ for each instance of ~w~Summoning~/~. ~w~Wraiths~/~ ~r~die~/~ once ~lg~\""Disorder\""~/~ expires.##This spell cannot be cast while under the effects of ~r~\""Obsession\""~/~ or ~lg~\""Disorder\""~/~.;
         Reanimates up to ~w~3~/~ corpses within ~w~6~/~ tiles, restoring them to ~lg~33%~/~ of their ~r~Max Health~/~ and ~lg~33%~/~ ~bl~Max Energy~/~.##Summons a ~w~Wraith~/~ for each missing corpse within the area of effect. The ~w~Wraith's~/~ power depends on the number of ~lg~\""Essence Charge\""~/~ stacks.##Grants ~w~3-6~/~ turns of ~lg~\""Disorder\""~/~ for each instance of ~w~Summoning~/~. ~w~Wraiths~/~ ~r~die~/~ once ~lg~\""Disorder\""~/~ expires.##This spell cannot be cast while under the effects of ~r~\""Obsession\""~/~ or ~lg~\""Disorder\""~/~.;
@@ -1987,7 +2132,7 @@ popenv [1000]")
         Reanimates up to ~w~3~/~ corpses within ~w~6~/~ tiles, restoring them to ~lg~33%~/~ of their ~r~Max Health~/~ and ~lg~33%~/~ ~bl~Max Energy~/~.##Summons a ~w~Wraith~/~ for each missing corpse within the area of effect. The ~w~Wraith's~/~ power depends on the number of ~lg~\""Essence Charge\""~/~ stacks.##Grants ~w~3-6~/~ turns of ~lg~\""Disorder\""~/~ for each instance of ~w~Summoning~/~. ~w~Wraiths~/~ ~r~die~/~ once ~lg~\""Disorder\""~/~ expires.##This spell cannot be cast while under the effects of ~r~\""Obsession\""~/~ or ~lg~\""Disorder\""~/~.;
         "",
         ""Death_Plague;
-        Убивает случайную союзную нежить или уничтожает один из ближайших трупов.##Приоритет выбора целей: ~w~Трупы~/~ > ~w~Умертвия~/~ > ~w~Нежить~/~.##Активирует эффект ~lg~\""Поглощëнная душа\""~/~ на ~w~30~/~ ходов:##~lg~+13%~/~ к силе магии#~lg~-9%~/~ к затратам на заклинания#~lg~-9%~/~ к времени восст. способностей#~lg~-9%~/~ к получаемому урону#~lg~+66%~/~ к сопр. усталости (этот эффект уменьшается с ростом степени эффекта)##Использование ~w~Заклинаний~/~ уменьшает степень эффекта на ~r~1~/~.##Повторное использование этого заклинания увеличивает степень эффекта (вплоть до ~w~IV~/~) и обновляет его длительность.;
+        Devours a targeted corpse or steals ~r~13%~/~ Max Health and ~bl~13%~/~ Max Energy from an Undead ally, transferring half of them to the caster.##Activates ~lg~\""Essence Charge\""~/~ for ~w~30~/~ turns:##~lg~+5%~/~ Weapon Damage#~lg~+10%~/~ Magic Power#~lg~-6%~/~ Abilities Energy Cost#~lg~+8~/~ Max Energy#~lg~+66%~/~ Fatigue Resistance (this effect decreases based on the stacks)##~w~III~/~ and ~w~IV~/~ stacks of the effect: slight chance of causing ~r~\""Obsession\""~/~.##Using ~w~Spells~/~ reduce the number of stacks by ~r~1~/~.##The repeated use of the spell grants an extra stack of the effect (up to ~w~IV~/~) and refreshes its duration.;
         Devours a targeted corpse or steals ~r~13%~/~ Max Health and ~bl~13%~/~ Max Energy from an Undead ally, transferring half of them to the caster.##Activates ~lg~\""Essence Charge\""~/~ for ~w~30~/~ turns:##~lg~+5%~/~ Weapon Damage#~lg~+10%~/~ Magic Power#~lg~-6%~/~ Abilities Energy Cost#~lg~+8~/~ Max Energy#~lg~+66%~/~ Fatigue Resistance (this effect decreases based on the stacks)##~w~III~/~ and ~w~IV~/~ stacks of the effect: slight chance of causing ~r~\""Obsession\""~/~.##Using ~w~Spells~/~ reduce the number of stacks by ~r~1~/~.##The repeated use of the spell grants an extra stack of the effect (up to ~w~IV~/~) and refreshes its duration.;
         Devours a targeted corpse or steals ~r~13%~/~ Max Health and ~bl~13%~/~ Max Energy from an Undead ally, transferring half of them to the caster.##Activates ~lg~\""Essence Charge\""~/~ for ~w~30~/~ turns:##~lg~+5%~/~ Weapon Damage#~lg~+10%~/~ Magic Power#~lg~-6%~/~ Abilities Energy Cost#~lg~+8~/~ Max Energy#~lg~+66%~/~ Fatigue Resistance (this effect decreases based on the stacks)##~w~III~/~ and ~w~IV~/~ stacks of the effect: slight chance of causing ~r~\""Obsession\""~/~.##Using ~w~Spells~/~ reduce the number of stacks by ~r~1~/~.##The repeated use of the spell grants an extra stack of the effect (up to ~w~IV~/~) and refreshes its duration.;
         Devours a targeted corpse or steals ~r~13%~/~ Max Health and ~bl~13%~/~ Max Energy from an Undead ally, transferring half of them to the caster.##Activates ~lg~\""Essence Charge\""~/~ for ~w~30~/~ turns:##~lg~+5%~/~ Weapon Damage#~lg~+10%~/~ Magic Power#~lg~-6%~/~ Abilities Energy Cost#~lg~+8~/~ Max Energy#~lg~+66%~/~ Fatigue Resistance (this effect decreases based on the stacks)##~w~III~/~ and ~w~IV~/~ stacks of the effect: slight chance of causing ~r~\""Obsession\""~/~.##Using ~w~Spells~/~ reduce the number of stacks by ~r~1~/~.##The repeated use of the spell grants an extra stack of the effect (up to ~w~IV~/~) and refreshes its duration.;
@@ -2000,31 +2145,32 @@ popenv [1000]")
         Devours a targeted corpse or steals ~r~13%~/~ Max Health and ~bl~13%~/~ Max Energy from an Undead ally, transferring half of them to the caster.##Activates ~lg~\""Essence Charge\""~/~ for ~w~30~/~ turns:##~lg~+5%~/~ Weapon Damage#~lg~+10%~/~ Magic Power#~lg~-6%~/~ Abilities Energy Cost#~lg~+8~/~ Max Energy#~lg~+66%~/~ Fatigue Resistance (this effect decreases based on the stacks)##~w~III~/~ and ~w~IV~/~ stacks of the effect: slight chance of causing ~r~\""Obsession\""~/~.##Using ~w~Spells~/~ reduce the number of stacks by ~r~1~/~.##The repeated use of the spell grants an extra stack of the effect (up to ~w~IV~/~) and refreshes its duration.;
         "",
         ""nmadness;
-        Медленно восполняет ~lg~мораль~/~.##Даëт ~g~+33%~/~ к сопр. нечестивому урону и ~g~+25%~/~ к сопр. боли.##~r~Препятствует~/~ получению ~ly~\""Благословения\""~/~.;
-        Successfully raising the dead allows you to ~y~learn~/~ their ~w~active abilities~/~ (for as long as they are available via skill menu).##Increases ~y~Experience Gain~/~ of Undead kills by ~lg~50%~/~.;
-        Successfully raising the dead allows you to ~y~learn~/~ their ~w~active abilities~/~ (for as long as they are available via skill menu).##Increases ~y~Experience Gain~/~ of Undead kills by ~lg~50%~/~.;
-        Successfully raising the dead allows you to ~y~learn~/~ their ~w~active abilities~/~ (for as long as they are available via skill menu).##Increases ~y~Experience Gain~/~ of Undead kills by ~lg~50%~/~.;
-        Successfully raising the dead allows you to ~y~learn~/~ their ~w~active abilities~/~ (for as long as they are available via skill menu).##Increases ~y~Experience Gain~/~ of Undead kills by ~lg~50%~/~.;
-        Successfully raising the dead allows you to ~y~learn~/~ their ~w~active abilities~/~ (for as long as they are available via skill menu).##Increases ~y~Experience Gain~/~ of Undead kills by ~lg~50%~/~.;
-        Successfully raising the dead allows you to ~y~learn~/~ their ~w~active abilities~/~ (for as long as they are available via skill menu).##Increases ~y~Experience Gain~/~ of Undead kills by ~lg~50%~/~.;
-        Successfully raising the dead allows you to ~y~learn~/~ their ~w~active abilities~/~ (for as long as they are available via skill menu).##Increases ~y~Experience Gain~/~ of Undead kills by ~lg~50%~/~.;
-        Successfully raising the dead allows you to ~y~learn~/~ their ~w~active abilities~/~ (for as long as they are available via skill menu).##Increases ~y~Experience Gain~/~ of Undead kills by ~lg~50%~/~.;
-        Successfully raising the dead allows you to ~y~learn~/~ their ~w~active abilities~/~ (for as long as they are available via skill menu).##Increases ~y~Experience Gain~/~ of Undead kills by ~lg~50%~/~.;
+        Successfully raising the dead allows you to ~y~learn~/~ their ~w~active abilities~/~ (for as long as they are available via skill menu).##Increases ~y~Experience Gain~/~ of Undead kills by ~lg~100%~/~.;
+        Successfully raising the dead allows you to ~y~learn~/~ their ~w~active abilities~/~ (for as long as they are available via skill menu).##Increases ~y~Experience Gain~/~ of Undead kills by ~lg~100%~/~.;
+        Successfully raising the dead allows you to ~y~learn~/~ their ~w~active abilities~/~ (for as long as they are available via skill menu).##Increases ~y~Experience Gain~/~ of Undead kills by ~lg~100%~/~.;
+        Successfully raising the dead allows you to ~y~learn~/~ their ~w~active abilities~/~ (for as long as they are available via skill menu).##Increases ~y~Experience Gain~/~ of Undead kills by ~lg~100%~/~.;
+        Successfully raising the dead allows you to ~y~learn~/~ their ~w~active abilities~/~ (for as long as they are available via skill menu).##Increases ~y~Experience Gain~/~ of Undead kills by ~lg~100%~/~.;
+        Successfully raising the dead allows you to ~y~learn~/~ their ~w~active abilities~/~ (for as long as they are available via skill menu).##Increases ~y~Experience Gain~/~ of Undead kills by ~lg~100%~/~.;
+        Successfully raising the dead allows you to ~y~learn~/~ their ~w~active abilities~/~ (for as long as they are available via skill menu).##Increases ~y~Experience Gain~/~ of Undead kills by ~lg~100%~/~.;
+        Successfully raising the dead allows you to ~y~learn~/~ their ~w~active abilities~/~ (for as long as they are available via skill menu).##Increases ~y~Experience Gain~/~ of Undead kills by ~lg~100%~/~.;
+        Successfully raising the dead allows you to ~y~learn~/~ their ~w~active abilities~/~ (for as long as they are available via skill menu).##Increases ~y~Experience Gain~/~ of Undead kills by ~lg~100%~/~.;
+        Successfully raising the dead allows you to ~y~learn~/~ their ~w~active abilities~/~ (for as long as they are available via skill menu).##Increases ~y~Experience Gain~/~ of Undead kills by ~lg~100%~/~.;
         "",
         ""unholymind;
-        Произнесение заклинаний ветки даёт всей нежити в поле зрения ~r~-33%~/~ к сопр. нечестивому урону на ~w~3~/~ хода.##Суммируется до ~w~3~/~ раз.##Немного снижает штрафы ~r~\""Одержимости\""~/~.##Смерть врага от рук союзной нежити в поле зрения даёт ~lg~50%~/~ ~y~опыта~/~.;
         Each turn, decreases max Unholy Resistance of Undeads and Proselytes by ~r~7%~/~ within ~w~7~/~ tiles, which persists for ~w~9~/~ turns.##This effect stacks up to ~w~9~/~ times.##If affecting by ~r~\""Obsession\""~/~, the effect triggers twice per turn.;
-        Casting this ability tree's spells apply all Undeads within vision with ~r~-33%~/~ Unholy Resistance for ~w~3~/~ turns (up to ~w~3~/~ times).##Partially decreases penalties of ~r~\""Obsession\""~/~.##Witnessing the death of an enemy grants ~lg~50%~/~ of their ~y~XP~/~.;
-        Casting this ability tree's spells apply all Undeads within vision with ~r~-33%~/~ Unholy Resistance for ~w~3~/~ turns (up to ~w~3~/~ times).##Partially decreases penalties of ~r~\""Obsession\""~/~.##Witnessing the death of an enemy grants ~lg~50%~/~ of their ~y~XP~/~.;
-        Casting this ability tree's spells apply all Undeads within vision with ~r~-33%~/~ Unholy Resistance for ~w~3~/~ turns (up to ~w~3~/~ times).##Partially decreases penalties of ~r~\""Obsession\""~/~.##Witnessing the death of an enemy grants ~lg~50%~/~ of their ~y~XP~/~.;
-        Casting this ability tree's spells apply all Undeads within vision with ~r~-33%~/~ Unholy Resistance for ~w~3~/~ turns (up to ~w~3~/~ times).##Partially decreases penalties of ~r~\""Obsession\""~/~.##Witnessing the death of an enemy grants ~lg~50%~/~ of their ~y~XP~/~.;
-        Casting this ability tree's spells apply all Undeads within vision with ~r~-33%~/~ Unholy Resistance for ~w~3~/~ turns (up to ~w~3~/~ times).##Partially decreases penalties of ~r~\""Obsession\""~/~.##Witnessing the death of an enemy grants ~lg~50%~/~ of their ~y~XP~/~.;
-        Casting this ability tree's spells apply all Undeads within vision with ~r~-33%~/~ Unholy Resistance for ~w~3~/~ turns (up to ~w~3~/~ times).##Partially decreases penalties of ~r~\""Obsession\""~/~.##Witnessing the death of an enemy grants ~lg~50%~/~ of their ~y~XP~/~.;
-        Casting this ability tree's spells apply all Undeads within vision with ~r~-33%~/~ Unholy Resistance for ~w~3~/~ turns (up to ~w~3~/~ times).##Partially decreases penalties of ~r~\""Obsession\""~/~.##Witnessing the death of an enemy grants ~lg~50%~/~ of their ~y~XP~/~.;
-        Casting this ability tree's spells apply all Undeads within vision with ~r~-33%~/~ Unholy Resistance for ~w~3~/~ turns (up to ~w~3~/~ times).##Partially decreases penalties of ~r~\""Obsession\""~/~.##Witnessing the death of an enemy grants ~lg~50%~/~ of their ~y~XP~/~.;
-        Casting this ability tree's spells apply all Undeads within vision with ~r~-33%~/~ Unholy Resistance for ~w~3~/~ turns (up to ~w~3~/~ times).##Partially decreases penalties of ~r~\""Obsession\""~/~.##Witnessing the death of an enemy grants ~lg~50%~/~ of their ~y~XP~/~.;"",
+        Each turn, decreases max Unholy Resistance of Undeads and Proselytes by ~r~7%~/~ within ~w~7~/~ tiles, which persists for ~w~9~/~ turns.##This effect stacks up to ~w~9~/~ times.##If affecting by ~r~\""Obsession\""~/~, the effect triggers twice per turn.;
+        Each turn, decreases max Unholy Resistance of Undeads and Proselytes by ~r~7%~/~ within ~w~7~/~ tiles, which persists for ~w~9~/~ turns.##This effect stacks up to ~w~9~/~ times.##If affecting by ~r~\""Obsession\""~/~, the effect triggers twice per turn.;
+        Each turn, decreases max Unholy Resistance of Undeads and Proselytes by ~r~7%~/~ within ~w~7~/~ tiles, which persists for ~w~9~/~ turns.##This effect stacks up to ~w~9~/~ times.##If affecting by ~r~\""Obsession\""~/~, the effect triggers twice per turn.;
+        Each turn, decreases max Unholy Resistance of Undeads and Proselytes by ~r~7%~/~ within ~w~7~/~ tiles, which persists for ~w~9~/~ turns.##This effect stacks up to ~w~9~/~ times.##If affecting by ~r~\""Obsession\""~/~, the effect triggers twice per turn.;
+        Each turn, decreases max Unholy Resistance of Undeads and Proselytes by ~r~7%~/~ within ~w~7~/~ tiles, which persists for ~w~9~/~ turns.##This effect stacks up to ~w~9~/~ times.##If affecting by ~r~\""Obsession\""~/~, the effect triggers twice per turn.;
+        Each turn, decreases max Unholy Resistance of Undeads and Proselytes by ~r~7%~/~ within ~w~7~/~ tiles, which persists for ~w~9~/~ turns.##This effect stacks up to ~w~9~/~ times.##If affecting by ~r~\""Obsession\""~/~, the effect triggers twice per turn.;
+        Each turn, decreases max Unholy Resistance of Undeads and Proselytes by ~r~7%~/~ within ~w~7~/~ tiles, which persists for ~w~9~/~ turns.##This effect stacks up to ~w~9~/~ times.##If affecting by ~r~\""Obsession\""~/~, the effect triggers twice per turn.;
+        Each turn, decreases max Unholy Resistance of Undeads and Proselytes by ~r~7%~/~ within ~w~7~/~ tiles, which persists for ~w~9~/~ turns.##This effect stacks up to ~w~9~/~ times.##If affecting by ~r~\""Obsession\""~/~, the effect triggers twice per turn.;
+        Each turn, decreases max Unholy Resistance of Undeads and Proselytes by ~r~7%~/~ within ~w~7~/~ tiles, which persists for ~w~9~/~ turns.##This effect stacks up to ~w~9~/~ times.##If affecting by ~r~\""Obsession\""~/~, the effect triggers twice per turn.;
+        Each turn, decreases max Unholy Resistance of Undeads and Proselytes by ~r~7%~/~ within ~w~7~/~ tiles, which persists for ~w~9~/~ turns.##This effect stacks up to ~w~9~/~ times.##If affecting by ~r~\""Obsession\""~/~, the effect triggers twice per turn.;
+        "",
         ""ndarkness;
-        ~lg~Уполовинивает~/~ потери рассудка от умений ~w~Оккультизма~/~.##Отвязывание нежити не тратит ход и восполняет количество ~bl~энергии~/~ равное ~lg~5%~/~ от ~w~силы магии~/~.##Увеличивает максимальное число воскрешëнной нежити на ~lg~1~/~.;
+        Halves sanity loss of ~w~Occultism~/~ abilities and partially decreases penalties of ~r~\""Obsession\""~/~.##Grants ~lg~33%~/~ Unholy Resistance.;
         Halves sanity loss of ~w~Occultism~/~ abilities and partially decreases penalties of ~r~\""Obsession\""~/~.##Grants ~lg~33%~/~ Unholy Resistance.;
         Halves sanity loss of ~w~Occultism~/~ abilities and partially decreases penalties of ~r~\""Obsession\""~/~.##Grants ~lg~33%~/~ Unholy Resistance.;
         Halves sanity loss of ~w~Occultism~/~ abilities and partially decreases penalties of ~r~\""Obsession\""~/~.##Grants ~lg~33%~/~ Unholy Resistance.;
@@ -2037,7 +2183,7 @@ popenv [1000]")
         Halves sanity loss of ~w~Occultism~/~ abilities and partially decreases penalties of ~r~\""Obsession\""~/~.##Grants ~lg~33%~/~ Unholy Resistance.;
         "",
         ""Pcurse;
-        Накладывает на цель эффект ~r~\""Мучительное проклятие\""~/~ на ~w~13~/~ ходов:##~r~+0.5%~/~ к изменению боли#~r~-4%~/~ к урону оружия#~r~-5%~/~ к силе магии#~r~-5%~/~ к запасу здоровья#~r~+4%~/~ к получаемому урону##~w~IV~/~ степень: каждый ход ухудшает состояние случайной части тела на ~r~1%~/~##Каждый ход увеличивает степень эффекта (вплоть до ~w~IV~/~). Обычные удары, выстрелы и применение способностей уменьшают степень на ~lg~2~/~.;
+        Applies the target with ~r~\""Withering Curse\""~/~ for ~w~13~/~ turns:##~r~-9%~/~ Fortitude#~r~-9%~/~ Magic Resistance#~r~-7%~/~ Nature Resistance#~r~-6%~/~ Max Health#~r~+4%~/~ Damage Taken##Each turn worsens the Condition of a random body part by ~r~0.5%~/~ per each stack.##Hitting the target by ~lg~\""Desecration\""~/~ or the the repeated use of the spell against the same target applies an extra stack of the effect (up to ~w~III~/~).;
         Applies the target with ~r~\""Withering Curse\""~/~ for ~w~13~/~ turns:##~r~-9%~/~ Fortitude#~r~-9%~/~ Magic Resistance#~r~-7%~/~ Nature Resistance#~r~-6%~/~ Max Health#~r~+4%~/~ Damage Taken##Each turn worsens the Condition of a random body part by ~r~0.5%~/~ per each stack.##Hitting the target by ~lg~\""Desecration\""~/~ or the the repeated use of the spell against the same target applies an extra stack of the effect (up to ~w~III~/~).;
         Applies the target with ~r~\""Withering Curse\""~/~ for ~w~13~/~ turns:##~r~-9%~/~ Fortitude#~r~-9%~/~ Magic Resistance#~r~-7%~/~ Nature Resistance#~r~-6%~/~ Max Health#~r~+4%~/~ Damage Taken##Each turn worsens the Condition of a random body part by ~r~0.5%~/~ per each stack.##Hitting the target by ~lg~\""Desecration\""~/~ or the the repeated use of the spell against the same target applies an extra stack of the effect (up to ~w~III~/~).;
         Applies the target with ~r~\""Withering Curse\""~/~ for ~w~13~/~ turns:##~r~-9%~/~ Fortitude#~r~-9%~/~ Magic Resistance#~r~-7%~/~ Nature Resistance#~r~-6%~/~ Max Health#~r~+4%~/~ Damage Taken##Each turn worsens the Condition of a random body part by ~r~0.5%~/~ per each stack.##Hitting the target by ~lg~\""Desecration\""~/~ or the the repeated use of the spell against the same target applies an extra stack of the effect (up to ~w~III~/~).;
@@ -2050,7 +2196,7 @@ popenv [1000]")
         Applies the target with ~r~\""Withering Curse\""~/~ for ~w~13~/~ turns:##~r~-9%~/~ Fortitude#~r~-9%~/~ Magic Resistance#~r~-7%~/~ Nature Resistance#~r~-6%~/~ Max Health#~r~+4%~/~ Damage Taken##Each turn worsens the Condition of a random body part by ~r~0.5%~/~ per each stack.##Hitting the target by ~lg~\""Desecration\""~/~ or the the repeated use of the spell against the same target applies an extra stack of the effect (up to ~w~III~/~).;
         "",
         ""Bw_Bless;
-        Восполняет цели ~lg~/*H_P*/%~/~ запаса здоровья и восстанавливает ~lg~ 33%~/~ состояния частей тела от количества восполненного здоровья.##Лечение на ~lg~50%~/~ эффективнее для союзной Нежити.##Накладывает на цель эффект ~lg~\""Дар Смерти\""~/~ на ~w~13~/~ ходов:##~lg~+9%~/~ к похищению жизни#~lg~+9%~/~ к похищению энергии#~lg~+13%~/~ к отражению урона;
+        Replenishes ~lg~/*H_P*/%~/~ Max Health to the target and improves the condition of bodyparts by ~lg~33%~/~ of the amount of health replenished.##This effect is ~lg~50%~/~ more effective on allied Undeads.##grants the target ~lg~\""Death's Blessing\""~/~ for ~w~13~/~ turns:##~lg~+9%~/~ Life Drain#~lg~+9%~/~ Energy Drain#~lg~+13%~/~ Damage Reflection;
         Replenishes ~lg~/*H_P*/%~/~ Max Health to the target and improves the condition of bodyparts by ~lg~33%~/~ of the amount of health replenished.##This effect is ~lg~50%~/~ more effective on allied Undeads.##grants the target ~lg~\""Death's Blessing\""~/~ for ~w~13~/~ turns:##~lg~+9%~/~ Life Drain#~lg~+9%~/~ Energy Drain#~lg~+13%~/~ Damage Reflection;
         Replenishes ~lg~/*H_P*/%~/~ Max Health to the target and improves the condition of bodyparts by ~lg~33%~/~ of the amount of health replenished.##This effect is ~lg~50%~/~ more effective on allied Undeads.##grants the target ~lg~\""Death's Blessing\""~/~ for ~w~13~/~ turns:##~lg~+9%~/~ Life Drain#~lg~+9%~/~ Energy Drain#~lg~+13%~/~ Damage Reflection;
         Replenishes ~lg~/*H_P*/%~/~ Max Health to the target and improves the condition of bodyparts by ~lg~33%~/~ of the amount of health replenished.##This effect is ~lg~50%~/~ more effective on allied Undeads.##grants the target ~lg~\""Death's Blessing\""~/~ for ~w~13~/~ turns:##~lg~+9%~/~ Life Drain#~lg~+9%~/~ Energy Drain#~lg~+13%~/~ Damage Reflection;
@@ -2063,7 +2209,7 @@ popenv [1000]")
         Replenishes ~lg~/*H_P*/%~/~ Max Health to the target and improves the condition of bodyparts by ~lg~33%~/~ of the amount of health replenished.##This effect is ~lg~50%~/~ more effective on allied Undeads.##grants the target ~lg~\""Death's Blessing\""~/~ for ~w~13~/~ turns:##~lg~+9%~/~ Life Drain#~lg~+9%~/~ Energy Drain#~lg~+13%~/~ Damage Reflection;
         "",
         ""Bw_Bolt;
-        Выпускает сгусток тёмной энергии, с ~w~/*Hit_Chance*/%~/~ точностью нанося ~ur~/*Unholy_Damage*/ нечестивого урона~/~.##Если заклинание попадает в цель, выжигает ей равное нанесённому урону количество энергии и восполняет столько же энергии заклинателю.##Даëт ~ur~/*Unholy_Damage2*/ нечестивого урона~/~ на ~w~12~/~ ходов.##Эффект не суммируется.;
+        Shoots a bolt of dark energy, dealing ~ur~/*Unholy_Damage*/ Unholy Damage~/~ with ~w~/*Hit_Chance*/%~/~ Accuracy.##If the spell hits the target, burns its Energy for the amount of damage dealt and replenishes the same amount of Energy to the caster.##Grants ~ur~/*Unholy_Damage2*/ Unholy Damage~/~ for ~w~12~/~ turns.##This effect doesn't stack.;
         Shoots a bolt of dark energy, dealing ~ur~/*Unholy_Damage*/ Unholy Damage~/~ with ~w~/*Hit_Chance*/%~/~ Accuracy.##If the spell hits the target, burns its Energy for the amount of damage dealt and replenishes the same amount of Energy to the caster.##Grants ~ur~/*Unholy_Damage2*/ Unholy Damage~/~ for ~w~12~/~ turns.##This effect doesn't stack.;
         Shoots a bolt of dark energy, dealing ~ur~/*Unholy_Damage*/ Unholy Damage~/~ with ~w~/*Hit_Chance*/%~/~ Accuracy.##If the spell hits the target, burns its Energy for the amount of damage dealt and replenishes the same amount of Energy to the caster.##Grants ~ur~/*Unholy_Damage2*/ Unholy Damage~/~ for ~w~12~/~ turns.##This effect doesn't stack.;
         Shoots a bolt of dark energy, dealing ~ur~/*Unholy_Damage*/ Unholy Damage~/~ with ~w~/*Hit_Chance*/%~/~ Accuracy.##If the spell hits the target, burns its Energy for the amount of damage dealt and replenishes the same amount of Energy to the caster.##Grants ~ur~/*Unholy_Damage2*/ Unholy Damage~/~ for ~w~12~/~ turns.##This effect doesn't stack.;
@@ -2076,7 +2222,7 @@ popenv [1000]")
         Shoots a bolt of dark energy, dealing ~ur~/*Unholy_Damage*/ Unholy Damage~/~ with ~w~/*Hit_Chance*/%~/~ Accuracy.##If the spell hits the target, burns its Energy for the amount of damage dealt and replenishes the same amount of Energy to the caster.##Grants ~ur~/*Unholy_Damage2*/ Unholy Damage~/~ for ~w~12~/~ turns.##This effect doesn't stack.;
         "",
         ""Bw_Resurrection;
-        Воскрешает выбранный труп, восполняя поднятой нежити ~lg~66%~/~ запаса здоровья и ~bl~66%~/~ запаса энергии. Прочность брони воскрешаемой нежити равна ~w~0%~/~.##Медленно понижает ~lg~рассудок~/~ до ~r~60%~/~.##Риск ~r~\""Одержимости\""~/~: ~ur~Высокий~/~##Призыв нежити свыше доступного максимума моментально вызывает ~r~\""Одержимость\""~/~ и постоянно продлевает её.##Использование этого заклинания ~r~невозможно~/~ под эффектом ~r~\""Одержимости\""~/~.;
+        Reanimates a targeted corpse, replenishing it ~lg~66%~/~ Max Health and ~bl~66%~/~ Max Energy and sets Armor Durability to ~w~0%~/~.##Increases ~lg~morale~/~ (up to ~w~75%~/~).#Slowly decreases ~lg~Sanity~/~ but no less than ~r~60%~/~.##Risk of ~r~\""Obsession\""~/~: ~ur~High~/~#Summoning more than one Undead instantly causes ~r~\""Obsession\""~/~.##~r~Can't~/~ summon Undeads higher than level ~w~/*LEVL*/~/~.##~r~Prevents~/~ from receiving ~ly~\""Blessing\""~/~.##This spell cannot be cast while under the effect of ~r~\""Obsession\""~/~.;
         Reanimates a targeted corpse, replenishing it ~lg~66%~/~ Max Health and ~bl~66%~/~ Max Energy and sets Armor Durability to ~w~0%~/~.##Increases ~lg~morale~/~ (up to ~w~75%~/~).#Slowly decreases ~lg~Sanity~/~ but no less than ~r~60%~/~.##Risk of ~r~\""Obsession\""~/~: ~ur~High~/~#Summoning more than one Undead instantly causes ~r~\""Obsession\""~/~.##~r~Can't~/~ summon Undeads higher than level ~w~/*LEVL*/~/~.##~r~Prevents~/~ from receiving ~ly~\""Blessing\""~/~.##This spell cannot be cast while under the effect of ~r~\""Obsession\""~/~.;
         Reanimates a targeted corpse, replenishing it ~lg~66%~/~ Max Health and ~bl~66%~/~ Max Energy and sets Armor Durability to ~w~0%~/~.##Increases ~lg~morale~/~ (up to ~w~75%~/~).#Slowly decreases ~lg~Sanity~/~ but no less than ~r~60%~/~.##Risk of ~r~\""Obsession\""~/~: ~ur~High~/~#Summoning more than one Undead instantly causes ~r~\""Obsession\""~/~.##~r~Can't~/~ summon Undeads higher than level ~w~/*LEVL*/~/~.##~r~Prevents~/~ from receiving ~ly~\""Blessing\""~/~.##This spell cannot be cast while under the effect of ~r~\""Obsession\""~/~.;
         Reanimates a targeted corpse, replenishing it ~lg~66%~/~ Max Health and ~bl~66%~/~ Max Energy and sets Armor Durability to ~w~0%~/~.##Increases ~lg~morale~/~ (up to ~w~75%~/~).#Slowly decreases ~lg~Sanity~/~ but no less than ~r~60%~/~.##Risk of ~r~\""Obsession\""~/~: ~ur~High~/~#Summoning more than one Undead instantly causes ~r~\""Obsession\""~/~.##~r~Can't~/~ summon Undeads higher than level ~w~/*LEVL*/~/~.##~r~Prevents~/~ from receiving ~ly~\""Blessing\""~/~.##This spell cannot be cast while under the effect of ~r~\""Obsession\""~/~.;
@@ -2089,7 +2235,7 @@ popenv [1000]")
         Reanimates a targeted corpse, replenishing it ~lg~66%~/~ Max Health and ~bl~66%~/~ Max Energy and sets Armor Durability to ~w~0%~/~.##Increases ~lg~morale~/~ (up to ~w~75%~/~).#Slowly decreases ~lg~Sanity~/~ but no less than ~r~60%~/~.##Risk of ~r~\""Obsession\""~/~: ~ur~High~/~#Summoning more than one Undead instantly causes ~r~\""Obsession\""~/~.##~r~Can't~/~ summon Undeads higher than level ~w~/*LEVL*/~/~.##~r~Prevents~/~ from receiving ~ly~\""Blessing\""~/~.##This spell cannot be cast while under the effect of ~r~\""Obsession\""~/~.;
         "",
         ""Bw_Touch;
-        Наносит ~ur~/*Unholy_Damage*/ нечестивого урона~/~.##Восполняет всей союзной нежити в зоне видимости количество здоровья равное ~lg~66%~/~ от нанесённого заклинанием урона.;
+        Deals ~ur~/*Unholy_Damage*/ Unholy Damage~/~ wtih ~lg~/*I_C*/%~/~ Immobilization Chance.##Replenishes Health to all allies within Vision for ~lg~66%~/~ of the damage dealt by the spell.;
         Deals ~ur~/*Unholy_Damage*/ Unholy Damage~/~ wtih ~lg~/*I_C*/%~/~ Immobilization Chance.##Replenishes Health to all allies within Vision for ~lg~66%~/~ of the damage dealt by the spell.;
         Deals ~ur~/*Unholy_Damage*/ Unholy Damage~/~ wtih ~lg~/*I_C*/%~/~ Immobilization Chance.##Replenishes Health to all allies within Vision for ~lg~66%~/~ of the damage dealt by the spell.;
         Deals ~ur~/*Unholy_Damage*/ Unholy Damage~/~ wtih ~lg~/*I_C*/%~/~ Immobilization Chance.##Replenishes Health to all allies within Vision for ~lg~66%~/~ of the damage dealt by the spell.;
@@ -2102,7 +2248,7 @@ popenv [1000]")
         Deals ~ur~/*Unholy_Damage*/ Unholy Damage~/~ wtih ~lg~/*I_C*/%~/~ Immobilization Chance.##Replenishes Health to all allies within Vision for ~lg~66%~/~ of the damage dealt by the spell.;
         "",
         ""Wraith_Binding;
-        Призывает ~w~Умертвие~/~ на выбранной клетке. Сила ~w~Умертвия~/~ зависит от степени ~lg~\""Поглощëнной души\""~/~ заклинателя.##Произнесение этого заклинания сбрасывает эффект ~lg~\""Поглощëнной души\""~/~.##Если при произнесении в руках нет оружия: даёт этому заклинанию ~lg~-50%~/~ к времени восст. и ~lg~уполовинивает~/~ шанс неудачи.##Риск ~r~\""Одержимости\""~/~: ~r~Неимоверно высокий~/~##Использование этого заклинания ~r~невозможно~/~ под эффектом ~r~\""Одержимости\""~/~.;
+        Summons a ~w~Wraith~/~ on the targeted tile. The ~w~Wraith's~/~ power depends on the number of ~lg~\""Essence Charge\""~/~ stacks.##Using the ability removes ~lg~\""Essence Charge\""~/~.##If there was no weapon equipped: grants the skill ~lg~-50%~/~ Cooldown Duration and ~lg~Halves~/~ Miscast Chance.##Risk of ~r~\""Obsession\""~/~: ~r~Extremely High~/~#Summoning more than one Wraith instantly causes ~r~\""Obsession\""~/~.##~r~Can't~/~ summon Wraiths higher than level ~w~/*LEVL*/~/~.##This spell cannot be cast while under the effect of ~r~\""Obsession\""~/~.;
         Summons a ~w~Wraith~/~ on the targeted tile. The ~w~Wraith's~/~ power depends on the number of ~lg~\""Essence Charge\""~/~ stacks.##Using the ability removes ~lg~\""Essence Charge\""~/~.##If there was no weapon equipped: grants the skill ~lg~-50%~/~ Cooldown Duration and ~lg~Halves~/~ Miscast Chance.##Risk of ~r~\""Obsession\""~/~: ~r~Extremely High~/~#Summoning more than one Wraith instantly causes ~r~\""Obsession\""~/~.##~r~Can't~/~ summon Wraiths higher than level ~w~/*LEVL*/~/~.##This spell cannot be cast while under the effect of ~r~\""Obsession\""~/~.;
         Summons a ~w~Wraith~/~ on the targeted tile. The ~w~Wraith's~/~ power depends on the number of ~lg~\""Essence Charge\""~/~ stacks.##Using the ability removes ~lg~\""Essence Charge\""~/~.##If there was no weapon equipped: grants the skill ~lg~-50%~/~ Cooldown Duration and ~lg~Halves~/~ Miscast Chance.##Risk of ~r~\""Obsession\""~/~: ~r~Extremely High~/~#Summoning more than one Wraith instantly causes ~r~\""Obsession\""~/~.##~r~Can't~/~ summon Wraiths higher than level ~w~/*LEVL*/~/~.##This spell cannot be cast while under the effect of ~r~\""Obsession\""~/~.;
         Summons a ~w~Wraith~/~ on the targeted tile. The ~w~Wraith's~/~ power depends on the number of ~lg~\""Essence Charge\""~/~ stacks.##Using the ability removes ~lg~\""Essence Charge\""~/~.##If there was no weapon equipped: grants the skill ~lg~-50%~/~ Cooldown Duration and ~lg~Halves~/~ Miscast Chance.##Risk of ~r~\""Obsession\""~/~: ~r~Extremely High~/~#Summoning more than one Wraith instantly causes ~r~\""Obsession\""~/~.##~r~Can't~/~ summon Wraiths higher than level ~w~/*LEVL*/~/~.##This spell cannot be cast while under the effect of ~r~\""Obsession\""~/~.;
