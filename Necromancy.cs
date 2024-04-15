@@ -97,7 +97,6 @@ public class Necromancy : Mod
 
     public override void PatchMod()
     {
-
         UndertaleGameObject o_skill_death_plague_ico = Msl.AddObject(
             name: "o_skill_death_plague_ico", 
             spriteName: "s_soul_abs", 
@@ -1664,9 +1663,53 @@ else
             .Save();
 
             
-    Msl.LoadAssemblyAsString("gml_Object_o_enemy_Destroy_0")
+        Msl.LoadAssemblyAsString("gml_Object_o_enemy_Destroy_0")
             .Apply(EnemyDestroyIterator)
             .Save();
+
+        Msl.LoadGML("gml_Object_o_enemy_Mouse_5")
+            .MatchFrom("global.skill_test\nscr_create_context_menu(\"Test_Skill\")")
+            .ReplaceBy(@"if ((faction_id == ""Pet"") || (faction_id == ""Servant"") || (faction_id == ""Fallower""))
+{
+scr_create_context_menu(""Atack"", ""Explore"", ""Swap"")
+}")
+            .Save();
+    
+        Msl.LoadGML("gml_Object_o_enemy_pass_zombie_Other_22")
+            .MatchFrom("variable_instance_exists(id, \"enemyTag\")")
+            .ReplaceBy(@"if (variable_instance_exists(id, ""enemyTag"") && scr_instance_exists_in_list(o_b_servemaster, buffs))
+{
+scr_param((string(enemyTag) + "" NH""), 0, 1)
+}
+else if variable_instance_exists(id, ""enemyTag"")")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_flesh_explosion_Other_12")
+            .MatchAll()
+            .Remove()
+            .Save();
+
+        string[] destroyEnemies = {
+            "gml_Object_o_ghost_cleric_Destroy_0",
+            "gml_Object_o_ghost_commander_Destroy_0",
+            "gml_Object_o_ghost_Destroy_0",
+            "gml_Object_o_ghost_knight_Destroy_0",
+            "gml_Object_o_ghost_monk_Destroy_0",
+            "gml_Object_o_ghost_seer_Destroy_0",
+            "gml_Object_o_ghost_sergeant_Destroy_0",
+            "gml_Object_o_ghost_squire_Destroy_0",
+            "gml_Object_o_ghost_templar_Destroy_0"
+            };
+
+        foreach(string destroyEnemy in destroyEnemies)
+        {
+            Msl.LoadGML(destroyEnemy)
+                .MatchFrom("can_drop_loot")
+                .InsertAbove("if (faction_id != \"Servant\"){")
+                .MatchAll()
+                .InsertBelow("}")
+                .Save();
+        }
 
         Msl.LoadGML("gml_Object_o_player_Create_0")
             .MatchFrom("event_inherited()")
@@ -2075,7 +2118,6 @@ popz.v
         "\"Bw_Touch;Касание смерти;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;\"," +
         "\"Wraith_Binding;Призыв умертвия;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;\",";
 
-        string sealofpower_ru = "#~ur~Оккультизм:~/~ ~lg~+15%~/~ к силе магии, ~lg~+12.5%~/~ к урону оружия нечестивостью, ~lg~-5%~/~ к получаемому урону, ~lg~-5%~/~ к времени восст. способностей";
         string sealofpower_en = "#~ur~Occultism:~/~ ~lg~+15%~/~ Magic Power, ~lg~+12.5%~/~ Weapon Damage, dealt as Unholy, ~lg~-5%~/~ Damage Taken, ~lg~-5%~/~ Cooldown Durations";
 
         string undead = "\";;///// UNDEAD;///// UNDEAD;;;;;///// UNDEAD;///// UNDEAD;;;;\",";
