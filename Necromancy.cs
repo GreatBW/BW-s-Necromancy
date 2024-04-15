@@ -1272,7 +1272,7 @@ grid_y = round((yy div 26))
 }")
             .Save();
 
-        // gml_GlobalScript_scr_get_damage_of_weapon
+        //TODO: gml_GlobalScript_scr_get_damage_of_weapon
 
          Msl.LoadGML("gml_GlobalScript_scr_get_XP")
             .MatchFrom("{")
@@ -1306,7 +1306,13 @@ with (o_pass_skill_unholymind) event_user(3)")
             .InsertBelow("}")
             .Save();
 
-        // gml_GlobalScript_scr_qualityBgDraw
+        Msl.LoadGML("gml_GlobalScript_scr_qualityBgDraw")
+            .MatchFrom("_colorTexture = make_color_rgb(34, 32, 35)\nbreak")
+            .InsertBelow(@"case (10 << 0):
+_colorBG = make_color_rgb(65, 44, 44)
+_colorTexture = make_color_rgb(102, 48, 48)
+break")
+            .Save();
 
         Msl.LoadGML("gml_GlobalScript_scr_skill_tier_init")
             .MatchFrom("}")
@@ -1316,7 +1322,12 @@ global.necromancy_tier2 = [""Necromancy"", o_skill_bw_resurrection_ico, o_bw_dar
 global.necromancy_tier3 = [""Necromancy"", o_pass_skill_unholymind, o_skill_bw_touch_ico, o_skill_soul_explosion_ico]")
             .Save();
 
-        // gml_GlobalScript_scr_weapon_generation
+        Msl.LoadGML("gml_GlobalScript_scr_weapon_generation")
+            .MatchFrom("Treasure = (7 << 0)")
+            .InsertBelow("Unholy = (10 << 0)")
+            .MatchFrom("ds_map_add(tech, string(Treasure), make_colour")
+            .InsertBelow("ds_map_add(tech, string(Unholy), make_colour_rgb(236, 77, 73))")
+            .Save();
             
         // events
         Msl.LoadGML("gml_Object_c_roadAltar_Other_10")
@@ -1711,9 +1722,101 @@ else if variable_instance_exists(id, ""enemyTag"")")
                 .Save();
         }
 
+        Msl.LoadGML("gml_Object_o_howl_Alarm_0")
+            .MatchFrom("(id != other.owner)")
+            .InsertAbove("if (!(scr_instance_exists_in_list(o_b_servemaster, buffs)))\n{")
+            .MatchFrom("state = \"npc combat\"")
+            .InsertBelow("}")
+            .Save();
+
+        // TODO: check this
+        Msl.LoadGML("gml_Object_o_inv_slot_Other_17")
+            .MatchFrom("var _pretype = string_extract(ds")
+            .InsertAbove(@"if (ds_map_find_value(data, ""quality"") == (10 << 0))
+{
+_name = (((""Darkened"" + _char) + _space) + weap_name)
+ds_map_replace(data, ""Name"", _name)
+}")
+            .MatchFrom("type_text = (((scr_stringTransformFirst(scr_string_g")
+            .InsertBelow(@"if (ds_map_find_value(data, ""quality"") == (10 << 0))
+{
+type_text = (""Unholy "" + _type_text)
+}")
+            .Save();
+
+        string[] boss_drop = {
+            "gml_Object_o_necromancer_boss_Alarm_4",
+            "gml_Object_o_necromancer_boss_staff_Alarm_4",
+            "gml_Object_o_necromancer_ritualist_Alarm_4",
+            "gml_Object_o_necromancer_wraithbinder_Alarm_4"
+        };
+
+        foreach(string boss in boss_drop)
+        {
+            Msl.LoadGML(boss)
+                .MatchAll()
+                .InsertAbove("if ((!(scr_instance_exists_in_list(o_b_servemaster, buffs))) && (!instance_exists(o_res_buff_creator)) && (!instance_exists(o_undead_fixer))){")
+                .MatchAll()
+                .InsertBelow("}")
+                .Save();
+        }
+
+        Msl.LoadGML("gml_Object_o_necromancer_wraithbinder_Destroy_0")
+            .MatchAll()
+            .InsertBelow(@"if ((!instance_exists(o_undead_fixer)) && faction_id != ""Servant"")
+scr_loot(o_loot_cgrimoir3, x, y, 100)")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_net_throw_Alarm_0")
+            .MatchFrom("scr_audio_play_at")
+            .InsertBelow(@"var _own = owner
+if scr_instance_exists_in_list(o_b_servemaster, owner.buffs)
+{
+with (o_db_net)
+{
+if (owner == _own) is_special = 1
+}
+}")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_pass_skill_spirit_and_body_Other_13")
+            .MatchAll()
+            .InsertBelow(@"if (!is_enemy_skill)
+{
+if (instance_exists(o_pass_skill_kingdead) && o_pass_skill_kingdead.is_open)
+{
+if is_attack_skill
+{
+}
+else if instance_exists(o_player)
+{
+with (o_unit)
+{
+if ((!is_player()) && is_visible() && faction_id != ""Servant"")
+instance_create(x, y, o_archtheurgy_impact)
+}
+}
+}
+if is_attack_skill
+{
+}
+else if (!global.bw_selection)
+{
+with (o_b_charged_soul)
+event_user(4)
+}
+global.bw_selection = 0
+}")
+            .Save();
+
         Msl.LoadGML("gml_Object_o_player_Create_0")
             .MatchFrom("event_inherited()")
             .InsertBelow("wraith_spin = -4")
+            .Save();
+
+        Msl.LoadGML("gml_Object_o_proselyte_martyr_dead_Create_0")
+            .MatchFrom("corpse_type")
+            .ReplaceBy("corpse_type = o_empty")
             .Save();
 
         Msl.LoadGML("gml_Object_o_skillmenu_Create_0")
@@ -2118,6 +2221,7 @@ popz.v
         "\"Bw_Touch;Касание смерти;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;\"," +
         "\"Wraith_Binding;Призыв умертвия;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;\",";
 
+        // TODO: inject that
         string sealofpower_en = "#~ur~Occultism:~/~ ~lg~+15%~/~ Magic Power, ~lg~+12.5%~/~ Weapon Damage, dealt as Unholy, ~lg~-5%~/~ Damage Taken, ~lg~-5%~/~ Cooldown Durations";
 
         string undead = "\";;///// UNDEAD;///// UNDEAD;;;;;///// UNDEAD;///// UNDEAD;;;;\",";
