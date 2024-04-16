@@ -7,7 +7,7 @@ button = "4"
 is_missile = 0
 scr_skill_atr(7)
 pointed = "Target Object"
-target_group = 1817
+target_group = o_unit
 self_cast = 0
 spell = 3146
 can_scale_range = 1

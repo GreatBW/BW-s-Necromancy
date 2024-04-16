@@ -10,6 +10,6 @@ with (target)
 }
 with (o_player)
 {
-    scr_guiAnimation(12882)
-    scr_audio_play_at(1214)
+    scr_guiAnimation(s_charming)
+    scr_audio_play_at(snd_altar_buff)
 }

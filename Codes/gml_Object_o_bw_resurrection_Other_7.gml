@@ -1,7 +1,7 @@
-if (unit_object == 1991 || unit_object == 844 || unit_object == 4184 || unit_object == 1508 || unit_object == 6992 || unit_object == 467 || unit_object == 1883 || unit_object == 130 || unit_object == 703 || unit_object == 127 || unit_object == 1645 || unit_object == 3211 || unit_object == 465 || unit_object == 6495 || unit_object == 812)
+if ((unit_object == o_Hive) || (unit_object == o_hornethive) || (unit_object == o_crawler_hive) || (unit_object == o_crawler_hive02) || (unit_object == o_crawler_hive03) || (unit_object == o_crawlerburrow01) || (unit_object == o_hornethive02) || (unit_object == o_hornethive03) || (unit_object == o_hornethive04) || (unit_object == o_hornethive05_special) || (unit_object == o_harpynest) || (unit_object == o_harpynest_02) || (unit_object == o_harpynest_03) || (unit_object == o_harpynest_04) || (unit_object == o_harpynest_05))
     return instance_destroy();
-if (unit_object == 239 || unit_object == 247 || unit_object == 2378 || unit_object == 1081 || unit_object == 707)
-    unit_object = 7065
+if (unit_object == o_npc_kromm || unit_object == o_npc_vyn || unit_object == o_npc_merc01 || unit_object == o_npc_merc02 || unit_object == o_npc_merc03)
+    unit_object = o_bw_zombie
 if is_crit
     restore_percent = 1
 else if (instance_exists(o_pass_skill_lingering_incantations) && o_pass_skill_lingering_incantations.is_open)

@@ -5,7 +5,7 @@ if instance_exists(target)
     {
         sprite_index = s_weapondamage_unholy
         image_speed = 1
-        scr_audio_play_at(choose(1460, 1461, 1462, 1463))
+        scr_audio_play_at(choose(snd_arcane_bolt_impact_1, snd_arcane_bolt_impact_2, snd_arcane_bolt_impact_3, snd_arcane_bolt_impact_4))
         scr_set_lt()
     }
     repeat (4 + irandom(5))

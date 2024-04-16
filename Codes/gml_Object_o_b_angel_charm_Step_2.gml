@@ -1,2 +1,2 @@
 event_inherited()
-alarm[2] = 1
+alarm[3] = 1

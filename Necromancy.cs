@@ -999,20 +999,20 @@ public class Necromancy : Mod
 
         o_b_charged_soul.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_b_charged_soul_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_b_charged_soul_Alarm_2.gml", EventType.Alarm, 2),
-new MslEvent("gml_Object_o_b_charged_soul_Alarm_3.gml", EventType.Alarm, 3),
-new MslEvent("gml_Object_o_b_charged_soul_Step_2.gml", EventType.Step, 2),
-new MslEvent("gml_Object_o_b_charged_soul_Other_10.gml", EventType.Other, 10),
-new MslEvent("gml_Object_o_b_charged_soul_Other_14.gml", EventType.Other, 14),
-new MslEvent("gml_Object_o_b_charged_soul_PreCreate_0.gml", EventType.PreCreate, 0)
+            new MslEvent("gml_Object_o_b_charged_soul_Alarm_2.gml", EventType.Alarm, 2),
+            new MslEvent("gml_Object_o_b_charged_soul_Alarm_3.gml", EventType.Alarm, 3),
+            new MslEvent("gml_Object_o_b_charged_soul_Step_2.gml", EventType.Step, 2),
+            new MslEvent("gml_Object_o_b_charged_soul_Other_10.gml", EventType.Other, 10),
+            new MslEvent("gml_Object_o_b_charged_soul_Other_14.gml", EventType.Other, 14),
+            new MslEvent("gml_Object_o_b_charged_soul_PreCreate_0.gml", EventType.PreCreate, 0)
         );
 
         o_b_angel_charm.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_b_angel_charm_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_b_angel_charm_Alarm_2.gml", EventType.Alarm, 2),
-new MslEvent("gml_Object_o_b_angel_charm_Alarm_3.gml", EventType.Alarm, 3),
-new MslEvent("gml_Object_o_b_angel_charm_Step_2.gml", EventType.Step, 2),
-new MslEvent("gml_Object_o_b_angel_charm_Other_10.gml", EventType.Other, 10)
+            new MslEvent("gml_Object_o_b_angel_charm_Alarm_2.gml", EventType.Alarm, 2),
+            new MslEvent("gml_Object_o_b_angel_charm_Alarm_3.gml", EventType.Alarm, 3),
+            new MslEvent("gml_Object_o_b_angel_charm_Step_2.gml", EventType.Step, 2),
+            new MslEvent("gml_Object_o_b_angel_charm_Other_10.gml", EventType.Other, 10)
         );
 
         o_b_darkenchant.ApplyEvent(ModFiles, 
@@ -1866,7 +1866,7 @@ scr_restore_hp(id, other.steal, scr_id_get_name(other.id))
             .InsertAbove(@"if is_special
 {
 instance_create(x, y, o_res_buff_creator)
-with (scr_enemy_create(x, y, 7065, is_cheack))
+with (scr_enemy_create(x, y, o_bw_zombie, is_cheack))
 {
 owner = other.owner
 scr_agred(100)

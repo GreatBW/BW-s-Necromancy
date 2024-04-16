@@ -10,12 +10,12 @@ if (instance_exists(owner) && instance_exists(target))
     if scr_instance_exists_in_list(o_b_angel_charm, owner.buffs)
     {
         with (target)
-            scr_guiAnimation_ext(x, y, 1493)
+            scr_guiAnimation_ext(x, y, s_weapondamage_sacred)
     }
     else
     {
         with (target)
-            scr_guiAnimation_ext(x, y, 11398)
+            scr_guiAnimation_ext(x, y, s_weapondamage_unholy)
     }
     scr_skill_damage(target)
 }
