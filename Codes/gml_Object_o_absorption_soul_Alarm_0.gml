@@ -20,7 +20,7 @@ if (instance_exists(owner) && instance_exists(target))
             scr_pure_damage(id, _hp)
             scr_restore_mp(id, (-_mp), other.name)
         }
-        with (scr_guiAnimation(3015, 1, 1, 0))
+        with (scr_guiAnimation(s_essence_leech_hit, 1, 1, 0))
             scr_set_lt(sprite_index)
         scr_audio_play_at(38)
     }
@@ -72,12 +72,12 @@ if instance_exists(target)
     {
         if (object_index == o_corpse)
         {
-            scr_guiAnimation_ext(x, y, 146)
-            scr_guiAnimation_ext(x, y, 147)
+            scr_guiAnimation_ext(x, y, s_signofdarkness_impact)
+            scr_guiAnimation_ext(x, y, s_signofdarkness_impact_lt)
             diss = 80
             scr_unitInterractImpact()
             inside_particles = 3557
-            scr_audio_play_at(908)
+            scr_audio_play_at(snd_meat_blood_death_1)
             var luft = 10
             repeat (20)
             {

@@ -1964,7 +1964,7 @@ ds_map_replace(data, ""Cooldown_Reduction"", -5)")
             .Save();
 
         Msl.LoadGML("gml_Object_o_b_seals_magic_Alarm_3")
-            .MatchFrom("else if ((magic_school == \"unholy\"))")
+            .MatchFrom("unholy")
             .ReplaceBy("else if ((magic_school == \"necromancy\"))")
             .Save();
 
@@ -2229,6 +2229,11 @@ scr_set_lt()
 scr_restore_hp(id, other.steal, scr_id_get_name(other.id))
 }
 }")
+            .Save();
+        
+        Msl.LoadGML("gml_Object_o_enemy_birth_Create_0")
+            .MatchAll()
+            .InsertBelow("is_special = 0")
             .Save();
 
         Msl.LoadGML("gml_Object_o_enemy_birth_Other_7")

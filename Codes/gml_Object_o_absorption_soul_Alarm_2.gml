@@ -1,7 +1,7 @@
 with (owner)
 {
-    with (scr_guiAnimation(9405, 1, 1, 0))
+    with (scr_guiAnimation(s_essence_leech_buff, 1, 1, 0))
         scr_set_lt(sprite_index)
-    scr_audio_play_at(21)
+    scr_audio_play_at(snd_skill_essence_leech_buff)
 }
 instance_destroy()
