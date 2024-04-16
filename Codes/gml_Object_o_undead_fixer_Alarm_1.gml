@@ -7,7 +7,7 @@ with (owner)
     {
         is_neutral = 1
         HP = 0
-        corpse_type = 1795
+        corpse_type = o_empty
         emo_death_sound = 242
     }
 }

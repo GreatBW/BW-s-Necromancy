@@ -9,7 +9,7 @@ scr_skill_atr(7)
 pointed = "Target Object"
 target_group = o_unit
 self_cast = 0
-spell = 3146
+spell = o_arrow
 can_scale_range = 1
 ignore_interact = 1
 MPcost = 0
