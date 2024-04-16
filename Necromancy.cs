@@ -1322,7 +1322,7 @@ public class Necromancy : Mod
             new MslEvent("gml_Object_o_b_servemaster_Alarm_8.gml", EventType.Alarm, 8),
             new MslEvent("gml_Object_o_b_servemaster_Step_0.gml", EventType.Step, 0),
             new MslEvent("gml_Object_o_b_servemaster_Mouse_54.gml", EventType.Mouse, 54),
-            new MslEvent("gml_Object_o_b_servemaster_Mouse_4.gml", EventType.Mouse, 4),
+            new MslEvent("gml_Object_o_b_servemaster_Mouse_53.gml", EventType.Mouse, 53),
             new MslEvent("gml_Object_o_b_servemaster_Other_10.gml", EventType.Other, 10),
             new MslEvent("gml_Object_o_b_servemaster_KeyPress_86.gml", EventType.KeyPress, 86),
             new MslEvent("gml_Object_o_b_servemaster_PreCreate_0.gml", EventType.PreCreate, 0)
