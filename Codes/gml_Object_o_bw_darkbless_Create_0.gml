@@ -6,4 +6,4 @@ image_speed = 1
 turns = 13
 dx = 13
 dy = 13
-scr_audio_play_at(1464)
+scr_audio_play_at(snd_dark_blessing_buff_impact)

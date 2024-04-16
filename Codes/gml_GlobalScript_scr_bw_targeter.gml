@@ -1,6 +1,6 @@
 function scr_bw_targeter() //gml_Script_scr_bw_targeter
 {
-    var _cur = 1671
+    var _cur = s_cursor_skill
     if (target_group != -4)
     {
         _cur = 1675
@@ -15,7 +15,7 @@ function scr_bw_targeter() //gml_Script_scr_bw_targeter
                 {
                     if _col.visible
                     {
-                        _cur = 1671
+                        _cur = s_cursor_skill
                         other.target_group = o_corpse
                     }
                 }
@@ -32,7 +32,7 @@ function scr_bw_targeter() //gml_Script_scr_bw_targeter
                     {
                         if scr_instance_exists_in_list(o_b_servemaster)
                         {
-                            _cur = 1671
+                            _cur = s_cursor_skill
                             other.target_group = o_enemy
                         }
                         else
