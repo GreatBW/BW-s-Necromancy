@@ -1,3 +1,3 @@
 event_inherited()
-inv_object = 7000
+inv_object = o_inv_cgrimoir
 number = 0

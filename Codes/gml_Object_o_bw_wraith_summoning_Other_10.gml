@@ -18,16 +18,16 @@ if (!is_execute)
                 switch stage
                 {
                     case 1:
-                        _unit = choose(723, 5068)
+                        _unit = choose(o_ghost_squire, o_ghost_monk)
                         break
                     case 2:
-                        _unit = choose(558, 755)
+                        _unit = choose(o_ghost_cleric, o_ghost_sergeant)
                         break
                     case 3:
-                        _unit = choose(2002, 2001)
+                        _unit = choose(o_ghost_seer, o_ghost_knight)
                         break
                     case 4:
-                        _unit = choose(1067, 3573)
+                        _unit = choose(o_ghost_templar, o_ghost_commander)
                         break
                 }
 
@@ -35,8 +35,8 @@ if (!is_execute)
                     instance_destroy()
             }
         }
-        scr_guiAnimation_ext((xx + 13), (yy + 13), 10932, 1, image_speed, 0, 16777215, 0)
-        scr_audio_play_at(1712)
+        scr_guiAnimation_ext((xx + 13), (yy + 13), s_wraithsummon_hit, 1, image_speed, 0, 16777215, 0)
+        scr_audio_play_at(snd_skill_wraith_summoning_hit)
         instance_create(x, y, o_res_buff_creator)
         with (scr_enemy_create((xx + 13), (yy + 13), _unit, 0))
         {

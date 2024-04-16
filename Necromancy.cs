@@ -97,6 +97,7 @@ public class Necromancy : Mod
 
     public override void PatchMod()
     {
+        // objects
         UndertaleGameObject o_skill_death_plague_ico = Msl.AddObject(
             name: "o_skill_death_plague_ico", 
             spriteName: "s_soul_abs", 
@@ -187,13 +188,7 @@ public class Necromancy : Mod
             collisionShapeFlags: CollisionShapeFlags.Circle
         );
 
-        Msl.AddFunction(ModFiles.GetCode("gml_GlobalScript_scr_bw_checker.gml"), "scr_bw_checker");
-        Msl.AddFunction(ModFiles.GetCode("gml_GlobalScript_scr_bw_targeter.gml"), "scr_bw_targeter");
-
-        Msl.GetObject("o_attitudes_menu").Sprite = Msl.GetSprite("s_big_att_menu");
-        Msl.GetObject("o_b_magic_unholy").Sprite = Msl.GetSprite("s_b_sealofpower_unholy");
-        
-        Msl.AddObject(
+        UndertaleGameObject o_inv_magic_treatise = Msl.AddObject(
             name: "o_inv_cgrimoir", 
             spriteName: "s_inv_cg01", 
             parentName: "o_inv_magic_treatise", 
@@ -201,14 +196,9 @@ public class Necromancy : Mod
             isPersistent: true, 
             isAwake: true,
             collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
-            new MslEvent("gml_Object_o_inv_cgrimoir_Create_0.gml", EventType.Create, 0),
-            new MslEvent("gml_Object_o_inv_cgrimoir_Other_10.gml", EventType.Other, 10),
-            new MslEvent("gml_Object_o_inv_cgrimoir_Draw_73.gml", EventType.Draw, 73),
-            new MslEvent("gml_Object_o_inv_cgrimoir_PreCreate_0.gml", EventType.PreCreate, 0)
         );
 
-        Msl.AddObject(
+        UndertaleGameObject o_inv_cgrimoir2 = Msl.AddObject(
             name: "o_inv_cgrimoir2", 
             spriteName: "s_inv_cg02", 
             parentName: "o_inv_magic_treatise", 
@@ -216,14 +206,9 @@ public class Necromancy : Mod
             isPersistent: true, 
             isAwake: true,
             collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
-            new MslEvent("gml_Object_o_inv_cgrimoir2_Create_0.gml", EventType.Create, 0),
-            new MslEvent("gml_Object_o_inv_cgrimoir2_Other_10.gml", EventType.Other, 10),
-            new MslEvent("gml_Object_o_inv_cgrimoir2_Draw_73.gml", EventType.Draw, 73),
-            new MslEvent("gml_Object_o_inv_cgrimoir2_PreCreate_0.gml", EventType.PreCreate, 0)
         );
 
-        Msl.AddObject(
+        UndertaleGameObject o_inv_cgrimoir3 = Msl.AddObject(
             name: "o_inv_cgrimoir3", 
             spriteName: "s_inv_cg03", 
             parentName: "o_inv_magic_treatise", 
@@ -231,14 +216,9 @@ public class Necromancy : Mod
             isPersistent: true, 
             isAwake: true,
             collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
-            new MslEvent("gml_Object_o_inv_cgrimoir3_Create_0.gml", EventType.Create, 0),
-            new MslEvent("gml_Object_o_inv_cgrimoir3_Other_10.gml", EventType.Other, 10),
-            new MslEvent("gml_Object_o_inv_cgrimoir3_Draw_73.gml", EventType.Draw, 73),
-            new MslEvent("gml_Object_o_inv_cgrimoir3_PreCreate_0.gml", EventType.PreCreate, 0)
         );
 
-        Msl.AddObject(
+        UndertaleGameObject o_loot_cgrimoir = Msl.AddObject(
             name: "o_loot_cgrimoir", 
             spriteName: "s_loot_cg", 
             parentName: "o_consument_loot", 
@@ -246,12 +226,9 @@ public class Necromancy : Mod
             isPersistent: false, 
             isAwake: true,
             collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
-            new MslEvent("gml_Object_o_loot_cgrimoir_Create_0.gml", EventType.Create, 0),
-            new MslEvent("gml_Object_o_loot_cgrimoir_PreCreate_0.gml", EventType.PreCreate, 0)
         );
-        
-        Msl.AddObject(
+
+        UndertaleGameObject o_loot_cgrimoir2 = Msl.AddObject(
             name: "o_loot_cgrimoir2", 
             spriteName: "s_loot_cg", 
             parentName: "o_consument_loot", 
@@ -259,12 +236,9 @@ public class Necromancy : Mod
             isPersistent: false, 
             isAwake: true,
             collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
-            new MslEvent("gml_Object_o_loot_cgrimoir2_Create_0.gml", EventType.Create, 0),
-            new MslEvent("gml_Object_o_loot_cgrimoir2_PreCreate_0.gml", EventType.PreCreate, 0)
         );
 
-        Msl.AddObject(
+        UndertaleGameObject o_loot_cgrimoir3 = Msl.AddObject(
             name: "o_loot_cgrimoir3", 
             spriteName: "s_loot_cg", 
             parentName: "o_consument_loot", 
@@ -272,12 +246,9 @@ public class Necromancy : Mod
             isPersistent: false, 
             isAwake: true,
             collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
-            new MslEvent("gml_Object_o_loot_cgrimoir3_Create_0.gml", EventType.Create, 0),
-            new MslEvent("gml_Object_o_loot_cgrimoir3_PreCreate_0.gml", EventType.PreCreate, 0)
         );
 
-        Msl.AddObject(
+        UndertaleGameObject o_mortal_blocker = Msl.AddObject(
             name: "o_mortal_blocker", 
             spriteName: "", 
             parentName: "", 
@@ -285,13 +256,9 @@ public class Necromancy : Mod
             isPersistent: false, 
             isAwake: true,
             collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
-            new MslEvent("gml_Object_o_mortal_blocker_Create_0.gml", EventType.Create, 0),
-            new MslEvent("gml_Object_o_mortal_blocker_Alarm_1.gml", EventType.Alarm, 1),
-            new MslEvent("gml_Object_o_mortal_blocker_PreCreate_0.gml", EventType.PreCreate, 0)
         );
 
-        Msl.AddObject(
+        UndertaleGameObject o_res_buff_creator = Msl.AddObject(
             name: "o_res_buff_creator", 
             spriteName: "", 
             parentName: "", 
@@ -299,14 +266,19 @@ public class Necromancy : Mod
             isPersistent: true, 
             isAwake: true,
             collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
-            new MslEvent("gml_Object_o_res_buff_creator_Create_0.gml", EventType.Create, 0),
-            new MslEvent("gml_Object_o_res_buff_creator_Alarm_1.gml", EventType.Alarm, 1),
-            new MslEvent("gml_Object_o_res_buff_creator_Alarm_2.gml", EventType.Alarm, 2),
-            new MslEvent("gml_Object_o_res_buff_creator_PreCreate_0.gml", EventType.PreCreate, 0)
         );
 
-        Msl.AddObject(
+        UndertaleGameObject o_soul_absorption_impact = Msl.AddObject(
+            name: "o_soul_absorption_impact", 
+            spriteName: "", 
+            parentName: "", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_undead_fixer = Msl.AddObject(
             name: "o_undead_fixer", 
             spriteName: "", 
             parentName: "", 
@@ -314,14 +286,19 @@ public class Necromancy : Mod
             isPersistent: false, 
             isAwake: true,
             collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
-            new MslEvent("gml_Object_o_undead_fixer_Create_0.gml", EventType.Create, 0),
-            new MslEvent("gml_Object_o_undead_fixer_Alarm_1.gml", EventType.Alarm, 1),
-            new MslEvent("gml_Object_o_undead_fixer_Alarm_2.gml", EventType.Alarm, 2),
-            new MslEvent("gml_Object_o_undead_fixer_PreCreate_0.gml", EventType.PreCreate, 0)
         );
 
-        Msl.AddObject(
+        UndertaleGameObject o_skill_category_necromancy = Msl.AddObject(
+            name: "o_skill_category_necromancy", 
+            spriteName: "", 
+            parentName: "o_sklill_category_magic", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_soul_destroyer = Msl.AddObject(
             name: "o_soul_destroyer", 
             spriteName: "", 
             parentName: "", 
@@ -329,12 +306,9 @@ public class Necromancy : Mod
             isPersistent: false, 
             isAwake: true,
             collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
-            new MslEvent("gml_Object_o_soul_destroyer_Create_0.gml", EventType.Create, 0),
-            new MslEvent("gml_Object_o_soul_destroyer_Alarm_1.gml", EventType.Alarm, 1)
         );
 
-        Msl.AddObject(
+        UndertaleGameObject o_res_new01 = Msl.AddObject(
             name: "o_res_new01", 
             spriteName: "s_res_new", 
             parentName: "", 
@@ -342,13 +316,9 @@ public class Necromancy : Mod
             isPersistent: false, 
             isAwake: true,
             collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
-            new MslEvent("gml_Object_o_res_new01_Create_0.gml", EventType.Create, 0),
-            new MslEvent("gml_Object_o_res_new01_Other_7.gml", EventType.Other, 7),
-            new MslEvent("gml_Object_o_res_new01_Draw_0.gml", EventType.Draw, 0)
         );
-                    
-        Msl.AddObject(
+
+        UndertaleGameObject o_trashy_corpz = Msl.AddObject(
             name: "o_trashy_corpz", 
             spriteName: "s_fleshpile_rotten", 
             parentName: "", 
@@ -356,12 +326,9 @@ public class Necromancy : Mod
             isPersistent: false, 
             isAwake: true,
             collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
-            new MslEvent("gml_Object_o_trashy_corpz_Create_0.gml", EventType.Create, 0),
-            new MslEvent("gml_Object_o_trashy_corpz_Alarm_0.gml", EventType.Alarm, 0)
         );
 
-        Msl.AddObject(
+        UndertaleGameObject o_Lostsouls = Msl.AddObject(
             name: "o_Lostsouls", 
             spriteName: "", 
             parentName: "", 
@@ -369,15 +336,9 @@ public class Necromancy : Mod
             isPersistent: false, 
             isAwake: true,
             collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
-            new MslEvent("gml_Object_o_Lostsouls_Create_0.gml", EventType.Create, 0),
-            new MslEvent("gml_Object_o_Lostsouls_Destroy_0.gml", EventType.Destroy, 0),
-            new MslEvent("gml_Object_o_Lostsouls_Alarm_0.gml", EventType.Alarm, 0),
-            new MslEvent("gml_Object_o_Lostsouls_Alarm_10.gml", EventType.Alarm, 10),
-            new MslEvent("gml_Object_o_Lostsouls_PreCreate_0.gml", EventType.PreCreate, 0)
         );
 
-        Msl.AddObject(
+        UndertaleGameObject o_absorption_soul = Msl.AddObject(
             name: "o_absorption_soul", 
             spriteName: "s_essence_leech_cast", 
             parentName: "o_magic_pillar", 
@@ -385,7 +346,372 @@ public class Necromancy : Mod
             isPersistent: false, 
             isAwake: true,
             collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        );
+
+        UndertaleGameObject o_b_servemaster = Msl.AddObject(
+            name: "o_b_servemaster", 
+            spriteName: "s_zompie_passiveskill", 
+            parentName: "o_class_skills", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_b_Lostsouls = Msl.AddObject(
+            name: "o_b_Lostsouls", 
+            spriteName: "", 
+            parentName: "o_class_skills", 
+            isVisible: false, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_b_unbind = Msl.AddObject(
+            name: "o_b_unbind", 
+            spriteName: "s_db_curse_new", 
+            parentName: "o_class_skills", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_db_punishment = Msl.AddObject(
+            name: "o_db_punishment", 
+            spriteName: "s_buff_punish", 
+            parentName: "o_class_skills", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_db_takeover = Msl.AddObject(
+            name: "o_db_takeover", 
+            spriteName: "s_take_over_effect", 
+            parentName: "o_mental_debuff", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_b_exceptional = Msl.AddObject(
+            name: "o_b_exceptional", 
+            spriteName: "s_exception_soulus", 
+            parentName: "o_magical_buff", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_b_charged_soul = Msl.AddObject(
+            name: "o_b_charged_soul", 
+            spriteName: "s_charged_z", 
+            parentName: "o_buff_stage", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_b_angel_charm = Msl.AddObject(
+            name: "o_b_angel_charm", 
+            spriteName: "s_buff_punish", 
+            parentName: "o_magical_buff", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_b_darkenchant = Msl.AddObject(
+            name: "o_b_darkenchant", 
+            spriteName: "s_dark_enchant_effect", 
+            parentName: "o_magical_buff", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_skill_Lostsouls = Msl.AddObject(
+            name: "o_skill_Lostsouls", 
+            spriteName: "s_disasterundead", 
+            parentName: "o_skill", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_skill_death_plague = Msl.AddObject(
+            name: "o_skill_death_plague", 
+            spriteName: "s_soul_abs", 
+            parentName: "o_skill", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_skill_soul_explosion = Msl.AddObject(
+            name: "o_skill_soul_explosion", 
+            spriteName: "s_soulzac", 
+            parentName: "o_skill", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_pass_skill_nmadness = Msl.AddObject(
+            name: "o_pass_skill_nmadness", 
+            spriteName: "s_growing_madness", 
+            parentName: "o_skill_passive", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_pass_skill_ndarkness = Msl.AddObject(
+            name: "o_pass_skill_ndarkness", 
+            spriteName: "s_crazed_by_magic", 
+            parentName: "o_skill_passive", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_pass_skill_darkblood = Msl.AddObject(
+            name: "o_pass_skill_darkblood", 
+            spriteName: "s_grim_blood", 
+            parentName: "o_skill_passive", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_pass_skill_unholymind = Msl.AddObject(
+            name: "o_pass_skill_unholymind", 
+            spriteName: "s_reaping_darkness", 
+            parentName: "o_skill_passive", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_pass_skill_imortall = Msl.AddObject(
+            name: "o_pass_skill_imortall", 
+            spriteName: "s_imortal_soul", 
+            parentName: "o_skill_passive", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_pass_skill_kingdead = Msl.AddObject(
+            name: "o_pass_skill_kingdead", 
+            spriteName: "s_angel_of_death", 
+            parentName: "o_skill_passive", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_allAttack_Attitude = Msl.AddObject(
+            name: "o_allAttack_Attitude", 
+            spriteName: "s_bw_attitude_attack", 
+            parentName: "o_Attitude", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_allDeffence_Attitude = Msl.AddObject(
+            name: "o_allDeffence_Attitude", 
+            spriteName: "s_bw_attitude_follow", 
+            parentName: "o_Attitude", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_disclaimer03 = Msl.AddObject(
+            name: "o_disclaimer03", 
+            spriteName: "", 
+            parentName: "", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_BwMark = Msl.AddObject(
+            name: "o_BwMark", 
+            spriteName: "s_bwdis", 
+            parentName: "", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: false,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_skill_bw_resurrection = Msl.AddObject(
+            name: "o_skill_bw_resurrection", 
+            spriteName: "s_recurct", 
+            parentName: "o_skill", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+       UndertaleGameObject o_bw_resurrection_birth = Msl.AddObject(
+            name: "o_bw_resurrection_birth", 
+            spriteName: "s_makefeast_birth", 
+            parentName: "o_spelllbirth", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+        
+        // functions
+        Msl.AddFunction(ModFiles.GetCode("gml_GlobalScript_scr_bw_checker.gml"), "scr_bw_checker");
+        Msl.AddFunction(ModFiles.GetCode("gml_GlobalScript_scr_bw_targeter.gml"), "scr_bw_targeter");
+
+        // modified objects
+        Msl.GetObject("o_attitudes_menu").Sprite = Msl.GetSprite("s_big_att_menu");
+        Msl.GetObject("o_b_magic_unholy").Sprite = Msl.GetSprite("s_b_sealofpower_unholy");
+        
+        // new events in already existing objects        
+        Msl.GetObject("o_animals").ApplyEvent(ModFiles,
+            new MslEvent("gml_Object_o_animals_Destroy_0.gml", EventType.Destroy, 0)
+        );
+
+        Msl.GetObject("o_darkball").ApplyEvent(ModFiles,
+            new MslEvent("gml_Object_o_darkball_Destroy_0.gml", EventType.Destroy, 0)
+        );
+
+        Msl.GetObject("o_Dead_March").ApplyEvent(ModFiles,
+            new MslEvent("gml_Object_o_Dead_March_Destroy_0.gml", EventType.Destroy, 0),
+            new MslEvent("gml_Object_o_Dead_March_Draw_0.gml", EventType.Draw, 0)
+        );
+
+        Msl.GetObject("o_necromancer_boss").ApplyEvent(ModFiles,
+            new MslEvent("gml_Object_o_necromancer_boss_Destroy_0.gml", EventType.Destroy, 0)
+        );
+
+        Msl.GetObject("o_necromancer_boss_staff").ApplyEvent(ModFiles,
+            new MslEvent("gml_Object_o_necromancer_boss_staff_Destroy_0.gml", EventType.Destroy, 0)
+        );
+
+        Msl.GetObject("o_necromancer_ritualist").ApplyEvent(ModFiles,
+            new MslEvent("gml_Object_o_necromancer_ritualist_Destroy_0.gml", EventType.Destroy, 0)
+        );
+
+        Msl.GetObject("o_Omnivore").ApplyEvent(ModFiles,
+            new MslEvent("gml_Object_o_Omnivore_Destroy_0.gml", EventType.Destroy, 0)
+        );
+
+        Msl.GetObject("o_proselyte").ApplyEvent(ModFiles,
+            new MslEvent("gml_Object_o_proselyte_Draw_0.gml", EventType.Draw, 0)
+        );
+
+        // new events of new objects
+        o_inv_magic_treatise.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_inv_cgrimoir_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_inv_cgrimoir_Other_10.gml", EventType.Other, 10),
+            new MslEvent("gml_Object_o_inv_cgrimoir_Draw_73.gml", EventType.Draw, 73),
+            new MslEvent("gml_Object_o_inv_cgrimoir_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
+
+        o_inv_cgrimoir2.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_inv_cgrimoir2_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_inv_cgrimoir2_Other_10.gml", EventType.Other, 10),
+            new MslEvent("gml_Object_o_inv_cgrimoir2_Draw_73.gml", EventType.Draw, 73),
+            new MslEvent("gml_Object_o_inv_cgrimoir2_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
+
+        o_inv_cgrimoir3.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_inv_cgrimoir3_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_inv_cgrimoir3_Other_10.gml", EventType.Other, 10),
+            new MslEvent("gml_Object_o_inv_cgrimoir3_Draw_73.gml", EventType.Draw, 73),
+            new MslEvent("gml_Object_o_inv_cgrimoir3_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
+
+        o_loot_cgrimoir.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_loot_cgrimoir_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_loot_cgrimoir_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
+        
+        o_loot_cgrimoir2.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_loot_cgrimoir2_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_loot_cgrimoir2_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
+
+        o_loot_cgrimoir3.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_loot_cgrimoir3_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_loot_cgrimoir3_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
+
+        o_mortal_blocker.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_mortal_blocker_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_mortal_blocker_Alarm_1.gml", EventType.Alarm, 1),
+            new MslEvent("gml_Object_o_mortal_blocker_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
+
+        o_res_buff_creator.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_res_buff_creator_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_res_buff_creator_Alarm_1.gml", EventType.Alarm, 1),
+            new MslEvent("gml_Object_o_res_buff_creator_Alarm_2.gml", EventType.Alarm, 2),
+            new MslEvent("gml_Object_o_res_buff_creator_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
+
+        o_undead_fixer.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_undead_fixer_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_undead_fixer_Alarm_1.gml", EventType.Alarm, 1),
+            new MslEvent("gml_Object_o_undead_fixer_Alarm_2.gml", EventType.Alarm, 2),
+            new MslEvent("gml_Object_o_undead_fixer_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
+
+        o_soul_destroyer.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_soul_destroyer_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_soul_destroyer_Alarm_1.gml", EventType.Alarm, 1)
+        );
+
+        o_res_new01.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_res_new01_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_res_new01_Other_7.gml", EventType.Other, 7),
+            new MslEvent("gml_Object_o_res_new01_Draw_0.gml", EventType.Draw, 0)
+        );
+                    
+        o_trashy_corpz.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_trashy_corpz_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_trashy_corpz_Alarm_0.gml", EventType.Alarm, 0)
+        );
+
+        o_Lostsouls.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_Lostsouls_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_Lostsouls_Destroy_0.gml", EventType.Destroy, 0),
+            new MslEvent("gml_Object_o_Lostsouls_Alarm_0.gml", EventType.Alarm, 0),
+            new MslEvent("gml_Object_o_Lostsouls_Alarm_10.gml", EventType.Alarm, 10),
+            new MslEvent("gml_Object_o_Lostsouls_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
+
+        o_absorption_soul.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_absorption_soul_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_absorption_soul_Destroy_0.gml", EventType.Destroy, 0),
             new MslEvent("gml_Object_o_absorption_soul_Alarm_0.gml", EventType.Alarm, 0),
@@ -394,15 +720,7 @@ public class Necromancy : Mod
             new MslEvent("gml_Object_o_absorption_soul_PreCreate_0.gml", EventType.PreCreate, 0)
         );
 
-        Msl.AddObject(
-            name: "o_b_servemaster", 
-            spriteName: "s_zompie_passiveskill", 
-            parentName: "o_class_skills", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_b_servemaster.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_b_servemaster_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_b_servemaster_Alarm_2.gml", EventType.Alarm, 2),
             new MslEvent("gml_Object_o_b_servemaster_Alarm_7.gml", EventType.Alarm, 7),
@@ -415,155 +733,82 @@ public class Necromancy : Mod
             new MslEvent("gml_Object_o_b_servemaster_PreCreate_0.gml", EventType.PreCreate, 0)
         );
 
-        Msl.AddObject(
-            name: "o_b_Lostsouls", 
-            spriteName: "", 
-            parentName: "o_class_skills", 
-            isVisible: false, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_b_Lostsouls.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_b_Lostsouls_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_b_Lostsouls_Alarm_2.gml", EventType.Alarm, 2),
             new MslEvent("gml_Object_o_b_Lostsouls_Other_10.gml", EventType.Other, 10)
         );
 
-        Msl.AddObject(
-            name: "o_b_unbind", 
-            spriteName: "s_db_curse_new", 
-            parentName: "o_class_skills", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_b_unbind.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_b_unbind_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_b_unbind_Mouse_53.gml", EventType.Mouse, 53),
             new MslEvent("gml_Object_o_b_unbind_Other_10.gml", EventType.Other, 10)
         );
 
-                    Msl.AddObject(
-                        name: "o_db_punishment", 
-                        spriteName: "s_buff_punish", 
-                        parentName: "o_class_skills", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_db_punishment_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_db_punishment_Alarm_2.gml", EventType.Alarm, 2),
-new MslEvent("gml_Object_o_db_punishment_Other_10.gml", EventType.Other, 10),
-new MslEvent("gml_Object_o_db_punishment_PreCreate_0.gml", EventType.PreCreate, 0)
-                    );
-                    Msl.AddObject(
-                        name: "o_db_takeover", 
-                        spriteName: "s_take_over_effect", 
-                        parentName: "o_mental_debuff", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_db_takeover_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_db_takeover_Destroy_0.gml", EventType.Destroy, 0),
-new MslEvent("gml_Object_o_db_takeover_Alarm_2.gml", EventType.Alarm, 2),
-new MslEvent("gml_Object_o_db_takeover_Other_10.gml", EventType.Other, 10)
-                    );
-                    Msl.AddObject(
-                        name: "o_b_exceptional", 
-                        spriteName: "s_exception_soulus", 
-                        parentName: "o_magical_buff", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_b_exceptional_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_b_exceptional_Destroy_0.gml", EventType.Destroy, 0),
-new MslEvent("gml_Object_o_b_exceptional_Alarm_2.gml", EventType.Alarm, 2),
-new MslEvent("gml_Object_o_b_exceptional_Other_10.gml", EventType.Other, 10),
-new MslEvent("gml_Object_o_b_exceptional_PreCreate_0.gml", EventType.PreCreate, 0)
-                    );
-                    Msl.AddObject(
-                        name: "o_b_charged_soul", 
-                        spriteName: "s_charged_z", 
-                        parentName: "o_buff_stage", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_b_charged_soul_Create_0.gml", EventType.Create, 0),
+        o_db_punishment.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_db_punishment_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_db_punishment_Alarm_2.gml", EventType.Alarm, 2),
+            new MslEvent("gml_Object_o_db_punishment_Other_10.gml", EventType.Other, 10),
+            new MslEvent("gml_Object_o_db_punishment_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
+
+        o_db_takeover.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_db_takeover_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_db_takeover_Destroy_0.gml", EventType.Destroy, 0),
+            new MslEvent("gml_Object_o_db_takeover_Alarm_2.gml", EventType.Alarm, 2),
+            new MslEvent("gml_Object_o_db_takeover_Other_10.gml", EventType.Other, 10)
+        );
+
+        o_b_exceptional.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_b_exceptional_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_b_exceptional_Destroy_0.gml", EventType.Destroy, 0),
+            new MslEvent("gml_Object_o_b_exceptional_Alarm_2.gml", EventType.Alarm, 2),
+            new MslEvent("gml_Object_o_b_exceptional_Other_10.gml", EventType.Other, 10),
+            new MslEvent("gml_Object_o_b_exceptional_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
+
+        o_b_charged_soul.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_b_charged_soul_Create_0.gml", EventType.Create, 0),
 new MslEvent("gml_Object_o_b_charged_soul_Alarm_2.gml", EventType.Alarm, 2),
 new MslEvent("gml_Object_o_b_charged_soul_Alarm_3.gml", EventType.Alarm, 3),
 new MslEvent("gml_Object_o_b_charged_soul_Step_2.gml", EventType.Step, 2),
 new MslEvent("gml_Object_o_b_charged_soul_Other_10.gml", EventType.Other, 10),
 new MslEvent("gml_Object_o_b_charged_soul_Other_14.gml", EventType.Other, 14),
 new MslEvent("gml_Object_o_b_charged_soul_PreCreate_0.gml", EventType.PreCreate, 0)
-                    );
-                    Msl.AddObject(
-                        name: "o_b_angel_charm", 
-                        spriteName: "s_buff_punish", 
-                        parentName: "o_magical_buff", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_b_angel_charm_Create_0.gml", EventType.Create, 0),
+        );
+
+        o_b_angel_charm.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_b_angel_charm_Create_0.gml", EventType.Create, 0),
 new MslEvent("gml_Object_o_b_angel_charm_Alarm_2.gml", EventType.Alarm, 2),
 new MslEvent("gml_Object_o_b_angel_charm_Alarm_3.gml", EventType.Alarm, 3),
 new MslEvent("gml_Object_o_b_angel_charm_Step_2.gml", EventType.Step, 2),
 new MslEvent("gml_Object_o_b_angel_charm_Other_10.gml", EventType.Other, 10)
-                    );
-                    Msl.AddObject(
-                        name: "o_b_darkenchant", 
-                        spriteName: "s_dark_enchant_effect", 
-                        parentName: "o_magical_buff", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_b_darkenchant_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_b_darkenchant_Alarm_2.gml", EventType.Alarm, 2),
-new MslEvent("gml_Object_o_b_darkenchant_Alarm_3.gml", EventType.Alarm, 3),
-new MslEvent("gml_Object_o_b_darkenchant_Step_2.gml", EventType.Step, 2),
-new MslEvent("gml_Object_o_b_darkenchant_Other_10.gml", EventType.Other, 10),
-new MslEvent("gml_Object_o_b_darkenchant_PreCreate_0.gml", EventType.PreCreate, 0)
-                    );
-                    Msl.AddObject(
-                        name: "o_skill_Lostsouls", 
-                        spriteName: "s_disasterundead", 
-                        parentName: "o_skill", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_skill_Lostsouls_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_skill_Lostsouls_Other_14.gml", EventType.Other, 14),
-new MslEvent("gml_Object_o_skill_Lostsouls_Other_17.gml", EventType.Other, 17),
-new MslEvent("gml_Object_o_skill_Lostsouls_Other_13.gml", EventType.Other, 13)
-                    );
-                    Msl.AddObject(
-                        name: "o_skill_death_plague", 
-                        spriteName: "s_soul_abs", 
-                        parentName: "o_skill", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_skill_death_plague_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_skill_death_plague_Other_17.gml", EventType.Other, 17),
-new MslEvent("gml_Object_o_skill_death_plague_Other_13.gml", EventType.Other, 13),
-new MslEvent("gml_Object_o_skill_death_plague_Other_19.gml", EventType.Other, 19),
-new MslEvent("gml_Object_o_skill_death_plague_Other_10.gml", EventType.Other, 10),
-new MslEvent("gml_Object_o_skill_death_plague_PreCreate_0.gml", EventType.PreCreate, 0)
-                    );
+        );
+
+        o_b_darkenchant.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_b_darkenchant_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_b_darkenchant_Alarm_2.gml", EventType.Alarm, 2),
+            new MslEvent("gml_Object_o_b_darkenchant_Alarm_3.gml", EventType.Alarm, 3),
+            new MslEvent("gml_Object_o_b_darkenchant_Step_2.gml", EventType.Step, 2),
+            new MslEvent("gml_Object_o_b_darkenchant_Other_10.gml", EventType.Other, 10),
+            new MslEvent("gml_Object_o_b_darkenchant_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
+
+        o_skill_Lostsouls.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_skill_Lostsouls_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_skill_Lostsouls_Other_14.gml", EventType.Other, 14),
+            new MslEvent("gml_Object_o_skill_Lostsouls_Other_17.gml", EventType.Other, 17),
+            new MslEvent("gml_Object_o_skill_Lostsouls_Other_13.gml", EventType.Other, 13)
+        );
+
+        o_skill_death_plague.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_skill_death_plague_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_skill_death_plague_Other_17.gml", EventType.Other, 17),
+            new MslEvent("gml_Object_o_skill_death_plague_Other_13.gml", EventType.Other, 13),
+            new MslEvent("gml_Object_o_skill_death_plague_Other_19.gml", EventType.Other, 19),
+            new MslEvent("gml_Object_o_skill_death_plague_Other_10.gml", EventType.Other, 10),
+            new MslEvent("gml_Object_o_skill_death_plague_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
                     
         o_skill_death_plague_ico.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_skill_death_plague_ico_Create_0.gml", EventType.Create, 0),
@@ -571,22 +816,14 @@ new MslEvent("gml_Object_o_skill_death_plague_PreCreate_0.gml", EventType.PreCre
             new MslEvent("gml_Object_o_skill_death_plague_ico_PreCreate_0.gml", EventType.PreCreate, 0)
         );
 
-                    Msl.AddObject(
-                        name: "o_skill_soul_explosion", 
-                        spriteName: "s_soulzac", 
-                        parentName: "o_skill", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_skill_soul_explosion_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_skill_soul_explosion_Other_18.gml", EventType.Other, 18),
-new MslEvent("gml_Object_o_skill_soul_explosion_Other_14.gml", EventType.Other, 14),
-new MslEvent("gml_Object_o_skill_soul_explosion_Other_17.gml", EventType.Other, 17),
-new MslEvent("gml_Object_o_skill_soul_explosion_Other_13.gml", EventType.Other, 13),
-new MslEvent("gml_Object_o_skill_soul_explosion_PreCreate_0.gml", EventType.PreCreate, 0)
-                    );
+        o_skill_soul_explosion.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_skill_soul_explosion_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_skill_soul_explosion_Other_18.gml", EventType.Other, 18),
+            new MslEvent("gml_Object_o_skill_soul_explosion_Other_14.gml", EventType.Other, 14),
+            new MslEvent("gml_Object_o_skill_soul_explosion_Other_17.gml", EventType.Other, 17),
+            new MslEvent("gml_Object_o_skill_soul_explosion_Other_13.gml", EventType.Other, 13),
+            new MslEvent("gml_Object_o_skill_soul_explosion_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
                     
         o_skill_soul_explosion_ico.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_skill_soul_explosion_ico_Create_0.gml", EventType.Create, 0),
@@ -596,15 +833,7 @@ new MslEvent("gml_Object_o_skill_soul_explosion_PreCreate_0.gml", EventType.PreC
             new MslEvent("gml_Object_o_skill_soul_explosion_ico_PreCreate_0.gml", EventType.PreCreate, 0)
         );
 
-        Msl.AddObject(
-            name: "o_pass_skill_nmadness", 
-            spriteName: "s_growing_madness", 
-            parentName: "o_skill_passive", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_pass_skill_nmadness.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_pass_skill_nmadness_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_pass_skill_nmadness_Step_2.gml", EventType.Step, 2),
             new MslEvent("gml_Object_o_pass_skill_nmadness_Other_17.gml", EventType.Other, 17),
@@ -612,152 +841,77 @@ new MslEvent("gml_Object_o_skill_soul_explosion_PreCreate_0.gml", EventType.PreC
             new MslEvent("gml_Object_o_pass_skill_nmadness_PreCreate_0.gml", EventType.PreCreate, 0)
         );
 
-                    Msl.AddObject(
-                        name: "o_pass_skill_ndarkness", 
-                        spriteName: "s_crazed_by_magic", 
-                        parentName: "o_skill_passive", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_pass_skill_ndarkness_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_pass_skill_ndarkness_Step_2.gml", EventType.Step, 2),
-new MslEvent("gml_Object_o_pass_skill_ndarkness_Other_17.gml", EventType.Other, 17),
-new MslEvent("gml_Object_o_pass_skill_ndarkness_Other_13.gml", EventType.Other, 13),
-new MslEvent("gml_Object_o_pass_skill_ndarkness_PreCreate_0.gml", EventType.PreCreate, 0)
-                    );
+        o_pass_skill_ndarkness.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_pass_skill_ndarkness_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_pass_skill_ndarkness_Step_2.gml", EventType.Step, 2),
+            new MslEvent("gml_Object_o_pass_skill_ndarkness_Other_17.gml", EventType.Other, 17),
+            new MslEvent("gml_Object_o_pass_skill_ndarkness_Other_13.gml", EventType.Other, 13),
+            new MslEvent("gml_Object_o_pass_skill_ndarkness_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
 
         o_skill_Lostsouls_ico.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_skill_Lostsouls_ico_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_skill_Lostsouls_ico_Step_2.gml", EventType.Step, 2)
         );
 
-                    Msl.AddObject(
-                        name: "o_pass_skill_darkblood", 
-                        spriteName: "s_grim_blood", 
-                        parentName: "o_skill_passive", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_pass_skill_darkblood_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_pass_skill_darkblood_Step_2.gml", EventType.Step, 2),
-new MslEvent("gml_Object_o_pass_skill_darkblood_Other_17.gml", EventType.Other, 17),
-new MslEvent("gml_Object_o_pass_skill_darkblood_Other_13.gml", EventType.Other, 13),
-new MslEvent("gml_Object_o_pass_skill_darkblood_PreCreate_0.gml", EventType.PreCreate, 0)
-                    );
-                    Msl.AddObject(
-                        name: "o_pass_skill_unholymind", 
-                        spriteName: "s_reaping_darkness", 
-                        parentName: "o_skill_passive", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_pass_skill_unholymind_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_pass_skill_unholymind_Step_2.gml", EventType.Step, 2),
-new MslEvent("gml_Object_o_pass_skill_unholymind_Other_13.gml", EventType.Other, 13),
-new MslEvent("gml_Object_o_pass_skill_unholymind_Other_17.gml", EventType.Other, 17),
-new MslEvent("gml_Object_o_pass_skill_unholymind_PreCreate_0.gml", EventType.PreCreate, 0)
-                    );
-                    Msl.AddObject(
-                        name: "o_pass_skill_imortall", 
-                        spriteName: "s_imortal_soul", 
-                        parentName: "o_skill_passive", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_pass_skill_imortall_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_pass_skill_imortall_Alarm_7.gml", EventType.Alarm, 7),
-new MslEvent("gml_Object_o_pass_skill_imortall_Step_2.gml", EventType.Step, 2),
-new MslEvent("gml_Object_o_pass_skill_imortall_Other_17.gml", EventType.Other, 17),
-new MslEvent("gml_Object_o_pass_skill_imortall_Other_13.gml", EventType.Other, 13),
-new MslEvent("gml_Object_o_pass_skill_imortall_PreCreate_0.gml", EventType.PreCreate, 0)
-                    );
-                    Msl.AddObject(
-                        name: "o_pass_skill_kingdead", 
-                        spriteName: "s_angel_of_death", 
-                        parentName: "o_skill_passive", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_pass_skill_kingdead_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_pass_skill_kingdead_Step_2.gml", EventType.Step, 2),
-new MslEvent("gml_Object_o_pass_skill_kingdead_Other_17.gml", EventType.Other, 17),
-new MslEvent("gml_Object_o_pass_skill_kingdead_Other_13.gml", EventType.Other, 13)
-                    );
-                    Msl.AddObject(
-                        name: "o_allAttack_Attitude", 
-                        spriteName: "s_bw_attitude_attack", 
-                        parentName: "o_Attitude", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_allAttack_Attitude_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_allAttack_Attitude_Mouse_7.gml", EventType.Mouse, 7),
-new MslEvent("gml_Object_o_allAttack_Attitude_Other_10.gml", EventType.Other, 10),
-new MslEvent("gml_Object_o_allAttack_Attitude_Other_12.gml", EventType.Other, 12),
-new MslEvent("gml_Object_o_allAttack_Attitude_PreCreate_0.gml", EventType.PreCreate, 0)
-                    );
-                    Msl.AddObject(
-                        name: "o_allDeffence_Attitude", 
-                        spriteName: "s_bw_attitude_follow", 
-                        parentName: "o_Attitude", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_allDeffence_Attitude_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_allDeffence_Attitude_Mouse_7.gml", EventType.Mouse, 7),
-new MslEvent("gml_Object_o_allDeffence_Attitude_Other_10.gml", EventType.Other, 10),
-new MslEvent("gml_Object_o_allDeffence_Attitude_Other_12.gml", EventType.Other, 12),
-new MslEvent("gml_Object_o_allDeffence_Attitude_PreCreate_0.gml", EventType.PreCreate, 0)
-                    );
+        o_pass_skill_darkblood.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_pass_skill_darkblood_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_pass_skill_darkblood_Step_2.gml", EventType.Step, 2),
+            new MslEvent("gml_Object_o_pass_skill_darkblood_Other_17.gml", EventType.Other, 17),
+            new MslEvent("gml_Object_o_pass_skill_darkblood_Other_13.gml", EventType.Other, 13),
+            new MslEvent("gml_Object_o_pass_skill_darkblood_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
 
-        Msl.AddObject(
-            name: "o_disclaimer03", 
-            spriteName: "", 
-            parentName: "", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_pass_skill_unholymind.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_pass_skill_unholymind_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_pass_skill_unholymind_Step_2.gml", EventType.Step, 2),
+            new MslEvent("gml_Object_o_pass_skill_unholymind_Other_13.gml", EventType.Other, 13),
+            new MslEvent("gml_Object_o_pass_skill_unholymind_Other_17.gml", EventType.Other, 17),
+            new MslEvent("gml_Object_o_pass_skill_unholymind_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
+
+        o_pass_skill_imortall.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_pass_skill_imortall_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_pass_skill_imortall_Alarm_7.gml", EventType.Alarm, 7),
+            new MslEvent("gml_Object_o_pass_skill_imortall_Step_2.gml", EventType.Step, 2),
+            new MslEvent("gml_Object_o_pass_skill_imortall_Other_17.gml", EventType.Other, 17),
+            new MslEvent("gml_Object_o_pass_skill_imortall_Other_13.gml", EventType.Other, 13),
+            new MslEvent("gml_Object_o_pass_skill_imortall_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
+
+        o_pass_skill_kingdead.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_pass_skill_kingdead_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_pass_skill_kingdead_Step_2.gml", EventType.Step, 2),
+            new MslEvent("gml_Object_o_pass_skill_kingdead_Other_17.gml", EventType.Other, 17),
+            new MslEvent("gml_Object_o_pass_skill_kingdead_Other_13.gml", EventType.Other, 13)
+        );
+
+        o_allAttack_Attitude.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_allAttack_Attitude_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_allAttack_Attitude_Mouse_7.gml", EventType.Mouse, 7),
+            new MslEvent("gml_Object_o_allAttack_Attitude_Other_10.gml", EventType.Other, 10),
+            new MslEvent("gml_Object_o_allAttack_Attitude_Other_12.gml", EventType.Other, 12),
+            new MslEvent("gml_Object_o_allAttack_Attitude_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
+
+        o_allDeffence_Attitude.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_allDeffence_Attitude_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_allDeffence_Attitude_Mouse_7.gml", EventType.Mouse, 7),
+            new MslEvent("gml_Object_o_allDeffence_Attitude_Other_10.gml", EventType.Other, 10),
+            new MslEvent("gml_Object_o_allDeffence_Attitude_Other_12.gml", EventType.Other, 12),
+            new MslEvent("gml_Object_o_allDeffence_Attitude_PreCreate_0.gml", EventType.PreCreate, 0)
+        );
+
+        o_disclaimer03.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_disclaimer03_Draw_0.gml", EventType.Draw, 0)
         );
 
-        Msl.AddObject(
-            name: "o_BwMark", 
-            spriteName: "s_bwdis", 
-            parentName: "", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: false,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_BwMark.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_BwMark_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_BwMark_Other_5.gml", EventType.Other, 5)
         );
 
-        Msl.AddObject(
-            name: "o_skill_bw_resurrection", 
-            spriteName: "s_recurct", 
-            parentName: "o_skill", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_skill_bw_resurrection.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_skill_bw_resurrection_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_skill_bw_resurrection_Step_2.gml", EventType.Step, 2),
             new MslEvent("gml_Object_o_skill_bw_resurrection_Other_17.gml", EventType.Other, 17),
@@ -772,15 +926,7 @@ new MslEvent("gml_Object_o_allDeffence_Attitude_PreCreate_0.gml", EventType.PreC
             new MslEvent("gml_Object_o_skill_bw_resurrection_ico_Other_13.gml", EventType.Other, 13)
         );
 
-        Msl.AddObject(
-            name: "o_bw_resurrection_birth", 
-            spriteName: "s_makefeast_birth", 
-            parentName: "o_spelllbirth", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_bw_resurrection_birth.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_bw_resurrection_birth_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_bw_resurrection_birth_Other_7.gml", EventType.Other, 7),
             new MslEvent("gml_Object_o_bw_resurrection_birth_Other_10.gml", EventType.Other, 10),
@@ -1151,28 +1297,12 @@ new MslEvent("gml_Object_o_darkball2_Other_11.gml", EventType.Other, 11)
             new MslEvent("gml_Object_o_bw_aoe_range_Draw_0.gml", EventType.Draw, 0)
         );
 
-        Msl.AddObject(
-            name: "o_soul_absorption_impact", 
-            spriteName: "", 
-            parentName: "", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_soul_absorption_impact.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_soul_absorption_impact_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_soul_absorption_impact_Alarm_1.gml", EventType.Alarm, 1)
         );
 
-        Msl.AddObject(
-            name: "o_skill_category_necromancy", 
-            spriteName: "", 
-            parentName: "o_sklill_category_magic", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_skill_category_necromancy.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_skill_category_necromancy_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_skill_category_necromancy_Other_24.gml", EventType.Other, 24),
             new MslEvent("gml_Object_o_skill_category_necromancy_PreCreate_0.gml", EventType.PreCreate, 0)
@@ -2641,7 +2771,6 @@ popz.v
         "\"Bw_Touch;Касание смерти;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;Death Touch;\"," +
         "\"Wraith_Binding;Призыв умертвия;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;Wraith Summoning;\",";
 
-        // TODO: inject that
         string sealofpower_en = "#~ur~Occultism:~/~ ~lg~+15%~/~ Magic Power, ~lg~+12.5%~/~ Weapon Damage, dealt as Unholy, ~lg~-5%~/~ Damage Taken, ~lg~-5%~/~ Cooldown Durations";
 
         string undead = "\";;///// UNDEAD;///// UNDEAD;;;;;///// UNDEAD;///// UNDEAD;;;;\",";
@@ -2834,6 +2963,11 @@ popz.v
                 string newItem = item;
                 newItem = newItem.Insert(newItem.IndexOf("\";skill_name_end"), skills);
                 newItem = newItem.Insert(newItem.IndexOf(undead) + undead.Length, skillsDesc.Replace('\n', ' '));
+                newItem = newItem.Insert(newItem.IndexOf(@"##Произнесение заклинаний ~lb~искусства магии"), sealofpower_en);
+                newItem = newItem.Insert(newItem.IndexOf(@"##Casting ~lb~Magic Mastery"), sealofpower_en);
+                newItem = newItem.Insert(newItem.IndexOf(@"##催动~lb~“驭法”"), sealofpower_en);
+                newItem = newItem.Insert(newItem.IndexOf(@"##Das Wirken von ~lb~Zauberkunst~/~"), sealofpower_en);
+                // TODO 8 languages are still missing
                 yield return newItem;
             }
             else
