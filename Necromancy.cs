@@ -587,6 +587,236 @@ public class Necromancy : Mod
             isAwake: true,
             collisionShapeFlags: CollisionShapeFlags.Circle
         );
+
+        UndertaleGameObject o_bw_resurrection = Msl.AddObject(
+            name: "o_bw_resurrection", 
+            spriteName: "s_resurection", 
+            parentName: "o_magic_pillar", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_skill_bw_wraithsummon = Msl.AddObject(
+            name: "o_skill_bw_wraithsummon", 
+            spriteName: "s_wraithbind", 
+            parentName: "o_skill", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_bw_wraith_summoning = Msl.AddObject(
+            name: "o_bw_wraith_summoning", 
+            spriteName: "s_wraithsummon_cast", 
+            parentName: "o_spelllbirth", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_bw_curse = Msl.AddObject(
+            name: "o_bw_curse", 
+            spriteName: "s_pcurse", 
+            parentName: "o_skill", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_bw_cursebirth = Msl.AddObject(
+            name: "o_bw_cursebirth", 
+            spriteName: "s_curse_cast", 
+            parentName: "o_spelllbirth", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_bw_inscurse = Msl.AddObject(
+            name: "o_bw_inscurse", 
+            spriteName: "s_teal_curse", 
+            parentName: "o_magic_pillar", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_bw_darkbolt = Msl.AddObject(
+            name: "o_bw_darkbolt", 
+            spriteName: "s_darkbalz", 
+            parentName: "o_skill", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_bw_ballbirth = Msl.AddObject(
+            name: "o_bw_ballbirth", 
+            spriteName: "s_spell_darkball_birth", 
+            parentName: "o_spelllbirth", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_bw_dark_bless = Msl.AddObject(
+            name: "o_bw_dark_bless", 
+            spriteName: "s_blusss", 
+            parentName: "o_skill", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_bw_blessing_birth = Msl.AddObject(
+            name: "o_bw_blessing_birth", 
+            spriteName: "s_darkbless_birth", 
+            parentName: "o_spelllbirth", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_bw_darkbless = Msl.AddObject(
+            name: "o_bw_darkbless", 
+            spriteName: "s_darkblessing", 
+            parentName: "o_magic_pillar", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_skill_bw_touch = Msl.AddObject(
+            name: "o_skill_bw_touch", 
+            spriteName: "s_dtouch", 
+            parentName: "o_skill", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_bw_touch = Msl.AddObject(
+            name: "o_bw_touch", 
+            spriteName: "", 
+            parentName: "", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_bw_sacrifice = Msl.AddObject(
+            name: "o_bw_sacrifice", 
+            spriteName: "s_db_soul_sacrifice", 
+            parentName: "o_class_skills", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_db_painful_curse = Msl.AddObject(
+            name: "o_db_painful_curse", 
+            spriteName: "s_buff_cursse", 
+            parentName: "o_magical_debuff", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_darkball2 = Msl.AddObject(
+            name: "o_darkball2", 
+            spriteName: "s_spell_darlball", 
+            parentName: "o_shell_damage", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_b_deathbless = Msl.AddObject(
+            name: "o_b_deathbless", 
+            spriteName: "s_buff_death_blesss", 
+            parentName: "o_physical_buff", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_bw_zombie = Msl.AddObject(
+            name: "o_bw_zombie", 
+            spriteName: "s_zombie01", 
+            parentName: "c_zombie", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_archtheurgy_impact = Msl.AddObject(
+            name: "o_archtheurgy_impact", 
+            spriteName: "", 
+            parentName: "", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_skill_enchantment_bw = Msl.AddObject(
+            name: "o_skill_enchantment_bw", 
+            spriteName: "sprite1", 
+            parentName: "o_weapon_skills", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_skill_bw_targeting = Msl.AddObject(
+            name: "o_skill_bw_targeting", 
+            spriteName: "s_torchishka", 
+            parentName: "o_skills_like", 
+            isVisible: true, 
+            isPersistent: true, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_skill_bw_targeting_offense = Msl.AddObject(
+            name: "o_skill_bw_targeting_offense", 
+            spriteName: "s_torchishka", 
+            parentName: "o_skills_like", 
+            isVisible: true, 
+            isPersistent: true, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
+
+        UndertaleGameObject o_bw_aoe_range = Msl.AddObject(
+            name: "o_bw_aoe_range", 
+            spriteName: "s_aoe_area", 
+            parentName: "", 
+            isVisible: true, 
+            isPersistent: false, 
+            isAwake: true,
+            collisionShapeFlags: CollisionShapeFlags.Circle
+        );
         
         // functions
         Msl.AddFunction(ModFiles.GetCode("gml_GlobalScript_scr_bw_checker.gml"), "scr_bw_checker");
@@ -933,15 +1163,7 @@ new MslEvent("gml_Object_o_b_angel_charm_Other_10.gml", EventType.Other, 10)
             new MslEvent("gml_Object_o_bw_resurrection_birth_Draw_0.gml", EventType.Draw, 0)
         );
 
-        Msl.AddObject(
-            name: "o_bw_resurrection", 
-            spriteName: "s_resurection", 
-            parentName: "o_magic_pillar", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_bw_resurrection.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_bw_resurrection_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_bw_resurrection_Destroy_0.gml", EventType.Destroy, 0),
             new MslEvent("gml_Object_o_bw_resurrection_Alarm_0.gml", EventType.Alarm, 0),
@@ -950,15 +1172,7 @@ new MslEvent("gml_Object_o_b_angel_charm_Other_10.gml", EventType.Other, 10)
             new MslEvent("gml_Object_o_bw_resurrection_Draw_0.gml", EventType.Draw, 0)
         );
 
-        Msl.AddObject(
-            name: "o_skill_bw_wraithsummon", 
-            spriteName: "s_wraithbind", 
-            parentName: "o_skill", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_skill_bw_wraithsummon.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_skill_bw_wraithsummon_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_skill_bw_wraithsummon_Other_14.gml", EventType.Other, 14),
             new MslEvent("gml_Object_o_skill_bw_wraithsummon_Other_17.gml", EventType.Other, 17),
@@ -973,30 +1187,14 @@ new MslEvent("gml_Object_o_b_angel_charm_Other_10.gml", EventType.Other, 10)
             new MslEvent("gml_Object_o_skill_bw_wraithsummon_ico_Other_5.gml", EventType.Other, 5)
         );
 
-        Msl.AddObject(
-            name: "o_bw_wraith_summoning", 
-            spriteName: "s_wraithsummon_cast", 
-            parentName: "o_spelllbirth", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_bw_wraith_summoning.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_bw_wraith_summoning_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_bw_wraith_summoning_Destroy_0.gml", EventType.Destroy, 0),
             new MslEvent("gml_Object_o_bw_wraith_summoning_Other_10.gml", EventType.Other, 10),
             new MslEvent("gml_Object_o_bw_wraith_summoning_Other_7.gml", EventType.Other, 7)
         );
 
-        Msl.AddObject(
-            name: "o_bw_curse", 
-            spriteName: "s_pcurse", 
-            parentName: "o_skill", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_bw_curse.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_bw_curse_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_bw_curse_Other_17.gml", EventType.Other, 17),
             new MslEvent("gml_Object_o_bw_curse_Other_13.gml", EventType.Other, 13)
@@ -1006,151 +1204,74 @@ new MslEvent("gml_Object_o_b_angel_charm_Other_10.gml", EventType.Other, 10)
             new MslEvent("gml_Object_o_bw_curse_ico_Create_0.gml", EventType.Create, 0)
         );
 
-        Msl.AddObject(
-            name: "o_bw_cursebirth", 
-            spriteName: "s_curse_cast", 
-            parentName: "o_spelllbirth", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_bw_cursebirth.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_bw_cursebirth_Create_0.gml", EventType.Create, 0)
         );
 
-        Msl.AddObject(
-            name: "o_bw_inscurse", 
-            spriteName: "s_teal_curse", 
-            parentName: "o_magic_pillar", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_bw_inscurse.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_bw_inscurse_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_bw_inscurse_Other_7.gml", EventType.Other, 7),
             new MslEvent("gml_Object_o_bw_inscurse_Draw_0.gml", EventType.Draw, 0)
         );
 
-                    Msl.AddObject(
-                        name: "o_bw_darkbolt", 
-                        spriteName: "s_darkbalz", 
-                        parentName: "o_skill", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_bw_darkbolt_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_bw_darkbolt_Other_17.gml", EventType.Other, 17),
-new MslEvent("gml_Object_o_bw_darkbolt_Other_13.gml", EventType.Other, 13)
-                    );
+        o_bw_darkbolt.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_bw_darkbolt_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_bw_darkbolt_Other_17.gml", EventType.Other, 17),
+            new MslEvent("gml_Object_o_bw_darkbolt_Other_13.gml", EventType.Other, 13)
+        );
 
         o_bw_darkbolt_ico.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_bw_darkbolt_ico_Create_0.gml", EventType.Create, 0)
         );
 
-                    Msl.AddObject(
-                        name: "o_bw_ballbirth", 
-                        spriteName: "s_spell_darkball_birth", 
-                        parentName: "o_spelllbirth", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_bw_ballbirth_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_bw_ballbirth_Other_17.gml", EventType.Other, 17),
-new MslEvent("gml_Object_o_bw_ballbirth_Other_10.gml", EventType.Other, 10)
-                    );
-                    Msl.AddObject(
-                        name: "o_bw_dark_bless", 
-                        spriteName: "s_blusss", 
-                        parentName: "o_skill", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_bw_dark_bless_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_bw_dark_bless_Other_17.gml", EventType.Other, 17),
-new MslEvent("gml_Object_o_bw_dark_bless_Other_13.gml", EventType.Other, 13)
-                    );
+        o_bw_ballbirth.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_bw_ballbirth_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_bw_ballbirth_Other_17.gml", EventType.Other, 17),
+            new MslEvent("gml_Object_o_bw_ballbirth_Other_10.gml", EventType.Other, 10)
+        );
+
+        o_bw_dark_bless.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_bw_dark_bless_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_bw_dark_bless_Other_17.gml", EventType.Other, 17),
+            new MslEvent("gml_Object_o_bw_dark_bless_Other_13.gml", EventType.Other, 13)
+        );
 
         o_bw_dark_bless_ico.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_bw_dark_bless_ico_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_bw_dark_bless_ico_Step_2.gml", EventType.Step, 2)
         );
 
-                    Msl.AddObject(
-                        name: "o_bw_blessing_birth", 
-                        spriteName: "s_darkbless_birth", 
-                        parentName: "o_spelllbirth", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_bw_blessing_birth_Create_0.gml", EventType.Create, 0)
-                    );
-                    Msl.AddObject(
-                        name: "o_bw_darkbless", 
-                        spriteName: "s_darkblessing", 
-                        parentName: "o_magic_pillar", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_bw_darkbless_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_bw_darkbless_Other_7.gml", EventType.Other, 7),
-new MslEvent("gml_Object_o_bw_darkbless_Draw_0.gml", EventType.Draw, 0)
-                    );
-                    Msl.AddObject(
-                        name: "o_skill_bw_touch", 
-                        spriteName: "s_dtouch", 
-                        parentName: "o_skill", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_skill_bw_touch_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_skill_bw_touch_Other_17.gml", EventType.Other, 17),
-new MslEvent("gml_Object_o_skill_bw_touch_Other_13.gml", EventType.Other, 13)
-                    );
+        o_bw_blessing_birth.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_bw_blessing_birth_Create_0.gml", EventType.Create, 0)
+        );
+
+        o_bw_darkbless.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_bw_darkbless_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_bw_darkbless_Other_7.gml", EventType.Other, 7),
+            new MslEvent("gml_Object_o_bw_darkbless_Draw_0.gml", EventType.Draw, 0)
+        );
+
+        o_skill_bw_touch.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_skill_bw_touch_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_skill_bw_touch_Other_17.gml", EventType.Other, 17),
+            new MslEvent("gml_Object_o_skill_bw_touch_Other_13.gml", EventType.Other, 13)
+        );
 
         o_skill_bw_touch_ico.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_skill_bw_touch_ico_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_skill_bw_touch_ico_Step_2.gml", EventType.Step, 2)
         );
 
-                    Msl.AddObject(
-                        name: "o_bw_touch", 
-                        spriteName: "", 
-                        parentName: "", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_bw_touch_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_bw_touch_Destroy_0.gml", EventType.Destroy, 0),
-new MslEvent("gml_Object_o_bw_touch_Alarm_1.gml", EventType.Alarm, 1),
-new MslEvent("gml_Object_o_bw_touch_Alarm_0.gml", EventType.Alarm, 0),
-new MslEvent("gml_Object_o_bw_touch_Alarm_2.gml", EventType.Alarm, 2),
-new MslEvent("gml_Object_o_bw_touch_Alarm_10.gml", EventType.Alarm, 10)
-                    );
+        o_bw_touch.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_bw_touch_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_bw_touch_Destroy_0.gml", EventType.Destroy, 0),
+            new MslEvent("gml_Object_o_bw_touch_Alarm_1.gml", EventType.Alarm, 1),
+            new MslEvent("gml_Object_o_bw_touch_Alarm_0.gml", EventType.Alarm, 0),
+            new MslEvent("gml_Object_o_bw_touch_Alarm_2.gml", EventType.Alarm, 2),
+            new MslEvent("gml_Object_o_bw_touch_Alarm_10.gml", EventType.Alarm, 10)
+        );
 
-        Msl.AddObject(
-            name: "o_bw_sacrifice", 
-            spriteName: "s_db_soul_sacrifice", 
-            parentName: "o_class_skills", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_bw_sacrifice.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_bw_sacrifice_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_bw_sacrifice_Destroy_0.gml", EventType.Destroy, 0),
             new MslEvent("gml_Object_o_bw_sacrifice_Alarm_2.gml", EventType.Alarm, 2),
@@ -1159,101 +1280,46 @@ new MslEvent("gml_Object_o_bw_touch_Alarm_10.gml", EventType.Alarm, 10)
             new MslEvent("gml_Object_o_bw_sacrifice_KeyPress_75.gml", EventType.KeyPress, 75)
         );
 
-                    Msl.AddObject(
-                        name: "o_db_painful_curse", 
-                        spriteName: "s_buff_cursse", 
-                        parentName: "o_magical_debuff", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_db_painful_curse_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_db_painful_curse_Destroy_0.gml", EventType.Destroy, 0),
-new MslEvent("gml_Object_o_db_painful_curse_Alarm_2.gml", EventType.Alarm, 2),
-new MslEvent("gml_Object_o_db_painful_curse_Alarm_1.gml", EventType.Alarm, 1),
-new MslEvent("gml_Object_o_db_painful_curse_Step_0.gml", EventType.Step, 0),
-new MslEvent("gml_Object_o_db_painful_curse_Other_15.gml", EventType.Other, 15),
-new MslEvent("gml_Object_o_db_painful_curse_Other_10.gml", EventType.Other, 10)
-                    );
-                    Msl.AddObject(
-                        name: "o_darkball2", 
-                        spriteName: "s_spell_darlball", 
-                        parentName: "o_shell_damage", 
-                        isVisible: true, 
-                        isPersistent: false, 
-                        isAwake: true,
-                        collisionShapeFlags: CollisionShapeFlags.Circle
-                    ).ApplyEvent(ModFiles, 
-                        new MslEvent("gml_Object_o_darkball2_Create_0.gml", EventType.Create, 0),
-new MslEvent("gml_Object_o_darkball2_Destroy_0.gml", EventType.Destroy, 0),
-new MslEvent("gml_Object_o_darkball2_Other_10.gml", EventType.Other, 10),
-new MslEvent("gml_Object_o_darkball2_Other_11.gml", EventType.Other, 11)
-                    );
+        o_db_painful_curse.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_db_painful_curse_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_db_painful_curse_Destroy_0.gml", EventType.Destroy, 0),
+            new MslEvent("gml_Object_o_db_painful_curse_Alarm_2.gml", EventType.Alarm, 2),
+            new MslEvent("gml_Object_o_db_painful_curse_Alarm_1.gml", EventType.Alarm, 1),
+            new MslEvent("gml_Object_o_db_painful_curse_Step_0.gml", EventType.Step, 0),
+            new MslEvent("gml_Object_o_db_painful_curse_Other_15.gml", EventType.Other, 15),
+            new MslEvent("gml_Object_o_db_painful_curse_Other_10.gml", EventType.Other, 10)
+        );
 
-        Msl.AddObject(
-            name: "o_b_deathbless", 
-            spriteName: "s_buff_death_blesss", 
-            parentName: "o_physical_buff", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_darkball2.ApplyEvent(ModFiles, 
+            new MslEvent("gml_Object_o_darkball2_Create_0.gml", EventType.Create, 0),
+            new MslEvent("gml_Object_o_darkball2_Destroy_0.gml", EventType.Destroy, 0),
+            new MslEvent("gml_Object_o_darkball2_Other_10.gml", EventType.Other, 10),
+            new MslEvent("gml_Object_o_darkball2_Other_11.gml", EventType.Other, 11)
+        );
+
+        o_b_deathbless.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_b_deathbless_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_b_deathbless_Alarm_2.gml", EventType.Alarm, 2),
             new MslEvent("gml_Object_o_b_deathbless_Other_10.gml", EventType.Other, 10)
         );
 
-        Msl.AddObject(
-            name: "o_bw_zombie", 
-            spriteName: "s_zombie01", 
-            parentName: "c_zombie", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_bw_zombie.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_bw_zombie_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_bw_zombie_Destroy_0.gml", EventType.Destroy, 0),
             new MslEvent("gml_Object_o_bw_zombie_PreCreate_0.gml", EventType.PreCreate, 0)
         );
 
-        Msl.AddObject(
-            name: "o_archtheurgy_impact", 
-            spriteName: "", 
-            parentName: "", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_archtheurgy_impact.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_archtheurgy_impact_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_archtheurgy_impact_Alarm_1.gml", EventType.Alarm, 1)
         );
 
-        Msl.AddObject(
-            name: "o_skill_enchantment_bw", 
-            spriteName: "sprite1", 
-            parentName: "o_weapon_skills", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles,         
+        o_skill_enchantment_bw.ApplyEvent(ModFiles,         
             new MslEvent("gml_Object_o_skill_enchantment_bw_Other_20.gml", EventType.Other, 20),
             new MslEvent("gml_Object_o_skill_enchantment_bw_Other_11.gml", EventType.Other, 11)
         );
 
-        Msl.AddObject(
-            name: "o_skill_bw_targeting", 
-            spriteName: "s_torchishka", 
-            parentName: "o_skills_like", 
-            isVisible: true, 
-            isPersistent: true, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_skill_bw_targeting.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_skill_bw_targeting_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_skill_bw_targeting_Alarm_1.gml", EventType.Alarm, 1),
             new MslEvent("gml_Object_o_skill_bw_targeting_Step_0.gml", EventType.Step, 0),
@@ -1264,15 +1330,7 @@ new MslEvent("gml_Object_o_darkball2_Other_11.gml", EventType.Other, 11)
             new MslEvent("gml_Object_o_skill_bw_targeting_Draw_0.gml", EventType.Draw, 0)
         );
 
-        Msl.AddObject(
-            name: "o_skill_bw_targeting_offense", 
-            spriteName: "s_torchishka", 
-            parentName: "o_skills_like", 
-            isVisible: true, 
-            isPersistent: true, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_skill_bw_targeting_offense.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_skill_bw_targeting_offense_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_skill_bw_targeting_offense_Alarm_1.gml", EventType.Alarm, 1),
             new MslEvent("gml_Object_o_skill_bw_targeting_offense_Step_0.gml", EventType.Step, 0),
@@ -1282,15 +1340,7 @@ new MslEvent("gml_Object_o_darkball2_Other_11.gml", EventType.Other, 11)
             new MslEvent("gml_Object_o_skill_bw_targeting_offense_Other_25.gml", EventType.Other, 25)
         );
 
-        Msl.AddObject(
-            name: "o_bw_aoe_range", 
-            spriteName: "s_aoe_area", 
-            parentName: "", 
-            isVisible: true, 
-            isPersistent: false, 
-            isAwake: true,
-            collisionShapeFlags: CollisionShapeFlags.Circle
-        ).ApplyEvent(ModFiles, 
+        o_bw_aoe_range.ApplyEvent(ModFiles, 
             new MslEvent("gml_Object_o_bw_aoe_range_Create_0.gml", EventType.Create, 0),
             new MslEvent("gml_Object_o_bw_aoe_range_Alarm_1.gml", EventType.Alarm, 1),
             new MslEvent("gml_Object_o_bw_aoe_range_Step_0.gml", EventType.Step, 0),
@@ -2366,7 +2416,7 @@ popz.v
         string rings = "\"// RINGS;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\",";
         foreach(string item in input)
         {
-            if(item.Contains("helmets"))
+            if(item.Contains(helmets))
             {
                 string newItem = item;
                 newItem = newItem.Insert(newItem.IndexOf(helmets) + helmets.Length, "\"sinistercrown;20;head101;Head;Light;Unique;metal;6000;333;;;;;;;1;;;;;;25;;;10;;;;;;;;;;;;;;;;;;;;;;;;10;;;;;;;;;;;;;;;;;;;;;;;;;;-33;;;;aldor magic;;;;;;;;;;;;;;;;;\",");
@@ -2424,28 +2474,28 @@ popz.v
         string grimoir3_type_ru = @"Автор: Силас, священнослужитель";
         string grimoir3_type_en = @"Written by Silas the priest";
 
-        string grimoir1_name = $"{grimoir1_id};{grimoir1_name_ru};" + Enumerable.Repeat($"{grimoir1_name_en};", 13);
-        string grimoir2_name = $"{grimoir2_id};{grimoir2_name_ru};" + Enumerable.Repeat($"{grimoir2_name_en};", 13);
-        string grimoir3_name = $"{grimoir3_id};{grimoir3_name_ru};" + Enumerable.Repeat($"{grimoir3_name_en};", 13);
+        string grimoir1_name = $"{grimoir1_id};{grimoir1_name_ru};" + string.Concat(Enumerable.Repeat($"{grimoir1_name_en};", 13));
+        string grimoir2_name = $"{grimoir2_id};{grimoir2_name_ru};" + string.Concat(Enumerable.Repeat($"{grimoir2_name_en};", 13));
+        string grimoir3_name = $"{grimoir3_id};{grimoir3_name_ru};" + string.Concat(Enumerable.Repeat($"{grimoir3_name_en};", 13));
 
-        string grimoir1_start = $"{grimoir1_id};" + Enumerable.Repeat($"{grimoir1_start_en};", 14);
-        string grimoir2_start = $"{grimoir2_id};" + Enumerable.Repeat($"{grimoir2_start_en};", 14);
-        string grimoir3_start = $"{grimoir3_id};" + Enumerable.Repeat($"{grimoir3_start_en};", 14);
+        string grimoir1_start = $"{grimoir1_id};" + string.Concat(Enumerable.Repeat($"{grimoir1_start_en};", 14));
+        string grimoir2_start = $"{grimoir2_id};" + string.Concat(Enumerable.Repeat($"{grimoir2_start_en};", 14));
+        string grimoir3_start = $"{grimoir3_id};" + string.Concat(Enumerable.Repeat($"{grimoir3_start_en};", 14));
 
-        string grimoir1_mid = $"{grimoir1_id};{grimoir1_mid_ru};" + Enumerable.Repeat($"{grimoir1_mid_en};", 13);
-        string grimoir2_mid = $"{grimoir2_id};{grimoir2_mid_ru};" + Enumerable.Repeat($"{grimoir2_mid_en};", 13);
-        string grimoir3_mid = $"{grimoir3_id};{grimoir3_mid_ru};" + Enumerable.Repeat($"{grimoir3_mid_en};", 13);
+        string grimoir1_mid = $"{grimoir1_id};{grimoir1_mid_ru};" + string.Concat(Enumerable.Repeat($"{grimoir1_mid_en};", 13));
+        string grimoir2_mid = $"{grimoir2_id};{grimoir2_mid_ru};" + string.Concat(Enumerable.Repeat($"{grimoir2_mid_en};", 13));
+        string grimoir3_mid = $"{grimoir3_id};{grimoir3_mid_ru};" + string.Concat(Enumerable.Repeat($"{grimoir3_mid_en};", 13));
 
-        string grimoir1_desc = $"{grimoir1_id};{grimoir1_desc_ru};" + Enumerable.Repeat($"{grimoir1_desc_en};", 13);
-        string grimoir2_desc = $"{grimoir2_id};{grimoir2_desc_ru};" + Enumerable.Repeat($"{grimoir2_desc_en};", 13);
-        string grimoir3_desc = $"{grimoir3_id};{grimoir3_desc_ru};" + Enumerable.Repeat($"{grimoir3_desc_en};", 13);
+        string grimoir1_desc = $"{grimoir1_id};{grimoir1_desc_ru};" + string.Concat(Enumerable.Repeat($"{grimoir1_desc_en};", 13));
+        string grimoir2_desc = $"{grimoir2_id};{grimoir2_desc_ru};" + string.Concat(Enumerable.Repeat($"{grimoir2_desc_en};", 13));
+        string grimoir3_desc = $"{grimoir3_id};{grimoir3_desc_ru};" + string.Concat(Enumerable.Repeat($"{grimoir3_desc_en};", 13));
 
-        string grimoir1_type = $"{grimoir1_id};{grimoir1_type_ru};" + Enumerable.Repeat($"{grimoir1_type_en};", 13);
-        string grimoir2_type = $"{grimoir2_id};{grimoir2_type_ru};" + Enumerable.Repeat($"{grimoir2_type_en};", 13);
-        string grimoir3_type = $"{grimoir3_id};{grimoir3_type_ru};" + Enumerable.Repeat($"{grimoir3_type_en};", 13);
+        string grimoir1_type = $"{grimoir1_id};{grimoir1_type_ru};" + string.Concat(Enumerable.Repeat($"{grimoir1_type_en};", 13));
+        string grimoir2_type = $"{grimoir2_id};{grimoir2_type_ru};" + string.Concat(Enumerable.Repeat($"{grimoir2_type_en};", 13));
+        string grimoir3_type = $"{grimoir3_id};{grimoir3_type_ru};" + string.Concat(Enumerable.Repeat($"{grimoir3_type_en};", 13));
         foreach(string item in input)
         {
-            if(item.Contains("bookname"))
+            if(item.Contains(bookname))
             {
                 string newItem = item;
                 
@@ -2470,90 +2520,90 @@ popz.v
         string id_angel_charm = "o_b_angel_charm";
         string name_angel_charm_ru = "Вознесение";
         string name_angel_charm_en = "Ascension";
-        string name_angel_charm = $"{id_angel_charm};{name_angel_charm_ru};" + Enumerable.Repeat($"{name_angel_charm_en};", 11);
+        string name_angel_charm = $"{id_angel_charm};{name_angel_charm_ru};" + string.Concat(Enumerable.Repeat($"{name_angel_charm_en};", 11));
         string desc_angel_charm_ru = @"";
         string desc_angel_charm_en = @"";
-        string desc_angel_charm= $"{id_angel_charm};{desc_angel_charm_ru};" + Enumerable.Repeat($"{desc_angel_charm_en};", 11);
+        string desc_angel_charm= $"{id_angel_charm};{desc_angel_charm_ru};" + string.Concat(Enumerable.Repeat($"{desc_angel_charm_en};", 11));
 
         string id_takeover = "o_db_takeover";
         string name_takeover_ru = "Одержимость";
         string name_takeover_en = "Obsession";
-        string name_takeover = $"{id_takeover};{name_takeover_ru};" + Enumerable.Repeat($"{name_takeover_en};", 11);
+        string name_takeover = $"{id_takeover};{name_takeover_ru};" + string.Concat(Enumerable.Repeat($"{name_takeover_en};", 11));
         string desc_takeover_ru = @"Штрафы меняются каждый ход в зависимости от недостающего ~lg~рассудка~/~.##Может вызвать ~r~Замешательство~/~ или ~r~Ошеломление~/~.##~r~Смерть близка~/~: каждые несколько ходов максимальное здоровье снижается.";
         string desc_takeover_en = @"The penalties change dynamically depending on the missing percentage of ~lg~Sanity~/~.##May Cause ~r~Confusion~/~ or ~r~Daze~/~.##Deals ~ur~1-3 Unholy Damage~/~ if sanity drops below ~r~33%~/~.##~r~Near death~/~: the character's Max Health is reduced every few turns.";
-        string desc_takeover = $"{id_takeover};{desc_takeover_ru};" + Enumerable.Repeat($"{desc_takeover_en};", 11);
+        string desc_takeover = $"{id_takeover};{desc_takeover_ru};" + string.Concat(Enumerable.Repeat($"{desc_takeover_en};", 11));
 
         string id_unbind = "o_b_unbind";
         string name_unbind_ru = "Отвязать";
         string name_unbind_en = "Unbind";
-        string name_unbind = $"{id_unbind};{name_unbind_ru};" + Enumerable.Repeat($"{name_unbind_en};", 11);
+        string name_unbind = $"{id_unbind};{name_unbind_ru};" + string.Concat(Enumerable.Repeat($"{name_unbind_en};", 11));
         string desc_unbind_ru = @"Нажатие на иконку эффекта или клавиши ~r~N~/~ в этом окне моментально убивает эту нежить. Тратит ход.";
         string desc_unbind_en = @"Clicking on this icon instantly kills this undead and then advances a turn.";
-        string desc_unbind = $"{id_unbind};{desc_unbind_ru};" + Enumerable.Repeat($"{desc_unbind_en};", 11);
+        string desc_unbind = $"{id_unbind};{desc_unbind_ru};" + string.Concat(Enumerable.Repeat($"{desc_unbind_en};", 11));
 
         string id_darkenchant = "o_b_darkenchant";
         string name_darkenchant_ru = "Тёмный договор";
         string name_darkenchant_en = "Dark Enchantment";
-        string name_darkenchant = $"{id_darkenchant};{name_darkenchant_ru};" + Enumerable.Repeat($"{name_darkenchant_en};", 11);
+        string name_darkenchant = $"{id_darkenchant};{name_darkenchant_ru};" + string.Concat(Enumerable.Repeat($"{name_darkenchant_en};", 11));
         string desc_darkenchant_ru = @"";
         string desc_darkenchant_en = @"";
-        string desc_darkenchant = $"{id_darkenchant};{desc_darkenchant_ru};" + Enumerable.Repeat($"{desc_darkenchant_en};", 11);
+        string desc_darkenchant = $"{id_darkenchant};{desc_darkenchant_ru};" + string.Concat(Enumerable.Repeat($"{desc_darkenchant_en};", 11));
 
         string id_punishment = "o_db_punishment";
         string name_punishment_ru = "Punishment";
         string name_punishment_en = "Punishment";
-        string name_punishment = $"{id_punishment};{name_punishment_ru};" + Enumerable.Repeat($"{name_punishment_en};", 11);
+        string name_punishment = $"{id_punishment};{name_punishment_ru};" + string.Concat(Enumerable.Repeat($"{name_punishment_en};", 11));
         string desc_punishment_ru = @"";
         string desc_punishment_en = @"";
-        string desc_punishment = $"{id_punishment};{desc_punishment_ru};" + Enumerable.Repeat($"{desc_punishment_en};", 11);
+        string desc_punishment = $"{id_punishment};{desc_punishment_ru};" + string.Concat(Enumerable.Repeat($"{desc_punishment_en};", 11));
 
         string id_exceptional = "o_b_exceptional";
         string name_exceptional_ru = "Исключительная душа";
         string name_exceptional_en = "Disorder";
-        string name_exceptional = $"{id_exceptional};{name_exceptional_ru};" + Enumerable.Repeat($"{name_exceptional_en};", 11);
+        string name_exceptional = $"{id_exceptional};{name_exceptional_ru};" + string.Concat(Enumerable.Repeat($"{name_exceptional_en};", 11));
         string desc_exceptional_ru = @"Аннулирует штрафы от эффекта ~r~\""Одержимости\""~/~ и препятствует его получению.##Когда эффект заканчивает: ~r~возвращает в загробный мир~/~ всех союзных умертвий.";
         string desc_exceptional_en = @"Negates penalties of ~r~Obsession~/~.##Prevents from receiving ~r~Obsession~/~.##When effect expires: ~r~unbinds~/~ all allied wraiths.";
-        string desc_exceptional = $"{id_exceptional};{desc_exceptional_ru};" + Enumerable.Repeat($"{desc_exceptional_en};", 11);
+        string desc_exceptional = $"{id_exceptional};{desc_exceptional_ru};" + string.Concat(Enumerable.Repeat($"{desc_exceptional_en};", 11));
 
         string id_bw_sacrifice = "o_bw_sacrifice";
         string name_bw_sacrifice_ru = "Soul Sacrifice";
         string name_bw_sacrifice_en = "Soul Sacrifice";
-        string name_bw_sacrifice = $"{id_bw_sacrifice};{name_bw_sacrifice_ru};" + Enumerable.Repeat($"{name_bw_sacrifice_en};", 11);
+        string name_bw_sacrifice = $"{id_bw_sacrifice};{name_bw_sacrifice_ru};" + string.Concat(Enumerable.Repeat($"{name_bw_sacrifice_en};", 11));
         string desc_bw_sacrifice_ru = @"Pressing ~r~K~/~ activates the effect and then advances a turn.##Activation consumes ~bl~10%~/~ of Max Energy.;Pressing ~r~K~/~ activates the effect and then advances a turn.##Activation consumes ~bl~10%~/~ of Max Energy.";
         string desc_bw_sacrifice_en = @"Pressing ~r~K~/~ activates the effect and then advances a turn.##Activation consumes ~bl~10%~/~ of Max Energy.;Pressing ~r~K~/~ activates the effect and then advances a turn.##Activation consumes ~bl~10%~/~ of Max Energy.";
-        string desc_bw_sacrifice = $"{id_bw_sacrifice};{desc_bw_sacrifice_ru};" + Enumerable.Repeat($"{desc_bw_sacrifice_en};", 11);
+        string desc_bw_sacrifice = $"{id_bw_sacrifice};{desc_bw_sacrifice_ru};" + string.Concat(Enumerable.Repeat($"{desc_bw_sacrifice_en};", 11));
 
         string id_servemaster = "o_b_servemaster";
         string name_servemaster_ru = "Оживление";
         string name_servemaster_en = "Revivify";
-        string name_servemaster = $"{id_servemaster};{name_servemaster_ru};" + Enumerable.Repeat($"{name_servemaster_en};", 11);
+        string name_servemaster = $"{id_servemaster};{name_servemaster_ru};" + string.Concat(Enumerable.Repeat($"{name_servemaster_en};", 11));
         string desc_servemaster_ru = @"Считается ~r~нежитью~/~: привод в город является ~r~преступлением~/~.##Способно ~lg~следовать~/~ за вами по всей карте.##Нажатие по иконке ~y~левой кнопкой мыши~/~ переключает режим поведения юнита между ~lg~Следованием~/~ и ~r~Агрессией~/~.#Нажатие по иконке ~y~правой кнопкой мыши~/~ переключает режим поведения юнита между ~lg~Простоем~/~ и ~p~Автономией~/~.##Нажатие клавиши ~y~C~/~ позволяет задать точку для перемещения подконтрольной нежити.#Нажатие клавиши ~y~V~/~ позволяет задать цель для атаки подконтрольной нежити.";
         string desc_servemaster_en = @"Considered as an ~r~Undead~/~: bringing it inside settlements is ~r~Crime~/~.##Capable of ~lg~Following~/~ you everywhere on the map.##~y~Left clicking~/~ this icon switches ~r~Aggressive~/~ and ~lg~Follow~/~ mode.#~y~Right clicking~/~ this icon switches ~lg~Idle~/~ and ~p~Autonomous~/~ mode.##Pressing ~y~V~/~ allows for selectable positioning.";
-        string desc_servemaster = $"{id_servemaster};{desc_servemaster_ru};" + Enumerable.Repeat($"{desc_servemaster_en};", 11);
+        string desc_servemaster = $"{id_servemaster};{desc_servemaster_ru};" + string.Concat(Enumerable.Repeat($"{desc_servemaster_en};", 11));
 
         string id_charged_soul = "o_b_charged_soul";
         string name_charged_soul_ru = "Поглощённая душа";
         string name_charged_soul_en = "Charged Soul";
-        string name_charged_soul = $"{id_charged_soul};{name_charged_soul_ru};" + Enumerable.Repeat($"{name_charged_soul_en};", 11);
+        string name_charged_soul = $"{id_charged_soul};{name_charged_soul_ru};" + string.Concat(Enumerable.Repeat($"{name_charged_soul_en};", 11));
         string desc_charged_soul_ru = @"Использование ~w~Заклинаний~/~ уменьшает степень эффекта на ~r~1~/~.##Повторное произнесение ~lg~Поглощения души~/~ увеличивает степень эффекта (вплоть до ~sy~IV~/~) и обновляет его длительность.";
         string desc_charged_soul_en = @"Using ~w~Spells~/~ reduce the number of stacks by ~r~1~/~.##The repeated use of ~lg~Soul Absorption~/~ grants an extra stack of the effect (up to ~w~IV~/~) and refreshes its duration.";
-        string desc_charged_soul = $"{id_charged_soul};{desc_charged_soul_ru};" + Enumerable.Repeat($"{desc_charged_soul_en};", 11);
+        string desc_charged_soul = $"{id_charged_soul};{desc_charged_soul_ru};" + string.Concat(Enumerable.Repeat($"{desc_charged_soul_en};", 11));
 
         string id_deathbless = "o_b_deathbless";
         string name_deathbless_ru = "Дар Смерти";
         string name_deathbless_en = "Death's Blessing";
-        string name_deathbless = $"{id_deathbless};{name_deathbless_ru};" + Enumerable.Repeat($"{name_deathbless_en};", 11);
+        string name_deathbless = $"{id_deathbless};{name_deathbless_ru};" + string.Concat(Enumerable.Repeat($"{name_deathbless_en};", 11));
         string desc_deathbless_ru = @"";
         string desc_deathbless_en = @"";
-        string desc_deathbless = $"{id_deathbless};{desc_deathbless_ru};" + Enumerable.Repeat($"{desc_deathbless_en};", 11);
+        string desc_deathbless = $"{id_deathbless};{desc_deathbless_ru};" + string.Concat(Enumerable.Repeat($"{desc_deathbless_en};", 11));
 
         string id_painful_curse = "o_db_painful_curse";
         string name_painful_curse_ru = "Мучительное проклятие";
         string name_painful_curse_en = "Withering Curse";
-        string name_painful_curse = $"{id_painful_curse};{name_painful_curse_ru};" + Enumerable.Repeat($"{name_painful_curse_en};", 11);
+        string name_painful_curse = $"{id_painful_curse};{name_painful_curse_ru};" + string.Concat(Enumerable.Repeat($"{name_painful_curse_en};", 11));
         string desc_painful_curse_ru = @"";
         string desc_painful_curse_en = @"";
-        string desc_painful_curse = $"{id_painful_curse};{desc_painful_curse_ru};" + Enumerable.Repeat($"{desc_painful_curse_en};", 11);
+        string desc_painful_curse = $"{id_painful_curse};{desc_painful_curse_ru};" + string.Concat(Enumerable.Repeat($"{desc_painful_curse_en};", 11));
 
         string name = $"\"{name_angel_charm}\",\"{name_takeover}\",\"{name_unbind}\",\"{name_darkenchant}\",\"{name_punishment}\",\"{name_exceptional}\",\"{name_bw_sacrifice}\",\"{name_servemaster}\",\"{name_charged_soul}\",\"{name_deathbless}\",\"{name_painful_curse}\",";
         string desc = $"\"{desc_angel_charm}\",\"{desc_takeover}\",\"{desc_unbind}\",\"{desc_darkenchant}\",\"{desc_punishment}\",\"{desc_exceptional}\",\"{desc_bw_sacrifice}\",\"{desc_servemaster}\",\"{desc_charged_soul}\",\"{desc_deathbless}\",\"{desc_painful_curse}\",";
