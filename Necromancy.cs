@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System;
 using System.Linq;
+using UndertaleModLib;
 
 namespace Necromancy;
 static class StringExtensions
@@ -21,7 +22,6 @@ static class StringExtensions
         }
         return Kmp(text, pattern);
     }
-
     private static IEnumerable<int> Kmp(string text, string pattern)
     {
         int M = pattern.Length;
@@ -56,7 +56,6 @@ static class StringExtensions
             }
         }
     }
-
     private static int[] LongestPrefixSuffix(string pattern)
     {
         int[] lps = new int[pattern.Length];
@@ -91,10 +90,9 @@ public class Necromancy : Mod
 {
     public override string Author => "BW, CommissarAmethyst, zizani";
     public override string Name => "Necromancy";
-    public override string Description => "mod_description";
+    public override string Description => "Raise the deads and curse enemies. Shall you go insane in the process ?";
     public override string Version => "0.2.0.0";
     public override string TargetVersion => "0.8.2.10";
-
     public override void PatchMod()
     {
         // sprites
@@ -2517,13 +2515,20 @@ else {scr_inventory_add_item(o_inv_cgrimoir3)}")
             .InsertBelow(@"if (owner.faction_id == ""Servant"")
 instance_create(x, y, o_res_buff_creator)")
             .Save();
+        
+        // room
+        UndertaleRoom disclaimerRoom = Msl.AddRoom("r_bw_disclaimer", 683, 483);
+        UndertaleRoom.Layer layerInstance = disclaimerRoom.AddLayerInstance("NewInstancesLayer");
+        disclaimerRoom.AddLayerBackground("NewBackgroundLayer");
+        
+        disclaimerRoom.AddGameObject(layerInstance, "o_init_overlay", Msl.AddCode(ModFiles.GetCode("disclaimer_creation.gml"), "disclaimer_creation"));
+        disclaimerRoom.AddGameObject(layerInstance, "o_BwMark");
+        disclaimerRoom.AddGameObject(layerInstance, "o_disclaimer03");
 
-
-        // TODO: add a room
-        /* Msl.LoadGML("gml_RoomCC_r_disclaimer2_0_Create")
+        Msl.LoadGML("gml_RoomCC_r_disclaimer2_0_Create")
             .MatchFrom("roomNext")
             .ReplaceBy("roomNext = r_bw_disclaimer")
-            .Save(); */
+            .Save();
 
         // table
         List<string>? ai_table = ModLoader.GetTable("gml_GlobalScript_table_animals_ai");
@@ -2896,9 +2901,6 @@ popz.v
         string name_angel_charm_ru = "Вознесение";
         string name_angel_charm_en = "Ascension";
         string name_angel_charm = $"{id_angel_charm};{name_angel_charm_ru};" + string.Concat(Enumerable.Repeat($"{name_angel_charm_en};", 11));
-        string desc_angel_charm_ru = @"";
-        string desc_angel_charm_en = @"";
-        string desc_angel_charm= $"{id_angel_charm};{desc_angel_charm_ru};" + string.Concat(Enumerable.Repeat($"{desc_angel_charm_en};", 11));
 
         string id_takeover = "o_db_takeover";
         string name_takeover_ru = "Одержимость";
@@ -2920,17 +2922,11 @@ popz.v
         string name_darkenchant_ru = "Тёмный договор";
         string name_darkenchant_en = "Dark Enchantment";
         string name_darkenchant = $"{id_darkenchant};{name_darkenchant_ru};" + string.Concat(Enumerable.Repeat($"{name_darkenchant_en};", 11));
-        string desc_darkenchant_ru = @"";
-        string desc_darkenchant_en = @"";
-        string desc_darkenchant = $"{id_darkenchant};{desc_darkenchant_ru};" + string.Concat(Enumerable.Repeat($"{desc_darkenchant_en};", 11));
 
         string id_punishment = "o_db_punishment";
         string name_punishment_ru = "Punishment";
         string name_punishment_en = "Punishment";
         string name_punishment = $"{id_punishment};{name_punishment_ru};" + string.Concat(Enumerable.Repeat($"{name_punishment_en};", 11));
-        string desc_punishment_ru = @"";
-        string desc_punishment_en = @"";
-        string desc_punishment = $"{id_punishment};{desc_punishment_ru};" + string.Concat(Enumerable.Repeat($"{desc_punishment_en};", 11));
 
         string id_exceptional = "o_b_exceptional";
         string name_exceptional_ru = "Исключительная душа";
@@ -2958,7 +2954,7 @@ popz.v
 
         string id_charged_soul = "o_b_charged_soul";
         string name_charged_soul_ru = "Поглощённая душа";
-        string name_charged_soul_en = "Charged Soul";
+        string name_charged_soul_en = "Essence Charge";
         string name_charged_soul = $"{id_charged_soul};{name_charged_soul_ru};" + string.Concat(Enumerable.Repeat($"{name_charged_soul_en};", 11));
         string desc_charged_soul_ru = @"Использование ~w~Заклинаний~/~ уменьшает степень эффекта на ~r~1~/~.##Повторное произнесение ~lg~Поглощения души~/~ увеличивает степень эффекта (вплоть до ~sy~IV~/~) и обновляет его длительность.";
         string desc_charged_soul_en = @"Using ~w~Spells~/~ reduce the number of stacks by ~r~1~/~.##The repeated use of ~lg~Soul Absorption~/~ grants an extra stack of the effect (up to ~w~IV~/~) and refreshes its duration.";
@@ -2968,20 +2964,14 @@ popz.v
         string name_deathbless_ru = "Дар Смерти";
         string name_deathbless_en = "Death's Blessing";
         string name_deathbless = $"{id_deathbless};{name_deathbless_ru};" + string.Concat(Enumerable.Repeat($"{name_deathbless_en};", 11));
-        string desc_deathbless_ru = @"";
-        string desc_deathbless_en = @"";
-        string desc_deathbless = $"{id_deathbless};{desc_deathbless_ru};" + string.Concat(Enumerable.Repeat($"{desc_deathbless_en};", 11));
 
         string id_painful_curse = "o_db_painful_curse";
         string name_painful_curse_ru = "Мучительное проклятие";
         string name_painful_curse_en = "Withering Curse";
         string name_painful_curse = $"{id_painful_curse};{name_painful_curse_ru};" + string.Concat(Enumerable.Repeat($"{name_painful_curse_en};", 11));
-        string desc_painful_curse_ru = @"";
-        string desc_painful_curse_en = @"";
-        string desc_painful_curse = $"{id_painful_curse};{desc_painful_curse_ru};" + string.Concat(Enumerable.Repeat($"{desc_painful_curse_en};", 11));
 
         string name = $"\"{name_angel_charm}\",\"{name_takeover}\",\"{name_unbind}\",\"{name_darkenchant}\",\"{name_punishment}\",\"{name_exceptional}\",\"{name_bw_sacrifice}\",\"{name_servemaster}\",\"{name_charged_soul}\",\"{name_deathbless}\",\"{name_painful_curse}\",";
-        string desc = $"\"{desc_angel_charm}\",\"{desc_takeover}\",\"{desc_unbind}\",\"{desc_darkenchant}\",\"{desc_punishment}\",\"{desc_exceptional}\",\"{desc_bw_sacrifice}\",\"{desc_servemaster}\",\"{desc_charged_soul}\",\"{desc_deathbless}\",\"{desc_painful_curse}\",";
+        string desc = $"\"{desc_takeover}\",\"{desc_unbind}\",\"{desc_exceptional}\",\"{desc_bw_sacrifice}\",\"{desc_servemaster}\",\"{desc_charged_soul}\",";
         
         foreach(string item in input)
         {
@@ -3392,7 +3382,14 @@ popz.v
                 newItem = newItem.Insert(newItem.IndexOf(@"##Casting ~lb~Magic Mastery"), sealofpower_en);
                 newItem = newItem.Insert(newItem.IndexOf(@"##催动~lb~“驭法”"), sealofpower_en);
                 newItem = newItem.Insert(newItem.IndexOf(@"##Das Wirken von ~lb~Zauberkunst~/~"), sealofpower_en);
-                // TODO 8 languages are still missing
+                newItem = newItem.Insert(newItem.IndexOf(@"##Lancer des sorts de ~lb~Maîtrise de la magie"), sealofpower_en);
+                newItem = newItem.Insert(newItem.IndexOf(@"##Lanciare incantesimi relativi all'~lb~Affinità Magica~/~"), sealofpower_en);
+                newItem = newItem.Insert(newItem.IndexOf(@"##Conjurar feitiços de ~lb~Maestria Mágica~/~"), sealofpower_en);
+                newItem = newItem.Insert(newItem.IndexOf(@"##Rzucanie zaklęć z drzewka ~lb~sztuki magicznej~/~"), sealofpower_en);
+                newItem = newItem.Insert(newItem.IndexOf(@"## ~lb~Büyü Ustalığı~/~ büyüleri kullanmak"), sealofpower_en);
+                newItem = newItem.Insert(newItem.IndexOf(@"##~lb~魔術技能~/~ の魔術"), sealofpower_en);
+                newItem = newItem.Insert(newItem.IndexOf(@"##~lb~마법 숙달~/~ 주문"), sealofpower_en);
+                // TODO Español LATAM is still missing
                 yield return newItem;
             }
             else

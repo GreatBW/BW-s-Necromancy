@@ -26,7 +26,7 @@ if is_open
             pause = 1
             with (o_player)
             {
-                other.anime = scr_onUnitAnimationCreate(_spr, _spr, 8029, -1)
+                other.anime = scr_onUnitAnimationCreate(_spr, _spr, s_empty, -1)
                 with (other.anime)
                     scr_set_lt()
             }
