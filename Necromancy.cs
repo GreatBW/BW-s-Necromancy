@@ -2521,14 +2521,11 @@ instance_create(x, y, o_res_buff_creator)")
         UndertaleRoom.Layer layerInstance = disclaimerRoom.AddLayerInstance("NewInstancesLayer");
         disclaimerRoom.AddLayerBackground("NewBackgroundLayer");
         
-        disclaimerRoom.AddGameObject(layerInstance, "o_init_overlay", Msl.AddCode(ModFiles.GetCode("disclaimer_creation.gml"), "disclaimer_creation"));
+        UndertaleRoom.GameObject overlay = disclaimerRoom.AddGameObject(layerInstance, "o_init_overlay");
         disclaimerRoom.AddGameObject(layerInstance, "o_BwMark");
         disclaimerRoom.AddGameObject(layerInstance, "o_disclaimer03");
 
-        Msl.LoadGML("gml_RoomCC_r_disclaimer2_0_Create")
-            .MatchFrom("roomNext")
-            .ReplaceBy("roomNext = r_bw_disclaimer")
-            .Save();
+        Msl.AddCustomDisclaimerRoom("r_bw_disclaimer", overlay);
 
         // table
         List<string>? ai_table = ModLoader.GetTable("gml_GlobalScript_table_animals_ai");
