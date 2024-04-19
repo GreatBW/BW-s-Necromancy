@@ -182,8 +182,13 @@ public class Necromancy : Mod
         Msl.GetSprite("s_necromancer_boss_staff_z").OriginY = 43;
         Msl.GetSprite("s_bison_undead_dead_rotten").OriginX = 38;
         Msl.GetSprite("s_bison_undead_dead_rotten").OriginY = 34;
-        Msl.GetSprite("s_charming").OriginX = 32;
-        Msl.GetSprite("s_charming").OriginY = 59;
+
+        UndertaleSprite s_charming = Msl.GetSprite("s_charming");
+        s_charming.OriginX = 32;
+        s_charming.OriginY = 59;
+        s_charming.GMS2PlaybackSpeedType = AnimSpeedType.FramesPerGameFrame;
+        s_charming.GMS2PlaybackSpeed = 0.3f;
+
         Msl.GetSprite("s_bison_undead").OriginX = 36;
         Msl.GetSprite("s_bison_undead").OriginY = 39;
         Msl.GetSprite("s_proselyte_anmara_z").OriginX = 30;
@@ -218,8 +223,13 @@ public class Necromancy : Mod
         Msl.GetSprite("s_smalltroll_dead_rotten").OriginY = 22;
         Msl.GetSprite("s_proselyte_harbinger_z").OriginX = 27;
         Msl.GetSprite("s_proselyte_harbinger_z").OriginY = 38;
-        Msl.GetSprite("s_teal_curse").OriginX = 20;
-        Msl.GetSprite("s_teal_curse").OriginY = 61;
+
+        UndertaleSprite s_teal_curse = Msl.GetSprite("s_teal_curse");
+        s_teal_curse.OriginX = 20;
+        s_teal_curse.OriginY = 61;
+        s_teal_curse.GMS2PlaybackSpeedType = AnimSpeedType.FramesPerGameFrame;
+        s_teal_curse.GMS2PlaybackSpeed = 0.3f;
+
         Msl.GetSprite("s_boar_undead").OriginX = 31;
         Msl.GetSprite("s_boar_undead").OriginY = 25;
         Msl.GetSprite("s_skill_death_blesss_off").OriginX = 12;
@@ -302,8 +312,13 @@ public class Necromancy : Mod
         Msl.GetSprite("s_dtouch").OriginY = 12;
         Msl.GetSprite("s_bandit_heavyarbalester_z").OriginX = 26;
         Msl.GetSprite("s_bandit_heavyarbalester_z").OriginY = 41;
-        Msl.GetSprite("s_curse_cast").OriginX = 17;
-        Msl.GetSprite("s_curse_cast").OriginY = 30;
+
+        UndertaleSprite s_curse_cast = Msl.GetSprite("s_curse_cast");
+        s_curse_cast.OriginX = 17;
+        s_curse_cast.OriginY = 30;
+        s_curse_cast.GMS2PlaybackSpeedType = AnimSpeedType.FramesPerGameFrame;
+        s_curse_cast.GMS2PlaybackSpeed = 0.3f;
+
         Msl.GetSprite("s_bandit_huntmaster_z").OriginX = 26;
         Msl.GetSprite("s_bandit_huntmaster_z").OriginY = 41;
         Msl.GetSprite("s_bandit_longbowman_z").OriginX = 26;
