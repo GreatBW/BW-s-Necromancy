@@ -186,6 +186,7 @@ public class Necromancy : Mod
         UndertaleSprite s_charming = Msl.GetSprite("s_charming");
         s_charming.OriginX = 32;
         s_charming.OriginY = 59;
+        s_charming.IsSpecialType = true;
         s_charming.GMS2PlaybackSpeedType = AnimSpeedType.FramesPerGameFrame;
         s_charming.GMS2PlaybackSpeed = 0.3f;
 
@@ -227,6 +228,7 @@ public class Necromancy : Mod
         UndertaleSprite s_teal_curse = Msl.GetSprite("s_teal_curse");
         s_teal_curse.OriginX = 20;
         s_teal_curse.OriginY = 61;
+        s_teal_curse.IsSpecialType = true;
         s_teal_curse.GMS2PlaybackSpeedType = AnimSpeedType.FramesPerGameFrame;
         s_teal_curse.GMS2PlaybackSpeed = 0.3f;
 
@@ -316,6 +318,7 @@ public class Necromancy : Mod
         UndertaleSprite s_curse_cast = Msl.GetSprite("s_curse_cast");
         s_curse_cast.OriginX = 17;
         s_curse_cast.OriginY = 30;
+        s_curse_cast.IsSpecialType = true;
         s_curse_cast.GMS2PlaybackSpeedType = AnimSpeedType.FramesPerGameFrame;
         s_curse_cast.GMS2PlaybackSpeed = 0.3f;
 
