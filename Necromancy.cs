@@ -1920,6 +1920,11 @@ global.necromancy_tier3 = [""Necromancy"", o_pass_skill_unholymind, o_skill_bw_t
             .ReplaceBy("var _attitudesArray = [o_allDeffence_Attitude, o_allAttack_Attitude, o_Meditative_Attitude, o_Aggressive_Attitude, o_shout, o_crossbow_charging]")
             .Save();
 
+        Msl.LoadGML("gml_Object_o_attitudes_menu_Other_11")
+            .MatchFrom("scr_guiLayoutOffsetUpdate")
+            .ReplaceBy("scr_guiLayoutOffsetUpdate(id, 512, -82)")
+            .Save();
+
         Msl.LoadGML("gml_Object_o_b_dark_blessing_Alarm_2")
             .MatchAll()
             .InsertBelow(@"var _dur = duration
