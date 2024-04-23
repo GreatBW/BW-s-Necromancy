@@ -230,7 +230,7 @@ public class Necromancy : Mod
         s_teal_curse.OriginY = 61;
         s_teal_curse.IsSpecialType = true;
         s_teal_curse.GMS2PlaybackSpeedType = AnimSpeedType.FramesPerGameFrame;
-        s_teal_curse.GMS2PlaybackSpeed = 0.3f;
+        s_teal_curse.GMS2PlaybackSpeed = 0.4f;
 
         Msl.GetSprite("s_boar_undead").OriginX = 31;
         Msl.GetSprite("s_boar_undead").OriginY = 25;
@@ -320,7 +320,7 @@ public class Necromancy : Mod
         s_curse_cast.OriginY = 30;
         s_curse_cast.IsSpecialType = true;
         s_curse_cast.GMS2PlaybackSpeedType = AnimSpeedType.FramesPerGameFrame;
-        s_curse_cast.GMS2PlaybackSpeed = 0.3f;
+        s_curse_cast.GMS2PlaybackSpeed = 0.4f;
 
         Msl.GetSprite("s_bandit_huntmaster_z").OriginX = 26;
         Msl.GetSprite("s_bandit_huntmaster_z").OriginY = 41;
