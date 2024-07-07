@@ -5,11 +5,6 @@
 using ModShardLauncher;
 using ModShardLauncher.Mods;
 using UndertaleModLib.Models;
-using System.Collections.Generic;
-using System.IO;
-using System;
-using System.Linq;
-using UndertaleModLib;
 
 namespace Necromancy;
 static class StringExtensions
@@ -1893,6 +1888,8 @@ with (o_pass_skill_unholymind) event_user(3)")
             .InsertAbove("if (_zompass || instance_exists(o_res_buff_creator))\n{\nfaction_id = \"Servant\"\nsubfaction_id = faction_id\n}\nelse{")
             .MatchFrom("subfaction_id = argument[0]")
             .InsertBelow("}")
+            .MatchFrom("gain_xp = scr_GetModParameter(\"XP\")")
+            .ReplaceBy("if (_zompass || instance_exists(o_res_buff_creator))\n{gain_xp = 1}\nelse{}")
             .Save();
 
         Msl.LoadGML("gml_GlobalScript_scr_penalty_player_attack")
