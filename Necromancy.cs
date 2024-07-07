@@ -1889,7 +1889,7 @@ with (o_pass_skill_unholymind) event_user(3)")
             .MatchFrom("subfaction_id = argument[0]")
             .InsertBelow("}")
             .MatchFrom("gain_xp = scr_GetModParameter(\"XP\")")
-            .ReplaceBy("if (_zompass || instance_exists(o_res_buff_creator))\n{gain_xp = 1}\nelse{}")
+            .ReplaceBy("if (_zompass || instance_exists(o_res_buff_creator))\n{gain_xp = 1}\nelse{gain_xp = scr_GetModParameter(\"XP\")}")
             .Save();
 
         Msl.LoadGML("gml_GlobalScript_scr_penalty_player_attack")
