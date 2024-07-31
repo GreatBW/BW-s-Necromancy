@@ -86,7 +86,7 @@ public class Necromancy : Mod
     public override string Author => "BW, CommissarAmethyst, zizani";
     public override string Name => "Necromancy";
     public override string Description => "Raise the deads and curse enemies. Shall you go insane in the process ?";
-    public override string Version => "1.0.0.0";
+    public override string Version => "1.0.1";
     public override string TargetVersion => "0.8.2.10";
     public override void PatchMod()
     {
