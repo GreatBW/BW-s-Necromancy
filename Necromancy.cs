@@ -2608,6 +2608,24 @@ instance_create(x, y, o_res_buff_creator)")
             .Apply(ModifiersIterator)
             .Save();
 
+        Msl.ExportTable("gml_GlobalScript_table_Modifiers", "_before_modifier.csv");
+
+        Msl.InjectTableModifiersLocalization(
+            new LocalizationModifier(
+                id: "o_db_takeover",
+                name: new Dictionary<ModLanguage, string> {
+                    {ModLanguage.English, "Obsession"},
+                    {ModLanguage.Russian, "Одержимость"},
+                },
+                description: new Dictionary<ModLanguage, string> {
+                    {ModLanguage.English, @"The penalties change dynamically depending on the missing percentage of ~lg~Sanity~/~.##May Cause ~r~Confusion~/~ or ~r~Daze~/~.##Deals ~ur~1-3 Unholy Damage~/~ if sanity drops below ~r~33%~/~.##~r~Near death~/~: the character's Max Health is reduced every few turns."},
+                    {ModLanguage.Russian, @"Штрафы меняются каждый ход в зависимости от недостающего ~lg~рассудка~/~.##Может вызвать ~r~Замешательство~/~ или ~r~Ошеломление~/~.##~r~Смерть близка~/~: каждые несколько ходов максимальное здоровье снижается."},
+                }
+            )
+        );
+
+        Msl.ExportTable("gml_GlobalScript_table_Modifiers", "_after_modifier.csv");
+
         Msl.LoadGML("gml_GlobalScript_table_weapons_text")
             .Apply(WeaponTextIterator)
             .Save();
@@ -2616,9 +2634,7 @@ instance_create(x, y, o_res_buff_creator)")
             .Apply(TextIterator)
             .Save();
 
-        Msl.LoadGML("gml_GlobalScript_table_speech")
-            .Apply(SpeechIterator)
-            .Save();
+        Necromancy_Localization.SpeechPatching();
 
         Msl.LoadGML("gml_GlobalScript_table_skills_stat")
             .Apply(SkillsStatIterator)
@@ -2919,14 +2935,6 @@ popz.v
         string name_angel_charm_en = "Ascension";
         string name_angel_charm = $"{id_angel_charm};{name_angel_charm_ru};" + string.Concat(Enumerable.Repeat($"{name_angel_charm_en};", 11));
 
-        string id_takeover = "o_db_takeover";
-        string name_takeover_ru = "Одержимость";
-        string name_takeover_en = "Obsession";
-        string name_takeover = $"{id_takeover};{name_takeover_ru};" + string.Concat(Enumerable.Repeat($"{name_takeover_en};", 11));
-        string desc_takeover_ru = @"Штрафы меняются каждый ход в зависимости от недостающего ~lg~рассудка~/~.##Может вызвать ~r~Замешательство~/~ или ~r~Ошеломление~/~.##~r~Смерть близка~/~: каждые несколько ходов максимальное здоровье снижается.";
-        string desc_takeover_en = @"The penalties change dynamically depending on the missing percentage of ~lg~Sanity~/~.##May Cause ~r~Confusion~/~ or ~r~Daze~/~.##Deals ~ur~1-3 Unholy Damage~/~ if sanity drops below ~r~33%~/~.##~r~Near death~/~: the character's Max Health is reduced every few turns.";
-        string desc_takeover = $"{id_takeover};{desc_takeover_ru};" + string.Concat(Enumerable.Repeat($"{desc_takeover_en};", 11));
-
         string id_unbind = "o_b_unbind";
         string name_unbind_ru = "Отвязать";
         string name_unbind_en = "Unbind";
@@ -2987,8 +2995,8 @@ popz.v
         string name_painful_curse_en = "Withering Curse";
         string name_painful_curse = $"{id_painful_curse};{name_painful_curse_ru};" + string.Concat(Enumerable.Repeat($"{name_painful_curse_en};", 11));
 
-        string name = $"\"{name_angel_charm}\",\"{name_takeover}\",\"{name_unbind}\",\"{name_darkenchant}\",\"{name_punishment}\",\"{name_exceptional}\",\"{name_bw_sacrifice}\",\"{name_servemaster}\",\"{name_charged_soul}\",\"{name_deathbless}\",\"{name_painful_curse}\",";
-        string desc = $"\"{desc_takeover}\",\"{desc_unbind}\",\"{desc_exceptional}\",\"{desc_bw_sacrifice}\",\"{desc_servemaster}\",\"{desc_charged_soul}\",";
+        string name = $"\"{name_angel_charm}\",\"{name_unbind}\",\"{name_darkenchant}\",\"{name_punishment}\",\"{name_exceptional}\",\"{name_bw_sacrifice}\",\"{name_servemaster}\",\"{name_charged_soul}\",\"{name_deathbless}\",\"{name_painful_curse}\",";
+        string desc = $"\"{desc_unbind}\",\"{desc_exceptional}\",\"{desc_bw_sacrifice}\",\"{desc_servemaster}\",\"{desc_charged_soul}\",";
         
         foreach(string item in input)
         {
@@ -3056,104 +3064,6 @@ popz.v
                 newItem = newItem.Insert(newItem.IndexOf("\";Tier_name_end"), tier);
                 newItem = newItem.Insert(newItem.IndexOf("\";rarity_end"), rarity);
                 newItem = newItem.Insert(newItem.IndexOf("\";skilltree_hover_end"), hover);
-                yield return newItem;
-            }
-            else
-            {
-                yield return item;
-            }
-        }
-    }
-    private static IEnumerable<string> SpeechIterator(IEnumerable<string> input)
-    {
-        string forbidden = "\";;// FORBIDDEN MAGIC;// FORBIDDEN MAGIC;;;;;;// FORBIDDEN MAGIC;;;;\",";
-
-        string MCWraithStart = "\"MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;MC_Wraith_Binding;\",";
-        string speechMCWraith = "\";Korrug Namar!;Lagua ra metha ...?!;廓卢戈'纳玛尔！;Korrug Namar!;¡Korrug Namar!;Korrug Namar !;Korrug Namar!;Korrug Namar!;Korrug Namar!;Korrug Namar!;コールグ・ナマール！;Korrug Namar!;Korrug Namar!;Korrug Namar!;\",";
-        string MCWraithEnd = "\"MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;MC_Wraith_Binding_end;\",";
-        
-        string WraithSart = "\"Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;Wraith_Binding;\",";
-        string speechWraith = "\";Korrug Namar!;Lagura mithensa!;廓卢戈'纳玛尔！;Korrug Namar!;¡Korrug Namar!;Korrug Namar !;Korrug Namar!;Korrug Namar!;Korrug Namar!;Korrug Namar!;コールグ・ナマール！;Korrug Namar!;Korrug Namar!;Korrug Namar!;\",";
-        string WraithEnd = "\"Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;Wraith_Binding_end;\",";
-        
-        string LostSoulsStart = "\"Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;Lostsouls;\",";
-        string speechLostSouls = "\";Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;Lagura Lamera !;\",";
-        string LostSoulsEnd = "\"Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;Lostsouls_end;\",";
-        
-        string MCLostSoulsStart = "\"MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;MC_Lostsouls;\",";
-        string speechMCLostSouls = "\";Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;Lagurera Mara ... ?!;\",";
-        string MCLostSoulsEnd = "\"MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;MC_Lostsouls_end;\",";
-
-        string MCbwTouchStart = "\"MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;MC_Bw_Touch;\",";
-        string speechMCbwTouch = "\";Korrug Namar!;Kogrug Nema ...?!;廓卢戈'纳玛尔！;Korrug Namar!;¡Korrug Namar!;Korrug Namar !;Korrug Namar!;Korrug Namar!;Korrug Namar!;Korrug Namar!;コールグ・ナマール！;Korrug Namar!;Korrug Namar!;Korrug Namar!;\",";
-        string MCbwTouchEnd = "\"MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;MC_Bw_Touch_end;\",";
-
-        string bwTouchStart = "\"Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;Bw_Touch;\",";
-        string speechbwTouch = "\";Korrug Namar!;Korrug Namar!;廓卢戈'纳玛尔！;Korrug Namar!;¡Korrug Namar!;Korrug Namar !;Korrug Namar!;Korrug Namar!;Korrug Namar!;Korrug Namar!;コールグ・ナマール！;Korrug Namar!;Korrug Namar!;Korrug Namar!;\",";
-        string bwTouchEnd = "\"Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;Bw_Touch_end;\",";
-        
-        string bwBlessStart = "\"Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;Bw_Bless;\",";
-        string speechbwBless = "\";Yagrak Atot!;Yagrak Atot!;亚格拉克'阿托特！;Yagrak Atot!;¡Yagrak Atot!;Yagrak Atot !;Yagrak Atot!;Yagrak Atot!;Yagrak Atot!;Yagrak Atot!;ヤグラク・アトット！;Yagrak Atot!;Yagrak Atot!;Yagrak Atot!;\",";
-        string bwBlessEnd = "\"Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;Bw_Bless_end;\",";
-
-        string MCbwBlessStart = "\"MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;MC_Bw_Bless;\",";
-        string speechMCbwBless = "\";Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;Yack Ato... ?!;\",";
-        string MCbwBlessEnd = "\"MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;MC_Bw_Bless_end;\",";
-
-        string DeathPlagueStart = "\"Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;Death_Plague;\",";
-        string speechDeathPlague = "\";En'thero !;En'thero !;En'thero !;En'thero !;En'thero !;En'thero !;En'thero !;En'thero !;En'thero !;En'thero !;En'thero !;En'thero !;En'thero !;En'thero !;\",";
-        string DeathPlagueEnd = "\"Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;Death_Plague_end;\",";
-
-        string MCDeathPlagueStart = "\"MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;MC_Death_Plague;\",";
-        string speechMCDeathPlague = "\";En'tera;En'tera;En'tera;En'tera;En'tera;En'tera;En'tera;En'tera;En'tera;En'tera;En'tera;En'tera;En'tera;En'tera;\",";
-        string MCDeathPlagueEnd = "\"MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;MC_Death_Plague_end;\",";
-
-        string BwBoltStart = "\"Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;Bw_Bolt;\",";
-        string speechBwBolt = "\";In Nag Zur!;In Nag Zur...;因纳戈祖尔……;In Nag Zur...;In Nag Zur...;In Nag Zur !;In Nag Zur...;In Nag Zur...;In Nag Zur...;In Nag Zur...;イン・ナグ・ズール…;In Nag Zur...;In Nag Zur...;In Nag Zur...;\",";
-        string BwBoltEnd = "\"Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;Bw_Bolt_end;\",";
-
-        string MCBwBoltStart = "\"MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;MC_Bw_Bolt;\",";
-        string speechMCBwBolt = "\";in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;in Nag zu ...?;\",";
-        string MCBwBoltEnd = "\"MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;MC_Bw_Bolt_end;\",";
-
-        string PcurseStart = "\"Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;Pcurse;\",";
-        string speechPcurse = "\";Shaggrath Azud...;Shaggrath Azud!;沙格拉斯'阿祖得！;Shaggrath Azud!;¡Shaggrath Azud!;Shaggrath Azud...;Shaggrath Azud!;Shaggrath Azud!;Shaggrath Azud!;Shaggrath Azud!;シャグラト・アズード！;Shaggrath Azud!;Shaggrath Azud!;Shaggrath Azud!;\",";
-        string PcurseEnd = "\"Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;Pcurse_end;\",";
-
-        string MCPcurseStart = "\"MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;MC_Pcurse;\",";
-        string speechMCPcurse = "\";Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;Shagerath erm ...?;\",";
-        string MCPcurseEnd = "\"MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;MC_Pcurse_end;\",";
-
-        string BwResurrectionStart = "\"Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;Bw_Resurrection;\",";
-        string speechBwResurrection = "\";Lagur! Lagur! Lagur!;Lagur! Lagur! Lagur!;拉古尔！拉古尔！拉古尔！;Lagur! Lagur! Lagur!;¡Lagur! ¡Lagur! ¡Lagur!;Lagur ! Lagur ! Lagur !;Lagur! Lagur! Lagur!;Lagur! Lagur! Lagur!;Lagur! Lagur! Lagur!;Lagur! Lagur! Lagur!;ラグール！ ラグール！ ラグール！;Lagur! Lagur! Lagur!;Lagur! Lagur! Lagur!;Lagur! Lagur! Lagur!;\",";
-        string BwResurrectionEnd = "\"Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;Bw_Resurrection_end;\",";
-
-        string MCBwResurrectionStart = "\"MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;MC_Bw_Resurrection;\",";
-        string speechMCBwResurrection = "\";Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;Lagu Lagu La ... ?!;\",";
-        string MCBwResurrectionEnd = "\"MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;MC_Bw_Resurrection_end;\",";
-        
-        string speech = MCWraithStart + speechMCWraith + MCWraithEnd + 
-            WraithSart + speechWraith + WraithEnd + 
-            LostSoulsStart + speechLostSouls + LostSoulsEnd + 
-            MCLostSoulsStart + speechMCLostSouls + MCLostSoulsEnd +
-            MCbwTouchStart + speechMCbwTouch + MCbwTouchEnd +
-            bwTouchStart + speechbwTouch + bwTouchEnd +
-            bwBlessStart + speechbwBless + bwBlessEnd +
-            MCbwBlessStart + speechMCbwBless + MCbwBlessEnd +
-            DeathPlagueStart + speechDeathPlague + DeathPlagueEnd +
-            MCDeathPlagueStart + speechMCDeathPlague + MCDeathPlagueEnd +
-            BwBoltStart + speechBwBolt + BwBoltEnd +
-            MCBwBoltStart + speechMCBwBolt + MCBwBoltEnd + 
-            PcurseStart + speechPcurse + PcurseEnd +
-            MCPcurseStart + speechMCPcurse + MCPcurseEnd +
-            BwResurrectionStart + speechBwResurrection + BwResurrectionEnd +
-            MCBwResurrectionStart + speechMCBwResurrection + MCBwResurrectionEnd;
-        
-        foreach(string item in input)
-        {
-            if (item.Contains(forbidden))
-            {
-                string newItem = item.Insert(item.IndexOf(forbidden) + forbidden.Length, speech);
                 yield return newItem;
             }
             else
