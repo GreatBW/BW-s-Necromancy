@@ -2605,11 +2605,8 @@ instance_create(x, y, o_res_buff_creator)")
             .Save();
         
         Necromancy_Localization.ModifierPatching();
+        Necromancy_Localization.WeaponTextsPatching();
 
-        Msl.LoadGML("gml_GlobalScript_table_weapons_text")
-            .Apply(WeaponTextIterator)
-            .Save();
-            
         Msl.LoadGML("gml_GlobalScript_table_text")
             .Apply(TextIterator)
             .Save();
@@ -2897,43 +2894,6 @@ popz.v
                 newItem = newItem.Insert(newItem.IndexOf(bookmid) + bookmid.Length, $"\"{grimoir1_mid}\",\"{grimoir2_mid}\",\"{grimoir3_mid}\",");
                 newItem = newItem.Insert(newItem.IndexOf(bookdesc) + bookdesc.Length, $"\"{grimoir1_desc}\",\"{grimoir2_desc}\",\"{grimoir3_desc}\",");
                 newItem = newItem.Insert(newItem.IndexOf(booktype) + booktype.Length, $"\"{grimoir1_type}\",\"{grimoir2_type}\",\"{grimoir3_type}\",");
-                yield return newItem;
-            }
-            else
-            {
-                yield return item;
-            }
-        }
-    }
-    private static IEnumerable<string> WeaponTextIterator(IEnumerable<string> input)
-    {
-        string chestpieces = "\";;CHESTPIECES;CHESTPIECES;;;;;CHESTPIECES;CHESTPIECES;;;;\",";
-        List<int> indicesChestpieces;
-        string rings = "\";;RINGS;RINGS;;;;;RINGS;RINGS;;;;\",";
-        List<int> indicesRings;
-
-        // armor_name
-        string sinistercrown = "\"sinistercrown;Sinister Crown;Sinister Crown;Sinister Crown;Sinister Crown;Sinister Crown;Sinister Crown;Sinister Crown;Sinister Crown;Sinister Crown;Sinister Crown;Sinister Crown;Sinister Crown;\",";
-        string hexermantle = "\"hexermantle;Hexer Mantle;Hexer Mantle;Hexer Mantle;Hexer Mantle;Hexer Mantle;Hexer Mantle;Hexer Mantle;Hexer Mantle;Hexer Mantle;Hexer Mantle;Hexer Mantle;Hexer Mantle;\",";
-        string skullmorionring = "\"Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;Skull Morion Ring;\",";
-        
-        // armor_desc
-        string sinistercrownDesc = "\"hexermantle;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;\",";
-        string hexermantleDesc = "\"sinistercrown;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;\",";
-        string skullmorionringDesc = "\"Skull Morion Ring;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;WIP;\",";
-
-        foreach(string item in input)
-        {
-            if (item.Contains(chestpieces) && item.Contains(rings))
-            {
-                string newItem = item;
-                indicesChestpieces = newItem.AllIndicesOf(chestpieces).ToList();
-                newItem = newItem.Insert(indicesChestpieces[1] + chestpieces.Length, sinistercrownDesc + hexermantleDesc);
-                newItem = newItem.Insert(indicesChestpieces[0] + chestpieces.Length, sinistercrown + hexermantle);
-                
-                indicesRings = newItem.AllIndicesOf(rings).ToList();
-                newItem = newItem.Insert(indicesRings[1] + rings.Length, skullmorionringDesc);
-                newItem = newItem.Insert(indicesRings[0] + rings.Length, skullmorionring);
                 yield return newItem;
             }
             else

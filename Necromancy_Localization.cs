@@ -268,4 +268,36 @@ public class Necromancy_Localization
             )
         );
     }
+    public static void WeaponTextsPatching()
+    {
+        Msl.InjectTableWeaponTextsLocalization(
+            new LocalizationWeaponText(
+                id: "sinistercrown",
+                name: new Dictionary<ModLanguage, string>{
+                    {ModLanguage.English, "Sinister Crown"},
+                },
+                description: new Dictionary<ModLanguage, string>{
+                    {ModLanguage.English, "WIP"},
+                }
+            ),
+            new LocalizationWeaponText(
+                id: "hexermantle",
+                name: new Dictionary<ModLanguage, string>{
+                    {ModLanguage.English, "Hexer Mantle"},
+                },
+                description: new Dictionary<ModLanguage, string>{
+                    {ModLanguage.English, "WIP"},
+                }
+            ),
+            new LocalizationWeaponText(
+                id: "Skull Morion Ring",
+                name: new Dictionary<ModLanguage, string>{
+                    {ModLanguage.English, "Skull Morion Ring"},
+                },
+                description: new Dictionary<ModLanguage, string>{
+                    {ModLanguage.English, "WIP"},
+                }
+            )
+        );
+    }
 }
