@@ -440,7 +440,7 @@ public class Necromancy_Localization
                 name: new Dictionary<ModLanguage, string>{
                     {ModLanguage.English, "Unholy"},
                     {ModLanguage.Russian, "магический / магическая / магическое / магические"},
-                    {ModLanguage.Chinese, "魔法"},
+                    {ModLanguage.Chinese, "邪术"},
                     {ModLanguage.German, "magischer / magische / magisches / magische"},
                     {ModLanguage.Spanish, "mágico / mágica / mágicos / mágicas"},
                     {ModLanguage.French, "magique / magique / magiques / magiques"},
@@ -449,7 +449,7 @@ public class Necromancy_Localization
                     {ModLanguage.Polish, "Magiczny / Magiczna / Magiczne / Magiczne"},
                     {ModLanguage.Turkish, "büyülü"},
                     {ModLanguage.Japanese, "マジカル"},
-                    {ModLanguage.Korean, "마법의"},
+                    {ModLanguage.Korean, "마법의"}
                 }
             )
         );
@@ -595,7 +595,7 @@ public class Necromancy_Localization
                 name: new Dictionary<ModLanguage, string>{
                     {ModLanguage.English, "Resurrection"},
                     {ModLanguage.Russian, "Воскрешение"},
-                    {ModLanguage.Chinese, "低等起死还魂"},
+                    {ModLanguage.Chinese, "起死还魂"},
                     {ModLanguage.German, "Kleines Ritual der Auferstehung"},
                     {ModLanguage.Italian, "Rituale di Resurrezione Inferiore"},
                     {ModLanguage.Japanese, "復活の簡易儀式"},
