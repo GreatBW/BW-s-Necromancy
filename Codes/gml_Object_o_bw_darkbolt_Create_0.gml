@@ -6,6 +6,8 @@ scr_skill_atr(8)
 can_learn = 1
 if (global.language == 1)
     info = "Связанные атрибуты: Сила магии, Восприятие"
+else if (global.language == 3)
+    info = "影响因素：法力、感知"
 else
     info = "Modified by: Magic Power, Perception"
 ignore_interact = 1

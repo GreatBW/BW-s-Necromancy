@@ -2,6 +2,8 @@ event_inherited()
 skill = "Wraith_Binding"
 if (global.language == 1)
     info = "Связанные атрибуты: Уровень"
+else if (global.language == 3)
+    info = "影响因素：等级"
 else
     info = "Modified by: Level"
 scr_skill_atr()
