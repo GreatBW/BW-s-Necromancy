@@ -310,7 +310,7 @@ public class Necromancy_Localization
                 id: "hexermantle",
                 name: new Dictionary<ModLanguage, string>{
                     {ModLanguage.English, "Hexer Mantle"},
-                    {ModLanguage.Chinese, "咒师斗篷"}
+                    {ModLanguage.Chinese, "咒师法袍"}
                 },
                 description: new Dictionary<ModLanguage, string>{
                     {ModLanguage.English, "WIP"},
