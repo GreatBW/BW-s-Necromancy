@@ -527,7 +527,7 @@ public class Necromancy_Localization
                 },
                 description: new Dictionary<ModLanguage, string>{
                     {ModLanguage.English, @"Successfully raising the dead allows you to ~y~learn~/~ their ~w~active abilities~/~ (for as long as they are available via skill menu).##Increases ~y~Experience Gain~/~ of Undead kills by ~lg~100%~/~."},
-                    {ModLanguage.Chinese, @"成功复活死者可以让你~y~学习~/~他们的~w~主动能力~/~（只要他们可以通过技能窗口获得）。##亡灵击杀所获经验增加~y~100%~/~。"}
+                    {ModLanguage.Chinese, @"成功复活死者可以让你~y~学习~/~他们的~w~主动能力~/~（只要这些能力可以通过技能窗口获得）。##亡灵击杀所获经验增加~y~100%~/~。"}
                 }
             ),
             new LocalizationSkill(
