@@ -41,11 +41,15 @@ if instance_exists(target)
     {
         if (global.language == 1)
             _value = choose("Убирайтесь из моей головы!", "Голова разрывается...", " Нести... смерть...", "Если так продолжится... я погибну...", "Я на грани смерти...!", " Не дать тьме поглотить себя...", "Заткнитесь! Просто заткнитесь...")
+        else if (global.language == 3)
+            _value = choose("滚出我的脑海！", "我的头要爆了...", "带来...死亡...", "再这样下去...我会死的...", "我濒临死亡...!", "不要被黑暗吞噬...", "闭嘴！给我闭嘴...")
         else
             _value = choose("Get out of my head!", "My head's about to burst...", "Bring... death...", "If this continues ... I will die...", "I'm on the verge of death...!", "Don't let the darkness swallow you ...", "Shut up! Just Shut up ...")
     }
     else if (global.language == 1)
         _value = choose("Смерть тебе к лицу!", " Ох, мир смертных... давно минувшие дни...", "Ты смеешь сопротивляться мне?...", "Этот сосуд мой!", " Ты станешь пустой оболочкой... скоро...", "Ха-ха-ха!", "Убить их всех...", "Поддайся... время уйти на покой...", " Сопротивление бесполезно...")
+    else if (global.language == 3)
+        _value = choose("你已经是个死人了！", "啊，凡人世界...好久不见了...", "你竟敢反抗我？...", "这具躯壳是我的！", "你很快就会变成一个空壳... 很快... 很快", "哈哈哈", "杀光他们...", "放弃吧...是时候长眠了...", "反抗是没有用的...")
     else
         _value = choose("You are as good as dead!", "Ah mortal world ... It's been a while...", "You dare oppose me ? ...", "This vessel is mine!", "You'll be an empty husk... soon... soon", "Ha ha ha", "Kill them all ...", "Give up ... It's time to sleep ...", "Resistance is no use...")
     with (target)

@@ -13,6 +13,8 @@ if instance_exists(o_player)
     var _value = ""
     if (global.language == 1)
         _value = choose("В атаку!", "В бой!", "Убить их всех!", "Да начнётся бойня!")
+    else if (global.language == 3)
+        _value = choose("进攻！", "与他们战斗！", "杀光他们！", "战斗开始")
     else
         _value = choose("Attack!", "Fight them!", "Kill them all!", "Let the battle begin")
     with (o_player)

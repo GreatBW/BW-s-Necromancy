@@ -13,6 +13,8 @@ if instance_exists(o_player)
     var _value = ""
     if (global.language == 1)
         _value = choose("Ближе!", "Отставить драку... за мной!", "Ты... ко мне", "Забудьте...", "Двигайтесь!", "Следовать за мной!")
+    else if (global.language == 3)
+        _value = choose("靠近点", "别反抗...跟上！", "你...过来", "算了...", "走！", "跟我来")
     else
         _value = choose("Get closer", "Stop fighting ... Follow!", "You... come here", "Forget it ...", "Move!", "Follow my lead")
     with (o_player)
