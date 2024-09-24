@@ -603,7 +603,7 @@ public class Necromancy_Localization
                 },
                 description: new Dictionary<ModLanguage, string>{
                     {ModLanguage.English, @"Reanimates a targeted corpse, replenishing it ~lg~66%~/~ Max Health and ~bl~66%~/~ Max Energy and sets Armor Durability to ~w~0%~/~.##Increases ~lg~morale~/~ (up to ~w~75%~/~).#Slowly decreases ~lg~Sanity~/~ but no less than ~r~60%~/~.##Risk of ~r~\""Obsession\""~/~: ~ur~High~/~#Summoning more than one Undead instantly causes ~r~\""Obsession\""~/~.##~r~Can't~/~ summon Undeads higher than level ~w~/*LEVL*/~/~.##~r~Prevents~/~ from receiving ~ly~\""Blessing\""~/~.##This spell cannot be cast while under the effect of ~r~\""Obsession\""~/~."},
-                    {ModLanguage.Chinese, @"令一个目标尸体复活，令其恢复生命上限~lg~66%~/~的生命和精力上限~bl~66%~/~的精力，并将其护甲耐久变为~w~0%~/~。##提升~lg~士气~/~（最多~w~75%~/~）。#缓慢降低~lg~神智~/~，但不低于~r~60%~/~。##~r~“痴迷”~/~的风险：~ur~高~/~#召唤多个亡灵会立即导致~r~“痴迷”~/~。##~r~无法~/~召唤高于~w~/*LEVL*/~/~级的亡灵。##~r~妨碍~/~接受~ly~“祝福”~/~。##在~r~“痴迷”~/~的影响下，这个咒法不能施放。"}
+                    {ModLanguage.Chinese, @"令一个目标尸体复活，令其恢复生命上限~lg~66%~/~的生命和精力上限~bl~66%~/~的精力，并将其护甲耐久变为~w~0%~/~。##提升~lg~斗志~/~（最多~w~75%~/~）。#缓慢降低~lg~神智~/~，但不低于~r~60%~/~。##~r~“痴迷”~/~的风险：~ur~高~/~#召唤多个亡灵会立即导致~r~“痴迷”~/~。##~r~无法~/~召唤高于~w~/*LEVL*/~/~级的亡灵。##~r~妨碍~/~接受~ly~“祝福”~/~。##在~r~“痴迷”~/~的影响下，这个咒法不能施放。"}
                 }
             ),
             new LocalizationSkill(
